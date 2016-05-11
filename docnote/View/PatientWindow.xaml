@@ -1,0 +1,125 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.PatientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.View"
+        xmlns:resources="clr-namespace:docnote.Resources"
+        mc:Ignorable="d"
+        Title="Пацієнт"
+        SaveWindowPosition="True"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen">
+        <!--DataContext="{Binding PatientVM, Source={StaticResource Locator}}"-->
+    <Window.Resources>
+        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" 
+               TargetType="RadioButton"/>
+        <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="VerticalContentAlignment" Value ="Center" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalContentAlignment" Value ="Center"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource MyGridStyle}">
+        <Grid.Resources>
+            <resources:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label >Прізвище</Label>
+        <Label Grid.Column="2">Старе прізвище</Label>
+        <Label Grid.Row="1" >Ім'я</Label>
+        <Label Grid.Row="1" Grid.Column="2">По-батькові</Label>
+        <Label Grid.Row="2" >Ідентифікаійний код</Label>
+        <Label Grid.Row="3" >Дата народження</Label>
+        <TextBox Text="{Binding Patient.FirstName}" Controls:TextBoxHelper.Watermark="Прізвище" Grid.Column="1"/>
+        <TextBox Text="{Binding Patient.ExLastName}" Controls:TextBoxHelper.Watermark="Старе прізвище" Grid.Column="3" />
+        <TextBox Text="{Binding Patient.LastName}" Controls:TextBoxHelper.Watermark="Ім'я" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Text="{Binding Patient.MiddleName}" Controls:TextBoxHelper.Watermark="По Батькові" Grid.Row="1" Grid.Column="3" />
+        <TextBox Text="{Binding Patient.IdentificationCode}" Controls:TextBoxHelper.Watermark="Ідентифікаійний код" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" />
+        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate, StringFormat=d}" />
+
+        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="3" >
+
+            <RadioButton x:Name="man" Content="чоловік" Margin="15,0,15,0"/>
+            <RadioButton x:Name="woman" Content="жінка" Margin="0,0,10,0"/>
+
+        </StackPanel>
+        <Label Content="Телефон" Grid.Row="4" />
+        <Label Content="Інформація про батків" Grid.Row="5"/>
+        <Label Content="Телефон батьків" Grid.Row="6" />
+        <Label Content="Місце навчання / роботи" Grid.Row="7" />
+        <Label Content="Телефон" Grid.Row="7" Grid.Column="2"/>
+        <Label Content="Професія" Grid.Row="8" />
+        <Label Content="Посада" Grid.Row="8" Grid.Column="2"/>
+        <Label Content="Дата реєстрації" Grid.Row="9" />
+        <Label Content="Дата зняття з реєстрації" Grid.Row="9" Grid.Column="2"/>
+        <Label Content="Причина зняття з реєстрації" Grid.Row="10" />
+        <TextBox Text="{Binding Patient.PhoneNumber}" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" />
+        <TextBox Text="{Binding Patient.ParentName}" Controls:TextBoxHelper.Watermark="ПІБ батків" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" />
+        <TextBox Text="{Binding Patient.ParentPhoneNumber}" Controls:TextBoxHelper.Watermark="Телефон батьків" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" />
+        <TextBox Text="{Binding Patient.JobSchoolPlace}" Controls:TextBoxHelper.Watermark="Місце навчання / роботи" Grid.Row="7" Grid.Column="1" />
+        <TextBox Text="{Binding Patient.JobSchoolPnoneNumber}" Controls:TextBoxHelper.Watermark="Телефон закладу" Grid.Row="7" Grid.Column="3" />
+        <TextBox Text="{Binding Patient.Profession}" Controls:TextBoxHelper.Watermark="Професія" Grid.Row="8" Grid.Column="1" />
+        <TextBox Text="{Binding Patient.Position}" Controls:TextBoxHelper.Watermark="Посада" Grid.Row="8" Grid.Column="3" />
+        <TextBox Text="{Binding Patient.RegistrationDate}" Controls:TextBoxHelper.Watermark="Дата реєстрації" Grid.Row="9" Grid.Column="1" />
+        <TextBox Text="{Binding Patient.UnregistrationDate}" Controls:TextBoxHelper.Watermark="Дата зняття з реєстрації" Grid.Row="9" Grid.Column="3" />
+        <TextBox Text="{Binding Patient.UnregistrationReason}" Controls:TextBoxHelper.Watermark="Причина зняття з реєстрації" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3"/>
+
+        <Label Content="Назва / Код карти" Grid.Row="11"  />
+        <Label Content="Остання дата оновлення" Grid.Row="11" Grid.Column="2" />
+        <TextBox Text="{Binding Card.CardNameCode}" Controls:TextBoxHelper.Watermark="Код карти" Grid.Row="11" Grid.Column="1" />
+        <TextBox Text="{Binding Card.LastUpdateDate}" Controls:TextBoxHelper.Watermark="дата оновлення" Grid.Row="11" Grid.Column="3" />
+        
+        <StackPanel Grid.Row="12" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.All}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=All}">Вибрати всі</RadioButton>
+            <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.LastMonth}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=LastMonth}">За останній місяць</RadioButton>
+            <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.Last3Month}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Last3Month}">За останні 3 місяці</RadioButton>
+        </StackPanel>
+        <Button Grid.Row="12" Grid.Column="2" Content="Добавити запис" Command="{Binding AddCardEntryClickCommand}"></Button>
+        <DataGrid  x:Name="CardEntriesGrid" Grid.Row="13" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Дата створення" Binding="{Binding CreationDate, StringFormat={}{0:dd MMMM yyyy}}"/>
+            </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=CardEntryDoubleClickCommand}"
+                                          CommandParameter="{Binding ElementName=CardEntriesGrid, Path=SelectedItem}"/>
+            </DataGrid.InputBindings>
+        </DataGrid>
+        <ScrollViewer Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="3">
+            <TextBlock Text="{Binding ElementName=CardEntriesGrid, Path=SelectedItem.EntryText}" TextWrapping="Wrap"/>
+        </ScrollViewer>
+
+    </Grid>
+</Controls:MetroWindow>
