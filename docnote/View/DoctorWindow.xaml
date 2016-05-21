@@ -1,0 +1,57 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.DoctorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.View"
+        mc:Ignorable="d"
+        Title="Доктор" 
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        SaveWindowPosition="True"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="VerticalContentAlignment" Value ="Center" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalContentAlignment" Value ="Center"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource MyGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label VerticalAlignment="Center" Margin="5,10,5,5">Прізвище</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Ім'я</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >По-батькові</Label>
+        <TextBox Text="{Binding Doctor.FirstName}" VerticalContentAlignment="Center" Margin="0,10,5,5" Controls:TextBoxHelper.Watermark="Прізвище" Grid.Column="1" />
+        <TextBox Text="{Binding Doctor.LastName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Ім'я" Grid.Column="1" Grid.Row="1" />
+        <TextBox Text="{Binding Doctor.MiddleName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="По-батькові" Grid.Column="1" Grid.Row="2" />
+
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Посада" Grid.Row="3"/>
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Місце роботи" Grid.Row="4" />
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Телефон" Grid.Row="5" />
+        <TextBox Text="{Binding Doctor.Rank}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Посада" Grid.Column="1" Grid.Row="3"  />
+        <TextBox Text="{Binding Doctor.JobPlace}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Місце роботи" Grid.Column="1" Grid.Row="4" />
+        <Button Command="{Binding Path=DoctorSaveClickCommand}" x:Name="button" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
+        <!--<TextBox Text="{Binding Doctor.MobileNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="5" />-->
+    </Grid>
+</Controls:MetroWindow>

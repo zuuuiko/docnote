@@ -30,40 +30,7 @@ namespace docnote.ViewModel
             {
                 Set(ref _rowDetailsVisible, value);
             }
-        }
-
-
-        #region Hospital
-        private Hospital _hospital;
-        public Hospital Hospital
-        {
-            get
-            {
-                return _hospital;
-            }
-            set
-            {
-                Set(ref _hospital, value);
-            }
-        }
-        public ICommand HospatalSaveClickCommand { get; private set; }
-        #endregion
-
-        #region Doctor
-        private Doctor _doctor;
-        public Doctor Doctor
-        {
-            get
-            {
-                return _doctor;
-            }
-            set
-            {
-                Set(ref _doctor, value);
-            }
-        }
-        public ICommand DoctorSaveClickCommand { get; private set; }
-        #endregion
+        }       
 
         #region Patients
         private ObservableCollection<Patient> _patients;
@@ -92,6 +59,8 @@ namespace docnote.ViewModel
         }
         public ICommand PatientClickCommand { get; private set; }
         public ICommand PatientDoubleClickCommand { get; private set; }
+        public ICommand OpenDoctorCommand { get; private set; }
+        public ICommand OpenHospitalCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -101,7 +70,6 @@ namespace docnote.ViewModel
         {
             _dataService = dataService;
             _rowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-            DoctorSaveClickCommand = new RelayCommand(SaveDoctor);
             PatientClickCommand = new RelayCommand(() =>
             {
                 if (RowDetailsVisible == DataGridRowDetailsVisibilityMode.Collapsed)
@@ -115,11 +83,26 @@ namespace docnote.ViewModel
             });
 
             PatientDoubleClickCommand = new RelayCommand<Patient>(OpenPatientWindow);
+            OpenDoctorCommand = new RelayCommand(OpenDoctorWindow);
+            OpenHospitalCommand = new RelayCommand(OpenHospitalWindow);
 
             LoadPatients();
-            LoadDoctor();
-            LoadHospital();
+        }
 
+        private void OpenHospitalWindow()
+        {
+            HospitalWindow dw = new HospitalWindow();
+            dw.DataContext = new HospitalWindowVM(_dataService);
+            //pw.Owner = this;
+            dw.ShowDialog();
+        }
+
+        private void OpenDoctorWindow()
+        {
+            DoctorWindow dw = new DoctorWindow();
+            dw.DataContext = new DoctorWindowVM(_dataService);
+            //pw.Owner = this;
+            dw.ShowDialog();
         }
 
         private void OpenPatientWindow(Patient p)
@@ -143,46 +126,6 @@ namespace docnote.ViewModel
                     Patients = patients;
                 });
         }
-
-        private void LoadHospital()
-        {
-            _dataService.GetHospitalAsync(
-                (hospital, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
-                    Hospital = hospital;
-                });
-        }
-
-        private void SaveDoctor()
-        {
-            _dataService.UpdateDoctorAsync(
-                (isUpdated, error)=>
-                {
-                    System.Diagnostics.Debug.WriteLine(isUpdated);
-                }, Doctor);
-        }
-
-        private void LoadDoctor()
-        {
-            _dataService.GetDoctorAsync(
-                (doctor, error) =>
-                {
-                    if (error != null)
-                    {
-                        // Report error here
-                        return;
-                    }
-                    Doctor = doctor;
-                });
-            //this.RaisePropertyChanged(() => this.Patients);
-            //Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Employees Loaded."));
-        }
-
 
         ////public override void Cleanup()
         ////{

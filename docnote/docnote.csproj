@@ -104,11 +104,19 @@
     <Compile Include="Resources\PeriodsRadioButtons.cs" />
     <Compile Include="Resources\SexConverter.cs" />
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
+    <Compile Include="ViewModel\DoctorWindowVM.cs" />
+    <Compile Include="ViewModel\HospitalWindowVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PatientWindowVM.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CardEntryWindow.xaml.cs">
       <DependentUpon>CardEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DoctorWindow.xaml.cs">
+      <DependentUpon>DoctorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HospitalWindow.xaml.cs">
+      <DependentUpon>HospitalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
@@ -130,6 +138,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CardEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DoctorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HospitalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,7 +182,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

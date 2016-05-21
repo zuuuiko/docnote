@@ -15,157 +15,114 @@
         WindowStartupLocation="CenterScreen">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label FontSize="21.333">Список пацієнтів</Label>
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Д" Command="{Binding OpenDoctorCommand}">
+                <!--<Rectangle Width="20"
+                           Height="20">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{StaticResource appbar_city}" />
+                    </Rectangle.Fill>
+                </Rectangle>-->
+            </Button>
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Л" Command="{Binding OpenHospitalCommand}"></Button>
+        </StackPanel>
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="4" x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
 
-        <TabControl Margin="15">
-            <TabItem Header="Список пацієнтів">
-                <Grid >
-                    <DataGrid x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
-                        
-                        <DataGrid.Resources>
-                            <resources:SexConverter x:Key="sexConverter"/>
-                            <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
-                                <Style.Resources>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Foreground" Value="Black" />
-                                    </Style>
-                                    <!--<Style TargetType="{x:Type TextBox}">
+            <DataGrid.Resources>
+                <!--<resources:SexConverter x:Key="sexConverter"/>-->
+                <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
+                    <Style.Resources>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="Black" />
+                        </Style>
+                        <!--<Style TargetType="{x:Type TextBox}">
                                         <Setter Property="Foreground" Value="Red" />
                                     </Style>-->
-                                </Style.Resources>
-                            </Style>
-                        </DataGrid.Resources>
-                        
-                        <!--<i:Interaction.Triggers>
+                    </Style.Resources>
+                </Style>
+            </DataGrid.Resources>
+
+            <!--<i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                 <i:InvokeCommandAction Command="{Binding PatientLBMouseUpCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>-->
-                        
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding IdentificationCode}"
-                                Header="Ідентифікатор">
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding FirstName}"
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}"
                                 Header="Ім'я">
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding LastName}"
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding MiddleName}"
+                                Header="По-Батькові">
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding LastName}"
                                 Header="Прізвище">
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Sex, Converter={StaticResource sexConverter}}"
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding BirthDate, StringFormat=d}"
+                                Header="Дата Народження">
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding PhoneNumber}"
+                                Header="Телефон">
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding ParentName}"
+                                Header="Батьки">
+                </DataGridTextColumn>
+                <!--<DataGridTextColumn Binding="{Binding Sex, Converter={StaticResource sexConverter}}"
                                 Header="Стать">
-                            </DataGridTextColumn>
+                </DataGridTextColumn>-->
 
-                        </DataGrid.Columns>
+            </DataGrid.Columns>
 
-                        <DataGrid.RowDetailsTemplate>
-                            <DataTemplate>
+            <!--<DataGrid.RowDetailsTemplate>
+                <DataTemplate>
 
-                                <Grid Margin="0,10" Background="GhostWhite" Style="{StaticResource MyGridStyle}">
+                    <Grid Margin="0,10" Background="GhostWhite" Style="{StaticResource MyGridStyle}">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                                    <TextBlock Text="Телефон: " FontWeight="Bold" />
-                                    <TextBlock Text="{Binding PhoneNumber}" Grid.Column="1" />
-                                    <TextBlock Text="Батьки: " FontWeight="Bold" Grid.Row="1" />
-                                    <TextBlock Text="{Binding ParentName}" Grid.Column="1" Grid.Row="1" />
-                                    <TextBlock Text="Телефон батьків: " FontWeight="Bold" Grid.Row="2" />
-                                    <TextBlock Text="{Binding ParentPhoneNumber}" Grid.Column="1" Grid.Row="2" />
-                                    <TextBlock Text="Дата народження: " FontWeight="Bold" Grid.Row="3" />
-                                    <TextBlock Text="{Binding BirthDate, StringFormat=d}" Grid.Column="1" Grid.Row="3" />
+                        <TextBlock Text="Телефон: " FontWeight="Bold" />
+                        <TextBlock Text="{Binding PhoneNumber}" Grid.Column="1" />
+                        <TextBlock Text="Батьки: " FontWeight="Bold" Grid.Row="1" />
+                        <TextBlock Text="{Binding ParentName}" Grid.Column="1" Grid.Row="1" />
+                        <TextBlock Text="Телефон батьків: " FontWeight="Bold" Grid.Row="2" />
+                        <TextBlock Text="{Binding ParentPhoneNumber}" Grid.Column="1" Grid.Row="2" />
+                        <TextBlock Text="Дата народження: " FontWeight="Bold" Grid.Row="3" />
+                        <TextBlock Text="{Binding BirthDate, StringFormat=d}" Grid.Column="1" Grid.Row="3" />
 
-                                </Grid>
+                    </Grid>
 
-                            </DataTemplate>
-                        </DataGrid.RowDetailsTemplate>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>-->
 
-                        <DataGrid.InputBindings>
-                            <MouseBinding MouseAction="LeftClick"
-                                          Command="{Binding Path=PatientClickCommand}"/>
-                            <MouseBinding MouseAction="LeftDoubleClick"
+            <DataGrid.InputBindings>
+                <!--<MouseBinding MouseAction="LeftClick"
+                                          Command="{Binding Path=PatientClickCommand}"/>-->
+                <MouseBinding MouseAction="LeftDoubleClick"
                                           Command="{Binding Path=PatientDoubleClickCommand}"
                                           CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}"/>
-                        </DataGrid.InputBindings>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Доктор" Margin="5,0,0,0" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-
-                    </Grid.RowDefinitions>
-                    <Label VerticalAlignment="Center" Margin="5,10,5,5">Прізвище</Label>
-                    <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Ім'я</Label>
-                    <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >По-батькові</Label>
-                    <TextBox Text="{Binding Doctor.FirstName}" VerticalContentAlignment="Center" Margin="0,10,5,5" Controls:TextBoxHelper.Watermark="Прізвище" Grid.Column="1" />
-                    <TextBox Text="{Binding Doctor.LastName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Ім'я" Grid.Column="1" Grid.Row="1" />
-                    <TextBox Text="{Binding Doctor.MiddleName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="По-батькові" Grid.Column="1" Grid.Row="2" />
-
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Посада" Grid.Row="3"/>
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Місце роботи" Grid.Row="4" />
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Телефон" Grid.Row="5" />
-                    <TextBox Text="{Binding Doctor.Rank}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Посада" Grid.Column="1" Grid.Row="3"  />
-                    <TextBox Text="{Binding Doctor.JobPlace}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Місце роботи" Grid.Column="1" Grid.Row="4" />
-                    <Button Command="{Binding Path=DoctorSaveClickCommand}" x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
-                    <!--<TextBox Text="{Binding Doctor.MobileNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="5" />-->
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="Лікарня" Margin="5,0,0,0" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-
-                    </Grid.RowDefinitions>
-                    <Label VerticalAlignment="Center" Margin="5,10,5,5">Назва</Label>
-                    <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Країна / Country</Label>
-                    <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >Область / Region</Label>
-                    <TextBox Text="{Binding Hospital.Name}" VerticalContentAlignment="Center" Margin="0,10,5,5" Controls:TextBoxHelper.Watermark="Повна назва лікарні" Grid.Column="1" />
-                    <TextBox Text="{Binding Hospital.Country}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва країни" Grid.Column="1" Grid.Row="1" />
-                    <TextBox Text="{Binding Hospital.Region}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Region" Grid.Column="1" Grid.Row="2" />
-
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Населений пункт" Grid.Row="3"/>
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Вулиця / Street" Grid.Row="4" />
-                    <Label VerticalContentAlignment="Center" Margin="5" Content="Будинок" Grid.Row="5" />
-                    <TextBox Text="{Binding Hospital.CityVillage}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва населеного пункту" Grid.Column="1" Grid.Row="3"  />
-                    <TextBox Text="{Binding Hospital.Street}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва вулиці" Grid.Column="1" Grid.Row="4" />
-                    <TextBox Text="{Binding Hospital.Building}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер будинку" Grid.Column="1" Grid.Row="5" />
-                    <Button Command="{Binding Path=HospitalSaveClickCommand}" x:Name="button1" Content="Button" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
-
-                </Grid>
-            </TabItem>
-        </TabControl>
+            </DataGrid.InputBindings>
+        </DataGrid>
     </Grid>
 
 </Controls:MetroWindow>

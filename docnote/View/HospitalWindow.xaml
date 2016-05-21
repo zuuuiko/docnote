@@ -1,0 +1,57 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.HospitalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.View"
+        mc:Ignorable="d"
+        Title="Лікарня" 
+        SaveWindowPosition="True"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="VerticalContentAlignment" Value ="Center" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalContentAlignment" Value ="Center"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource MyGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label VerticalAlignment="Center" Margin="5,10,5,5">Назва</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Країна / Country</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >Область / Region</Label>
+        <TextBox Text="{Binding Hospital.Name}" VerticalContentAlignment="Center" Margin="0,10,5,5" Controls:TextBoxHelper.Watermark="Повна назва лікарні" Grid.Column="1" />
+        <TextBox Text="{Binding Hospital.Country}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва країни" Grid.Column="1" Grid.Row="1" />
+        <TextBox Text="{Binding Hospital.Region}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Region" Grid.Column="1" Grid.Row="2" />
+
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Населений пункт" Grid.Row="3"/>
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Вулиця / Street" Grid.Row="4" />
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Будинок" Grid.Row="5" />
+        <TextBox Text="{Binding Hospital.CityVillage}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва населеного пункту" Grid.Column="1" Grid.Row="3"  />
+        <TextBox Text="{Binding Hospital.Street}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва вулиці" Grid.Column="1" Grid.Row="4" />
+        <TextBox Text="{Binding Hospital.Building}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер будинку" Grid.Column="1" Grid.Row="5" />
+        <Button Command="{Binding Path=HospitalSaveClickCommand}" x:Name="button1" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
+    </Grid>
+</Controls:MetroWindow>
