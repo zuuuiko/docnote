@@ -98,6 +98,7 @@ namespace docnote.ViewModel
         public ICommand ShowCardEntriesCommand { get; private set; }
         public ICommand CardEntryDoubleClickCommand { get; private set; }
         public ICommand AddCardEntryClickCommand { get; private set; }
+        public ICommand AddUpdatePatientClickCommand { get; private set; }
 
         public PatientWindowVM(Patient p, IDataService dataService)
         {
@@ -110,6 +111,18 @@ namespace docnote.ViewModel
             ShowCardEntriesCommand = new RelayCommand<PeriodsRadioButtons>(ShowCardEntries);
             CardEntryDoubleClickCommand = new RelayCommand<CardEntry>(OpenCardEntryWindow);
             AddCardEntryClickCommand = new RelayCommand(OpenCardEntryWindow);
+            AddUpdatePatientClickCommand = new RelayCommand(AddUpdatePatient);
+        }
+
+        private void AddUpdatePatient()
+        {
+            //_dataService.AddUpdatePatientAsync(
+            //    async (isSaved, error) =>
+            //    {
+            //        var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
+            //        if (window != null)
+            //            await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
+            //    }, Patient);
         }
 
         private void OpenCardEntryWindow(CardEntry ce)

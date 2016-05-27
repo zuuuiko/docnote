@@ -17,12 +17,12 @@ namespace docnote.Model
                     callback(p, null);
             }
         }
-        public void DeletePatient(Action<bool, Exception> callback, Patient p)
+        public async void DeletePatientAsync(Action<bool, Exception> callback, Patient p)
         {
             using (var context = new DocnoteContext())
             {
                 context.Patients.Remove(p);
-                callback(context.SaveChanges() > 0, null);
+                callback(await context.SaveChangesAsync() > 0, null);
             }
         }
         public void GetPatient(Action<Patient, Exception> callback, Patient p)
@@ -48,6 +48,7 @@ namespace docnote.Model
         }
         #endregion
 
+        #region Hospital
         public async void GetHospitalAsync(Action<Hospital, Exception> callback)
         {
             using (var db = new DocnoteContext())
@@ -56,6 +57,18 @@ namespace docnote.Model
                 callback(await db.Hospitals.FirstOrDefaultAsync(), null);
             };
         }
+
+        public async void UpdateHospitalAsync(Action<bool, Exception> callback, Hospital hospital)
+        {
+            using (var context = new DocnoteContext())
+            {
+                //Doctor doctorToUpdate = context.Doctors.Where(d => d.Id == doc.Id).FirstOrDefault<Doctor>();
+                //doctorToUpdate.LastName = doc.LastName;
+                context.Entry<Hospital>(hospital).State = EntityState.Modified;
+                callback(await context.SaveChangesAsync() > 0, null);
+            }
+        }
+        #endregion
 
         #region Doctor
         public async void GetDoctorAsync(Action<Doctor, Exception> callback)
@@ -94,11 +107,11 @@ namespace docnote.Model
             }
         }
 
+        #region CardEntries
         public async void GetCardEntriesAsync(Action<ObservableCollection<CardEntry>, Exception> callback, Card c)
         {
             using (var context = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 await context.CardEntries.Where(ce => ce.CardId == c.Id).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
@@ -108,7 +121,6 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 await context.CardEntries.Where(ce => ce.CardId == c.Id && ce.CreationDate > earliestDate).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
@@ -118,19 +130,27 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 await context.CardEntries.Where(ce => ce.CardId == c.Id && ce.CreationDate > earliestDate && ce.CreationDate < latestDate).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
         }
 
-        public async void SaveCardEntryAsync(Action<bool, Exception> callback, CardEntry ce)
+        public async void SaveUpdateCardEntryAsync(Action<bool, Exception> callback, CardEntry ce)
         {
             using (var context = new DocnoteContext())
             {
-                context.CardEntries.Add(ce);
+                if (ce.Id != 0) // Update
+                {
+                    context.Entry<CardEntry>(ce).State = EntityState.Modified;
+                }
+                else // Save
+                {
+                    context.CardEntries.Add(ce);
+                }
+
                 callback(await context.SaveChangesAsync() > 0, null);
             }
         }
+        #endregion
     }
 }

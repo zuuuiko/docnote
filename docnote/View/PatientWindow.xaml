@@ -120,6 +120,8 @@
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.Last3Month}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Last3Month}">За останні 3 місяці</RadioButton>
         </StackPanel>
         <Button Grid.Row="8" Grid.Column="2" Content="Додати запис" Command="{Binding AddCardEntryClickCommand}"></Button>
+        <Button Grid.Row="8" Grid.Column="3" Content="Зберегти пацієнта" Command="{Binding AddUpdatePatientClickCommand}"></Button>
+
         <DataGrid  x:Name="CardEntriesGrid" Grid.Row="9" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата створення" Binding="{Binding CreationDate, StringFormat={}{0:dd MMMM yyyy}}"/>

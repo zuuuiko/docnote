@@ -1,11 +1,15 @@
 ﻿using docnote.Model;
+using docnote.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace docnote.ViewModel
@@ -40,9 +44,11 @@ namespace docnote.ViewModel
         private void SaveDoctor()
         {
             _dataService.UpdateDoctorAsync(
-                (isUpdated, error) =>
+                async (isUpdated, error) =>
                 {
-                    System.Diagnostics.Debug.WriteLine(isUpdated);
+                    var window = Application.Current.Windows.OfType<DoctorWindow>().FirstOrDefault();
+                    if (window != null)
+                        await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
                 }, Doctor);
         }
 

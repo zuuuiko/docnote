@@ -1,11 +1,15 @@
 ﻿using docnote.Model;
+using docnote.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace docnote.ViewModel
@@ -38,10 +42,12 @@ namespace docnote.ViewModel
 
         private void SaveCardEntryWindow()
         {
-            _dataService.SaveCardEntryAsync(
-                (isSaved, error) =>
+            _dataService.SaveUpdateCardEntryAsync(
+                async (isSaved, error) =>
                 {
-                    System.Diagnostics.Debug.WriteLine(isSaved);
+                    var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
+                    if (window != null)
+                        await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
                 }, CardEntry);
 
         }

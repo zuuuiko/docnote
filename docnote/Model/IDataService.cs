@@ -13,10 +13,11 @@ namespace docnote.Model
         void GetPatientById(Action<Patient, Exception> callback, int id);
         void AddPatientAsync(Action<Patient, Exception> callback, Patient p);
         void UpdatePatient(Action<Patient, Exception> callback, Patient p);
-        void DeletePatient(Action<bool, Exception> callback, Patient p);
+        void DeletePatientAsync(Action<bool, Exception> callback, Patient p);
         
         #region Hospital
         void GetHospitalAsync(Action<Hospital, Exception> callback);
+        void UpdateHospitalAsync(Action<bool, Exception> callback, Hospital hospital);
         #endregion
 
         #region Doctor
@@ -34,7 +35,7 @@ namespace docnote.Model
 
         void GetCardEntriesByPeriodAsync(Action<ObservableCollection<CardEntry>, Exception> callback, Card c, DateTime earliestDate, DateTime latestDate);
 
-        void SaveCardEntryAsync(Action<bool, Exception> callback, CardEntry ce);
+        void SaveUpdateCardEntryAsync(Action<bool, Exception> callback, CardEntry ce);
 
     }
 }

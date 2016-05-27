@@ -26,6 +26,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label FontSize="21.333">Список пацієнтів</Label>
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="+" 
+                    Command="{Binding AddPatientClickCommand}"/>
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="-" 
+                    Command="{Binding DeletePatientClickCommand}"
+                    CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}"/>
+        </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal">
             <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Д" Command="{Binding OpenDoctorCommand}">
                 <!--<Rectangle Width="20"
@@ -79,6 +86,12 @@
                 <DataGridTextColumn Binding="{Binding ParentName}"
                                 Header="Батьки">
                 </DataGridTextColumn>
+                <!--<DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
+                                        />-->
+                
+                
                 <!--<DataGridTextColumn Binding="{Binding Sex, Converter={StaticResource sexConverter}}"
                                 Header="Стать">
                 </DataGridTextColumn>-->
