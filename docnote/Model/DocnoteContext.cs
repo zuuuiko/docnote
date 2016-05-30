@@ -9,7 +9,7 @@ namespace docnote.Model
     {
         static DocnoteContext()
         {
-            Database.SetInitializer<DocnoteContext>(new CreateDatabaseIfNotExists<DocnoteContext>());
+            Database.SetInitializer<DocnoteContext>(new DropCreateDatabaseIfModelChanges<DocnoteContext>());
             //Database.SetInitializer<DocnoteContext>(new ModelInitializer());
         }
 

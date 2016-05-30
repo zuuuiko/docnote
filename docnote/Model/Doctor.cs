@@ -31,6 +31,9 @@ namespace docnote.Model
         [StringLength(50)]
         public string JobPlace { get; set; }
 
+        [StringLength(20)]
+        public string PhoneNumber { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patients { get; set; }
     }

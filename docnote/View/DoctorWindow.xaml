@@ -51,6 +51,7 @@
         <Label VerticalContentAlignment="Center" Margin="5" Content="Телефон" Grid.Row="5" />
         <TextBox Text="{Binding Doctor.Rank}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Посада" Grid.Column="1" Grid.Row="3"  />
         <TextBox Text="{Binding Doctor.JobPlace}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Місце роботи" Grid.Column="1" Grid.Row="4" />
+        <TextBox Text="{Binding Doctor.PhoneNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="5" />
         <Button Command="{Binding Path=DoctorSaveClickCommand}" x:Name="button" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
         <!--<TextBox Text="{Binding Doctor.MobileNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="5" />-->
     </Grid>
