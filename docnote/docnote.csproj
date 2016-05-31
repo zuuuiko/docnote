@@ -101,7 +101,9 @@
     <Compile Include="Model\ModelInitializer.cs" />
     <Compile Include="Model\Patient.cs" />
     <Compile Include="Resources\EnumBooleanConverter.cs" />
+    <Compile Include="Resources\LengthConverter.cs" />
     <Compile Include="Resources\PeriodsRadioButtons.cs" />
+    <Compile Include="Resources\SelectAllTextBoxBehavior.cs" />
     <Compile Include="Resources\SexConverter.cs" />
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
     <Compile Include="ViewModel\DoctorWindowVM.cs" />

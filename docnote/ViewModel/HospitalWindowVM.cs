@@ -6,11 +6,13 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Collections;
 
 namespace docnote.ViewModel
 {
@@ -19,6 +21,7 @@ namespace docnote.ViewModel
         private readonly IDataService _dataService;
 
         private Hospital _hospital;
+
         public Hospital Hospital
         {
             get
@@ -28,6 +31,7 @@ namespace docnote.ViewModel
             set
             {
                 Set(ref _hospital, value);
+                //ValidateUsername(_username);
             }
         }
         public ICommand HospitalSaveClickCommand { get; private set; }

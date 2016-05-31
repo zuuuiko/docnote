@@ -5,12 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:docnote.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:resources="clr-namespace:docnote.Resources"
         mc:Ignorable="d"
         Title="Лікарня" 
         SaveWindowPosition="True"
         GlowBrush="{DynamicResource AccentColorBrush}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <!--<Style x:Key="Validate" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self},
+                                            Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
         <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
             <Style.Resources>
                 <Style TargetType="{x:Type Label}">
@@ -42,16 +54,58 @@
         <Label VerticalAlignment="Center" Margin="5,10,5,5">Назва</Label>
         <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Країна / Country</Label>
         <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >Область / Region</Label>
-        <TextBox Text="{Binding Hospital.Name}" VerticalContentAlignment="Center" Margin="0,10,5,5" Controls:TextBoxHelper.Watermark="Повна назва лікарні" Grid.Column="1" />
-        <TextBox Text="{Binding Hospital.Country}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва країни" Grid.Column="1" Grid.Row="1" />
-        <TextBox Text="{Binding Hospital.Region}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Region" Grid.Column="1" Grid.Row="2" />
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Name'}"
+                 Text="{Binding Path=Hospital.Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,10,5,5" Grid.Column="1">
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Country'}"
+                 Text="{Binding Path=Hospital.Country, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="1" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Region'}"
+                 Text="{Binding Path=Hospital.Region, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="2" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
 
         <Label VerticalContentAlignment="Center" Margin="5" Content="Населений пункт" Grid.Row="3"/>
         <Label VerticalContentAlignment="Center" Margin="5" Content="Вулиця / Street" Grid.Row="4" />
         <Label VerticalContentAlignment="Center" Margin="5" Content="Будинок" Grid.Row="5" />
-        <TextBox Text="{Binding Hospital.CityVillage}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва населеного пункту" Grid.Column="1" Grid.Row="3"  />
-        <TextBox Text="{Binding Hospital.Street}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Назва вулиці" Grid.Column="1" Grid.Row="4" />
-        <TextBox Text="{Binding Hospital.Building}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер будинку" Grid.Column="1" Grid.Row="5" />
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.CityVillage'}"
+                 Text="{Binding Path=Hospital.CityVillage, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="3"  >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Street'}"
+                 Text="{Binding Path=Hospital.Street, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="4" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Building'}"
+                 Text="{Binding Path=Hospital.Building, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="5" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Button Command="{Binding Path=HospitalSaveClickCommand}" x:Name="button1" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
     </Grid>
 </Controls:MetroWindow>

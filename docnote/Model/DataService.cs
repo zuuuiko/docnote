@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace docnote.Model
 {
@@ -53,7 +55,6 @@ namespace docnote.Model
         {
             using (var db = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 callback(await db.Hospitals.FirstOrDefaultAsync(), null);
             };
         }
@@ -152,5 +153,6 @@ namespace docnote.Model
             }
         }
         #endregion
+
     }
 }
