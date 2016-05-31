@@ -81,7 +81,7 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate, StringFormat=d}" />
+        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate}"  SelectedDateFormat="Long"/>
         <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" 
                  Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.PhoneNumber'}"
@@ -189,22 +189,9 @@
                         <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
                     </i:Interaction.Behaviors>
                 </TextBox>
-                <TextBox Grid.Row="5" Grid.Column="1" 
-                         Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.RegistrationDate'}"
-                         Text="{Binding Path=Patient.RegistrationDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Row="5" Grid.Column="3" 
-                         Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.UnregistrationDate'}"
-                         Text="{Binding Path=Patient.UnregistrationDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
+                <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long"/>
+                <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long"/>
+
                 <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.UnregistrationReason'}"
@@ -237,7 +224,7 @@
 
         <DataGrid  x:Name="CardEntriesGrid" Grid.Row="9" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата створення" Binding="{Binding CreationDate, StringFormat={}{0:dd MMMM yyyy}}"/>
+                <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy hh:mm}}"/>
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"

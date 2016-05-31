@@ -77,7 +77,7 @@
                 <DataGridTextColumn Binding="{Binding LastName}"
                                 Header="Прізвище">
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding BirthDate, StringFormat=d}"
+                <DataGridTextColumn Binding="{Binding Path=BirthDate, StringFormat={}{0:dd/MM/yyyy}}"
                                 Header="Дата Народження">
                 </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding PhoneNumber}"

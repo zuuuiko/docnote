@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Дата запису" />
-        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding CardEntry.CreationDate, StringFormat={}{0:dd MMMM yyyy / hh:mm}}"/>
+        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding CardEntry.CreationDate}" ContentStringFormat="dd/MM/yyyy hh:mm"/>
         <TextBox Grid.Row="1" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" 
                  VerticalScrollBarVisibility="Auto"
