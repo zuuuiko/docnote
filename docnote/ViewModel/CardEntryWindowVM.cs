@@ -42,14 +42,13 @@ namespace docnote.ViewModel
 
         private void SaveCardEntryWindow()
         {
-            _dataService.SaveUpdateCardEntryAsync(
+            _dataService.AddUpdateCardEntry(
                 async (isSaved, error) =>
                 {
                     var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
                     if (window != null)
                         await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
                 }, CardEntry);
-
         }
     }
 }

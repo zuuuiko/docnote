@@ -98,7 +98,18 @@ namespace docnote.ViewModel
         public ICommand ShowCardEntriesCommand { get; private set; }
         public ICommand CardEntryDoubleClickCommand { get; private set; }
         public ICommand AddCardEntryClickCommand { get; private set; }
-        public ICommand AddUpdatePatientClickCommand { get; private set; }
+        public ICommand SavePatientClickCommand { get; private set; }
+
+        [PreferredConstructor]
+        public PatientWindowVM(IDataService dataService)
+        {
+            _dataService = dataService;
+            Init();
+            Address = new Address();
+            CardEntries = new ObservableCollection<CardEntry>();
+            Card = new Card { CardEntries = this.CardEntries};
+            Patient = new Patient { Addresses = new ObservableCollection<Address> { Address }, Cards = new ObservableCollection<Card> { Card } };
+        }
 
         public PatientWindowVM(Patient p, IDataService dataService)
         {
@@ -107,16 +118,21 @@ namespace docnote.ViewModel
             LoadAddress();
             LoadCard();
             LoadCardEntries();
+            Init();  
+        }
+
+        private void Init()
+        {
             PeriodsRadioButtons = PeriodsRadioButtons.All;
             ShowCardEntriesCommand = new RelayCommand<PeriodsRadioButtons>(ShowCardEntries);
             CardEntryDoubleClickCommand = new RelayCommand<CardEntry>(OpenCardEntryWindow);
             AddCardEntryClickCommand = new RelayCommand(OpenCardEntryWindow);
-            AddUpdatePatientClickCommand = new RelayCommand(AddUpdatePatient);
+            SavePatientClickCommand = new RelayCommand(SavePatient);
         }
 
-        private void AddUpdatePatient()
+        private void SavePatient()
         {
-            //_dataService.AddUpdatePatientAsync(
+            //_dataService.AddUpdatePatient(
             //    async (isSaved, error) =>
             //    {
             //        var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
@@ -134,9 +150,9 @@ namespace docnote.ViewModel
         private void OpenCardEntryWindow()
         {
             CardEntry ce = new CardEntry { CardId = Card.Id, CreationDate = DateTime.Now };
-            CardEntryWindow pw = new CardEntryWindow();
-            pw.DataContext = new CardEntryWindowVM(ce, _dataService);
-            pw.ShowDialog();
+            CardEntryWindow cew = new CardEntryWindow();
+            cew.DataContext = new CardEntryWindowVM(ce, _dataService);
+            cew.ShowDialog();
         }
 
         private void ShowCardEntries(PeriodsRadioButtons period)

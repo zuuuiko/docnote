@@ -10,31 +10,33 @@ namespace docnote.Model
     public class DataService : IDataService
     {
         #region Patient
-        public async void AddPatientAsync(Action<Patient, Exception> callback, Patient p)
+        public void AddUpdatePatient(Action<Patient, Exception> callback, Patient p)
         {
-            using (var context = new DocnoteContext())
-            {
-                context.Patients.Add(p);
-                if (await context.SaveChangesAsync() > 0)
-                    callback(p, null);
-            }
+            //using (var context = new DocnoteContext())
+            //{
+            //    if (p.Id != 0) // Update
+            //    {
+            //        context.Entry<Patient>(p).State = EntityState.Modified;
+            //    }
+            //    else // Save
+            //    {
+            //        context.Patients.Add(p);
+            //    }
+
+            //    if(context.SaveChanges() > 0)
+            //        callback(p, null);
+            //}
         }
-        public async void DeletePatientAsync(Action<bool, Exception> callback, Patient p)
+        public void DeletePatient(Action<bool, Exception> callback, Patient p)
         {
             using (var context = new DocnoteContext())
             {
+                context.Patients.Attach(p);
                 context.Patients.Remove(p);
-                callback(await context.SaveChangesAsync() > 0, null);
+                callback(context.SaveChanges() > 0, null);
             }
         }
-        public void GetPatient(Action<Patient, Exception> callback, Patient p)
-        {
-            throw new NotImplementedException();
-        }
-        public void GetPatientById(Action<Patient, Exception> callback, int id)
-        {
-            throw new NotImplementedException();
-        }
+
         public async void GetPatientsAsync(Action<ObservableCollection<Patient>, Exception> callback)
         {
             using (var context = new DocnoteContext())
@@ -43,10 +45,6 @@ namespace docnote.Model
                 await context.Patients.LoadAsync();
                 callback(context.Patients.Local, null);
             };
-        }
-        public void UpdatePatient(Action<Patient, Exception> callback, Patient p)
-        {
-            throw new NotImplementedException();
         }
         #endregion
 
@@ -136,7 +134,7 @@ namespace docnote.Model
             };
         }
 
-        public async void SaveUpdateCardEntryAsync(Action<bool, Exception> callback, CardEntry ce)
+        public void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce)
         {
             using (var context = new DocnoteContext())
             {
@@ -149,7 +147,7 @@ namespace docnote.Model
                     context.CardEntries.Add(ce);
                 }
 
-                callback(await context.SaveChangesAsync() > 0, null);
+                callback(context.SaveChanges() > 0, null);
             }
         }
         #endregion

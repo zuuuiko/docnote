@@ -43,6 +43,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -220,7 +221,8 @@
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.Last3Month}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Last3Month}">За останні 3 місяці</RadioButton>
         </StackPanel>
         <Button Grid.Row="8" Grid.Column="2" Content="Додати запис" Command="{Binding AddCardEntryClickCommand}"></Button>
-        <Button Grid.Row="8" Grid.Column="3" Content="Зберегти пацієнта" Command="{Binding AddUpdatePatientClickCommand}"></Button>
+        <Button Grid.Row="10" Grid.Column="2" Content="Зберегти і закрити" Command="{Binding SavePatientClickCommand}" IsEnabled="False"></Button>
+        <Button Grid.Row="10" Grid.Column="3" Content="Закрити" Command="{Binding CloseClickCommand}" IsEnabled="False"></Button>
 
         <DataGrid  x:Name="CardEntriesGrid" Grid.Row="9" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>

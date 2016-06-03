@@ -23,18 +23,18 @@ namespace docnote.ViewModel
     {
         private readonly IDataService _dataService;
 
-        private DataGridRowDetailsVisibilityMode _rowDetailsVisible;
-        public DataGridRowDetailsVisibilityMode RowDetailsVisible
-        {
-            get
-            {
-                return _rowDetailsVisible;
-            }
-            set
-            {
-                Set(ref _rowDetailsVisible, value);
-            }
-        }       
+        //private DataGridRowDetailsVisibilityMode _rowDetailsVisible;
+        //public DataGridRowDetailsVisibilityMode RowDetailsVisible
+        //{
+        //    get
+        //    {
+        //        return _rowDetailsVisible;
+        //    }
+        //    set
+        //    {
+        //        Set(ref _rowDetailsVisible, value);
+        //    }
+        //}       
 
         #region Patients
         private ObservableCollection<Patient> _patients;
@@ -61,7 +61,7 @@ namespace docnote.ViewModel
                 Set(ref _selectedPatient, value);
             }
         }
-        public ICommand PatientClickCommand { get; private set; }
+        //public ICommand PatientClickCommand { get; private set; }
         public ICommand PatientDoubleClickCommand { get; private set; }
         public ICommand DeletePatientClickCommand { get; private set; }
         public ICommand AddPatientClickCommand { get; private set; }
@@ -76,18 +76,18 @@ namespace docnote.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            _rowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-            PatientClickCommand = new RelayCommand(() =>
-            {
-                if (RowDetailsVisible == DataGridRowDetailsVisibilityMode.Collapsed)
-                {
-                    RowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-                }
-                else
-                {
-                    RowDetailsVisible = DataGridRowDetailsVisibilityMode.Collapsed;
-                }
-            });
+            //_rowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            //PatientClickCommand = new RelayCommand(() =>
+            //{
+            //    if (RowDetailsVisible == DataGridRowDetailsVisibilityMode.Collapsed)
+            //    {
+            //        RowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            //    }
+            //    else
+            //    {
+            //        RowDetailsVisible = DataGridRowDetailsVisibilityMode.Collapsed;
+            //    }
+            //});
 
             PatientDoubleClickCommand = new RelayCommand<Patient>(OpenPatientWindow);
             AddPatientClickCommand = new RelayCommand(OpenPatientWindow);
@@ -105,17 +105,18 @@ namespace docnote.ViewModel
             var window = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             if (window != null)
             {
-                 var result = await window.ShowMessageAsync("Видалити", $"{p.FirstName} {p.LastName}", 
+                 var result = await window.ShowMessageAsync("Видалити?", $"{p.FirstName} {p.LastName}", 
                                                                             MessageDialogStyle.AffirmativeAndNegative);
                 if (result == MessageDialogResult.Negative) return;
             }
            
-            _dataService.DeletePatientAsync(
+            _dataService.DeletePatient(
                 async (isDeleted, error) =>
                 {
                     if (window != null)
                         await window.ShowMessageAsync(null, $"{p.FirstName} {p.LastName} видалений");
                 }, p);
+            LoadPatients();
         }
 
         private void OpenHospitalWindow()
@@ -144,9 +145,8 @@ namespace docnote.ViewModel
 
         private void OpenPatientWindow()
         {
-            Patient p = new Patient();
             PatientWindow pw = new PatientWindow();
-            pw.DataContext = new PatientWindowVM(p, _dataService);
+            pw.DataContext = new PatientWindowVM(_dataService);
             //pw.Owner = this;
             pw.ShowDialog();
         }

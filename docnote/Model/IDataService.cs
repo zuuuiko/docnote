@@ -9,11 +9,8 @@ namespace docnote.Model
     public interface IDataService
     {
         void GetPatientsAsync(Action<ObservableCollection<Patient>, Exception> callback);
-        void GetPatient(Action<Patient, Exception> callback, Patient p);
-        void GetPatientById(Action<Patient, Exception> callback, int id);
-        void AddPatientAsync(Action<Patient, Exception> callback, Patient p);
-        void UpdatePatient(Action<Patient, Exception> callback, Patient p);
-        void DeletePatientAsync(Action<bool, Exception> callback, Patient p);
+        void AddUpdatePatient(Action<Patient, Exception> callback, Patient p);
+        void DeletePatient(Action<bool, Exception> callback, Patient p);
         
         #region Hospital
         void GetHospitalAsync(Action<Hospital, Exception> callback);
@@ -35,7 +32,7 @@ namespace docnote.Model
 
         void GetCardEntriesByPeriodAsync(Action<ObservableCollection<CardEntry>, Exception> callback, Card c, DateTime earliestDate, DateTime latestDate);
 
-        void SaveUpdateCardEntryAsync(Action<bool, Exception> callback, CardEntry ce);
+        void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce);
 
     }
 }

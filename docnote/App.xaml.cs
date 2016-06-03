@@ -1,5 +1,8 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
+using System.Windows.Markup;
+using System.Globalization;
+using System.Threading;
 
 namespace docnote
 {
@@ -11,6 +14,17 @@ namespace docnote
         static App()
         {
             DispatcherHelper.Initialize();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("uk-UA");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("uk-UA");
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+    new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }
