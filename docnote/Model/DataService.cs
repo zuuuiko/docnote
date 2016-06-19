@@ -44,6 +44,15 @@ namespace docnote.Model
                 callback(context.Patients.Local, null);
             };
         }
+
+        public async void GetPatientsByLNameAsync(Action<ObservableCollection<Patient>, Exception> callback, string lName)
+        {
+            using (var context = new DocnoteContext())
+            {
+                await context.Patients.Where(p => p.LastName.StartsWith(lName)).LoadAsync();
+                callback(context.Patients.Local, null);
+            };
+        }
         #endregion
 
         #region Hospital

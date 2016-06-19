@@ -18,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -45,7 +46,16 @@
             </Button>
             <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Л" Command="{Binding OpenHospitalCommand}"></Button>
         </StackPanel>
-        <DataGrid Grid.Row="1" Grid.ColumnSpan="4" x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
+        <Label Grid.Row="1" Content="Пошук за прізвищем"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="SearchByLNameBox">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding SearchPatientsByLNameCommand}"
+                                           CommandParameter="{Binding ElementName=SearchByLNameBox, Path=Text}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
 
             <DataGrid.Resources>
                 <!--<resources:SexConverter x:Key="sexConverter"/>-->
@@ -60,7 +70,7 @@
                     </Style.Resources>
                 </Style>
             </DataGrid.Resources>
-
+                       
             <!--<i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                 <i:InvokeCommandAction Command="{Binding PatientLBMouseUpCommand}"/>

@@ -56,6 +56,7 @@ namespace docnote.ViewModel
 
         public ICommand OpenDoctorCommand { get; private set; }
         public ICommand OpenHospitalCommand { get; private set; }
+        public ICommand SearchPatientsByLNameCommand { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -69,8 +70,23 @@ namespace docnote.ViewModel
             DeletePatientClickCommand = new RelayCommand<Patient>(DeletePatient);
             OpenDoctorCommand = new RelayCommand(OpenDoctorWindow);
             OpenHospitalCommand = new RelayCommand(OpenHospitalWindow);
+            SearchPatientsByLNameCommand = new RelayCommand<string>(SearchPatientsByLName);
 
             LoadPatients();
+        }
+
+        private void SearchPatientsByLName(string lName)
+        {
+            _dataService.GetPatientsByLNameAsync(
+                (patients, error) =>
+                {
+                    if (error != null)
+                    {
+                        // Report error here
+                        return;
+                    }
+                    Patients = patients;
+                }, lName);
         }
 
         private async void DeletePatient(Patient p)
