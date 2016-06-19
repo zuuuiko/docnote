@@ -4,12 +4,14 @@ using docnote.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace docnote.ViewModel
@@ -30,6 +32,8 @@ namespace docnote.ViewModel
             }
         }
 
+        MainViewModel _mainVM;
+
         private Patient _patient;
         public Patient Patient
         {
@@ -40,33 +44,6 @@ namespace docnote.ViewModel
             set
             {
                 Set(ref _patient, value);
-            }
-        }
-
-        private Address _address;
-        public Address Address
-        {
-            get
-            {
-                return _address;
-            }
-            set
-            {
-                Set(ref _address, value);
-            }
-        }
-
-
-        private Card _card;
-        public Card Card
-        {
-            get
-            {
-                return _card;
-            }
-            set
-            {
-                Set(ref _card, value);
             }
         }
 
@@ -98,60 +75,111 @@ namespace docnote.ViewModel
         public ICommand ShowCardEntriesCommand { get; private set; }
         public ICommand CardEntryDoubleClickCommand { get; private set; }
         public ICommand AddCardEntryClickCommand { get; private set; }
-        public ICommand SavePatientClickCommand { get; private set; }
+        public ICommand DeleteCardEntryClickCommand { get; private set; }
+        public ICommand SaveAndClosePatientClickCommand { get; private set; }
+        public ICommand ClosePatientClickCommand { get; private set; }
 
         [PreferredConstructor]
-        public PatientWindowVM(IDataService dataService)
+        public PatientWindowVM(MainViewModel mainVM, IDataService dataService)
         {
             _dataService = dataService;
-            Init();
-            Address = new Address();
-            CardEntries = new ObservableCollection<CardEntry>();
-            Card = new Card { CardEntries = this.CardEntries};
-            Patient = new Patient { Addresses = new ObservableCollection<Address> { Address }, Cards = new ObservableCollection<Card> { Card } };
+            Init(mainVM);
+            Patient = new Patient { Address = new Address(), Card = new Card() };
         }
 
-        public PatientWindowVM(Patient p, IDataService dataService)
+        public PatientWindowVM(MainViewModel mainVM, Patient p, IDataService dataService)
         {
             _dataService = dataService;
             Patient = p;
             LoadAddress();
             LoadCard();
             LoadCardEntries();
-            Init();  
+            Init(mainVM);  
         }
 
-        private void Init()
+        private void Init(MainViewModel mainVM)
         {
+            _mainVM = mainVM;
             PeriodsRadioButtons = PeriodsRadioButtons.All;
             ShowCardEntriesCommand = new RelayCommand<PeriodsRadioButtons>(ShowCardEntries);
             CardEntryDoubleClickCommand = new RelayCommand<CardEntry>(OpenCardEntryWindow);
             AddCardEntryClickCommand = new RelayCommand(OpenCardEntryWindow);
-            SavePatientClickCommand = new RelayCommand(SavePatient);
+            DeleteCardEntryClickCommand = new RelayCommand<CardEntry>(DeleteCardEntry);
+            SaveAndClosePatientClickCommand = new RelayCommand(SaveAndClosePatient);
+            ClosePatientClickCommand = new RelayCommand(ClosePatientWindow);
+        }
+
+        private async void DeleteCardEntry(CardEntry ce)
+        {
+            if (ce == null) return;
+
+            var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
+            if (window != null)
+            {
+                var result = await window.ShowMessageAsync("Видалити?", $"{ce.CreationDate}",
+                                                                           MessageDialogStyle.AffirmativeAndNegative);
+                if (result == MessageDialogResult.Negative) return;
+            }
+
+            _dataService.DeleteCardEntry(
+                async (isDeleted, error) =>
+                {
+                    if (window != null && isDeleted)
+                        await window.ShowMessageAsync(null, $"{ce.CreationDate} видалений");
+                }, ce);
+            LoadCardEntries();
+        }
+
+        private void ClosePatientWindow()
+        {
+            Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault().Close();
+        }
+
+        private void SaveAndClosePatient()
+        {
+            _dataService.AddUpdatePatient(
+                async (isSaved, error) =>
+                {
+                    var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
+                    if (window != null)
+                    {
+                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
+                        if (result == MessageDialogResult.Affirmative)
+                        {
+                            _mainVM.LoadPatients();
+                            ClosePatientWindow();
+                        }
+                    }
+                }, Patient);
         }
 
         private void SavePatient()
         {
-            //_dataService.AddUpdatePatient(
-            //    async (isSaved, error) =>
-            //    {
-            //        var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
-            //        if (window != null)
-            //            await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
-            //    }, Patient);
+            _dataService.AddUpdatePatient(
+               (isSaved, error) =>
+                {
+                    
+                }, Patient);
         }
 
         private void OpenCardEntryWindow(CardEntry ce)
         {
             CardEntryWindow pw = new CardEntryWindow();
-            pw.DataContext = new CardEntryWindowVM(ce, _dataService);
+            pw.DataContext = new CardEntryWindowVM(this, ce, _dataService);
             pw.ShowDialog();
         }
+
+        //New CardEntry
         private void OpenCardEntryWindow()
         {
-            CardEntry ce = new CardEntry { CardId = Card.Id, CreationDate = DateTime.Now };
+            if (Patient.Id == 0)
+            {
+                SavePatient();
+                _mainVM.LoadPatients();
+            }
+
             CardEntryWindow cew = new CardEntryWindow();
-            cew.DataContext = new CardEntryWindowVM(ce, _dataService);
+            cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
             cew.ShowDialog();
         }
 
@@ -178,7 +206,7 @@ namespace docnote.ViewModel
 
         private void LoadAddress()
         {
-            _dataService.GetAddressAsync(
+            _dataService.GetAddress(
                 (address, error) =>
                 {
                     if (error != null)
@@ -186,7 +214,7 @@ namespace docnote.ViewModel
                         // Report error here
                         return;
                     }
-                    Address = address;
+                    Patient.Address = address;
                 }, Patient);
         }
 
@@ -200,11 +228,11 @@ namespace docnote.ViewModel
                         // Report error here
                         return;
                     }
-                    Card = card;
+                    Patient.Card = card;
                 }, Patient);
         }
 
-        private void LoadCardEntries()
+        public void LoadCardEntries()
         {
             _dataService.GetCardEntriesAsync(
                 (cardEntries, error) =>
@@ -215,7 +243,7 @@ namespace docnote.ViewModel
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Card);
+                }, Patient.Card);
         }
 
         private void LoadCardEntriesByPeriod(DateTime earliestDate, DateTime latestDate)
@@ -229,7 +257,7 @@ namespace docnote.ViewModel
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Card, earliestDate, latestDate);
+                }, Patient.Card, earliestDate, latestDate);
         }
 
         private void LoadCardEntriesByPeriod(DateTime earliestDate)
@@ -243,7 +271,7 @@ namespace docnote.ViewModel
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Card, earliestDate);
+                }, Patient.Card, earliestDate);
         }
     }
 }

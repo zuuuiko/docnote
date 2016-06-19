@@ -105,6 +105,7 @@
     <Compile Include="Resources\PeriodsRadioButtons.cs" />
     <Compile Include="Resources\SelectAllTextBoxBehavior.cs" />
     <Compile Include="Resources\SexConverter.cs" />
+    <Compile Include="Resources\BoolInverterConverter.cs" />
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
     <Compile Include="ViewModel\DoctorWindowVM.cs" />
     <Compile Include="ViewModel\HospitalWindowVM.cs" />

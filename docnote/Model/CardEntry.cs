@@ -10,10 +10,9 @@ namespace docnote.Model
     {
         public int Id { get; set; }
 
-        public int? CardId { get; set; }
+        public int CardId { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public string EntryText { get; set; }
 

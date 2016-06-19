@@ -9,6 +9,12 @@ namespace docnote.Model
 
     public partial class Hospital : IDataErrorInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Hospital()
+        {
+            Doctors = new HashSet<Doctor>();
+        }
+
         public int Id { get; set; }
 
         [StringLength(50)]
@@ -28,6 +34,9 @@ namespace docnote.Model
 
         [StringLength(10)]
         public string Building { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors { get; set; }
 
         public string Error
         {

@@ -12,7 +12,7 @@
         SaveWindowPosition="True"
         GlowBrush="{DynamicResource AccentColorBrush}"
         WindowStartupLocation="CenterScreen">
-        <!--DataContext="{Binding PatientVM, Source={StaticResource Locator}}"-->
+    <!--DataContext="{Binding PatientVM, Source={StaticResource Locator}}"-->
     <Window.Resources>
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}" 
                TargetType="RadioButton"/>
@@ -101,114 +101,185 @@
         </TextBox>
 
         <Expander Grid.Row="6" Grid.ColumnSpan="4">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160*"/>
-                    <ColumnDefinition Width="200*"/>
-                    <ColumnDefinition Width="160*"/>
-                    <ColumnDefinition Width="200*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label>Старе прізвище</Label>
-                <Label Grid.Row="1" >Ідентифікаійний код</Label>
-                <TextBox Grid.Column="1" 
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="160*"/>
+                        <ColumnDefinition Width="200*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label>Старе прізвище</Label>
+                    <Label Grid.Row="1" >Ідентифікаійний код</Label>
+                    <TextBox Grid.Column="1" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.ExLastName'}"
                          Text="{Binding Path=Patient.ExLastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Column="1" Grid.Row="1" 
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Column="1" Grid.Row="1" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.IdentificationCode'}"
                          Text="{Binding Path=Patient.IdentificationCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="2" >
+                    <StackPanel Orientation="Horizontal" Grid.Column="2" >
 
-                    <RadioButton x:Name="man" Content="чоловік" Margin="15,0,15,0"/>
-                    <RadioButton x:Name="woman" Content="жінка" Margin="0,0,10,0"/>
+                        <RadioButton GroupName="Sex" IsChecked="{Binding Path=Patient.Sex}" Content="чоловік" Margin="15,0,15,0"/>
+                        <RadioButton GroupName="Sex" IsChecked="{Binding Path=Patient.Sex, Converter={StaticResource BoolInverterConverter}}" Content="жінка" Margin="0,0,10,0"/>
 
-                </StackPanel>
-                <Label Content="Телефон батьків" Grid.Row="2" />
-                <Label Content="Місце навчання / роботи" Grid.Row="3" />
-                <Label Content="Телефон" Grid.Row="3" Grid.Column="2"/>
-                <Label Content="Професія" Grid.Row="4" />
-                <Label Content="Посада" Grid.Row="4" Grid.Column="2"/>
-                <Label Content="Дата реєстрації" Grid.Row="5" />
-                <Label Content="Дата зняття з реєстрації" Grid.Row="5" Grid.Column="2"/>
-                <Label Content="Причина зняття з реєстрації" Grid.Row="6" />
-                <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
+                    </StackPanel>
+                    <Label Content="Телефон батьків" Grid.Row="2" />
+                    <Label Content="Місце навчання / роботи" Grid.Row="3" />
+                    <Label Content="Телефон" Grid.Row="3" Grid.Column="2"/>
+                    <Label Content="Професія" Grid.Row="4" />
+                    <Label Content="Посада" Grid.Row="4" Grid.Column="2"/>
+                    <Label Content="Дата реєстрації" Grid.Row="5" />
+                    <Label Content="Дата зняття з реєстрації" Grid.Row="5" Grid.Column="2"/>
+                    <Label Content="Причина зняття з реєстрації" Grid.Row="6" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.ParentPhoneNumber'}"
                          Text="{Binding Path=Patient.ParentPhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Row="3" Grid.Column="1" 
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Row="3" Grid.Column="1" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.JobSchoolPlace'}"
                          Text="{Binding Path=Patient.JobSchoolPlace, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Row="3" Grid.Column="3" 
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Row="3" Grid.Column="3" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.JobSchoolPnoneNumber'}"
                          Text="{Binding Path=Patient.JobSchoolPnoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Row="4" Grid.Column="1" 
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="1" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Profession'}"
                          Text="{Binding Path=Patient.Profession, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <TextBox Grid.Row="4" Grid.Column="3" 
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Row="4" Grid.Column="3" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Position'}"
                          Text="{Binding Path=Patient.Position, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-                <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long"/>
-                <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long"/>
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long"/>
+                    <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long"/>
 
-                <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" 
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.UnregistrationReason'}"
                          Text="{Binding Path=Patient.UnregistrationReason, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Behaviors>
-                        <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
-                    </i:Interaction.Behaviors>
-                </TextBox>
-            </Grid>
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="220*"/>
+                        <ColumnDefinition Width="120*"/>
+                        <ColumnDefinition Width="220*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Країна" />
+                    <Label Content="Область" Grid.Column="2"/>
+                    <Label Content="Населений пункт" Grid.Row="1"/>
+                    <Label Content="Вулиця" Grid.Row="2"/>
+                    <TextBox Grid.Column="1" 
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Country'}"
+                         Text="{Binding Path=Patient.Address.Country, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Column="3" 
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Region'}"
+                         Text="{Binding Path=Patient.Address.Region, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Column="1" Grid.Row="1"
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.CityVillage'}"
+                         Text="{Binding Path=Patient.Address.CityVillage, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <TextBox Grid.Column="1" Grid.Row="2"
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Street'}"
+                         Text="{Binding Path=Patient.Address.Street, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Behaviors>
+                            <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBox>
+                    <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <Label Content="Будинок" />
+                        <TextBox MinWidth="30"
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Building'}"
+                         Text="{Binding Path=Patient.Address.Building, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Behaviors>
+                                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                            </i:Interaction.Behaviors>
+                        </TextBox>
+                        <Label Content="Квартира" />
+                        <TextBox MinWidth="30"
+                         Style="{StaticResource Validate}" 
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Apartment'}"
+                         Text="{Binding Path=Patient.Address.Apartment, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="26" VerticalAlignment="Top">
+                            <i:Interaction.Behaviors>
+                                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+                            </i:Interaction.Behaviors>
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
         </Expander>
         <Label Content="Назва / Код карти" Grid.Row="7"  />
         <!--<Label Content="Остання дата оновлення" Grid.Row="7" Grid.Column="2" />-->
         <TextBox Grid.Row="7" Grid.Column="1" 
                  Style="{StaticResource Validate}" 
-                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.CardNameCode'}"
-                 Text="{Binding Path=Patient.CardNameCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Card.CardNameCode'}"
+                 Text="{Binding Path=Patient.Card.CardNameCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
@@ -221,12 +292,15 @@
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.Last3Month}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Last3Month}">За останні 3 місяці</RadioButton>
         </StackPanel>
         <Button Grid.Row="8" Grid.Column="2" Content="Додати запис" Command="{Binding AddCardEntryClickCommand}"></Button>
-        <Button Grid.Row="10" Grid.Column="2" Content="Зберегти і закрити" Command="{Binding SavePatientClickCommand}" IsEnabled="False"></Button>
-        <Button Grid.Row="10" Grid.Column="3" Content="Закрити" Command="{Binding CloseClickCommand}" IsEnabled="False"></Button>
+        <Button Grid.Row="8" Grid.Column="3" Content="Видалити запис" 
+                Command="{Binding DeleteCardEntryClickCommand}"
+                CommandParameter="{Binding ElementName=CardEntriesGrid, Path=SelectedItem}"></Button>
+        <Button Grid.Row="10" Grid.Column="2" Content="Зберегти і закрити" Command="{Binding SaveAndClosePatientClickCommand}"></Button>
+        <Button Grid.Row="10" Grid.Column="3" Content="Закрити" Command="{Binding ClosePatientClickCommand}"></Button>
 
         <DataGrid  x:Name="CardEntriesGrid" Grid.Row="9" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy hh:mm}}"/>
+                <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"
@@ -239,5 +313,5 @@
         </ScrollViewer>
 
     </Grid>
-    
+
 </Controls:MetroWindow>

@@ -27,40 +27,41 @@ namespace docnote.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Address>()
-                .Property(e => e.Region)
+
+            modelBuilder.Entity<Doctor>()
+                .Property(e => e.PhoneNumber)
                 .IsFixedLength();
 
-            modelBuilder.Entity<Address>()
-                .Property(e => e.CityVillage)
+            modelBuilder.Entity<Patient>()
+                .Property(e => e.PhoneNumber)
                 .IsFixedLength();
 
-            modelBuilder.Entity<Address>()
-                .Property(e => e.Street)
-                .IsFixedLength();
+            modelBuilder.Entity<Hospital>()
+                .HasMany(e => e.Doctors)
+                .WithOptional(e => e.Hospital)
+                .HasForeignKey(e => e.HospitalId);
 
-            modelBuilder.Entity<Address>()
-                .Property(e => e.Building)
-                .IsFixedLength();
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.Patients)
+                .WithOptional(e => e.Doctor)
+                .HasForeignKey(e => e.DoctorId);
 
-            modelBuilder.Entity<Address>()
-                .Property(e => e.Apartment)
-                .IsFixedLength();
+            modelBuilder.Entity<Patient>()
+                .HasOptional(e => e.Address)
+                .WithRequired(e => e.Patient)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Patient>()
+                .HasOptional(e => e.Card)
+                .WithRequired(e => e.Patient)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Card>()
                 .HasMany(e => e.CardEntries)
-                .WithOptional(e => e.Card)
+                .WithRequired(e => e.Card)
+                .HasForeignKey(e => e.CardId)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<Patient>()
-                .HasMany(e => e.Addresses)
-                .WithOptional(e => e.Patient)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Patient>()
-                .HasMany(e => e.Cards)
-                .WithOptional(e => e.Patient)
-                .WillCascadeOnDelete();
         }
     }
 }

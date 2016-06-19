@@ -31,24 +31,34 @@ namespace docnote.ViewModel
                 Set(ref _doctor, value);
             }
         }
-        public ICommand DoctorSaveClickCommand { get; private set; }
+        public ICommand DoctorSaveAndCloseClickCommand { get; private set; }
+        public ICommand DoctorCloseClickCommand { get; private set; }
         #endregion
 
         public DoctorWindowVM(IDataService dataService)
         {
             _dataService = dataService;
-            DoctorSaveClickCommand = new RelayCommand(SaveDoctor);
+            DoctorSaveAndCloseClickCommand = new RelayCommand(SaveDoctor);
+            DoctorCloseClickCommand = new RelayCommand(CloseDoctor);
             LoadDoctor();
+        }
+
+        private void CloseDoctor()
+        {
+            Application.Current.Windows.OfType<DoctorWindow>().FirstOrDefault().Close();
         }
 
         private void SaveDoctor()
         {
-            _dataService.UpdateDoctorAsync(
+            _dataService.UpdateDoctor(
                 async (isUpdated, error) =>
                 {
                     var window = Application.Current.Windows.OfType<DoctorWindow>().FirstOrDefault();
                     if (window != null)
-                        await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                    {
+                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                        if(result == MessageDialogResult.Affirmative) window.Close();
+                    }
                 }, Doctor);
         }
 

@@ -8,12 +8,6 @@ namespace docnote.Model
 
     public partial class Patient
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Patient()
-        {
-            Addresses = new HashSet<Address>();
-            Cards = new HashSet<Card>();
-        }
 
         public int Id { get; set; }
 
@@ -31,14 +25,13 @@ namespace docnote.Model
         [StringLength(30)]
         public string ExLastName { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? BirthDate { get; set; }
 
         public bool? Sex { get; set; }
 
         public int? IdentificationCode { get; set; }
 
-        [StringLength(20)]
+        [StringLength(14)]
         public string PhoneNumber { get; set; }
 
         [StringLength(100)]
@@ -59,23 +52,18 @@ namespace docnote.Model
         [StringLength(20)]
         public string Position { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "date")]
         public DateTime? RegistrationDate { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? UnregistrationDate { get; set; }
 
         [StringLength(20)]
         public string UnregistrationReason { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual Address Address { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Card> Cards { get; set; }
+        public virtual Card Card { get; set; }
 
         public virtual Doctor Doctor { get; set; }
     }

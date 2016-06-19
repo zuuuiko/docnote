@@ -106,6 +106,8 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <Button Command="{Binding Path=HospitalSaveClickCommand}" x:Name="button1" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
+        <Button Command="{Binding Path=HospitalSaveAndCloseClickCommand}" Content="Зберегти і закрити" HorizontalAlignment="Center" 
+                Grid.Row="6" VerticalAlignment="Top" Margin="10,25,27,0"/>
+        <Button Command="{Binding Path=HospitalCloseClickCommand}"  Content="Закрити" HorizontalAlignment="Left" Margin="25,25,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
     </Grid>
 </Controls:MetroWindow>

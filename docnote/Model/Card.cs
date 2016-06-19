@@ -14,17 +14,16 @@ namespace docnote.Model
             CardEntries = new HashSet<CardEntry>();
         }
 
-        public int Id { get; set; }
-
-        public int? PatientId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CardPatientId { get; set; }
 
         [StringLength(20)]
         public string CardNameCode { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CardEntry> CardEntries { get; set; }

@@ -21,20 +21,7 @@ namespace docnote.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private readonly IDataService _dataService;
-
-        //private DataGridRowDetailsVisibilityMode _rowDetailsVisible;
-        //public DataGridRowDetailsVisibilityMode RowDetailsVisible
-        //{
-        //    get
-        //    {
-        //        return _rowDetailsVisible;
-        //    }
-        //    set
-        //    {
-        //        Set(ref _rowDetailsVisible, value);
-        //    }
-        //}       
+        private readonly IDataService _dataService;      
 
         #region Patients
         private ObservableCollection<Patient> _patients;
@@ -76,18 +63,6 @@ namespace docnote.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            //_rowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-            //PatientClickCommand = new RelayCommand(() =>
-            //{
-            //    if (RowDetailsVisible == DataGridRowDetailsVisibilityMode.Collapsed)
-            //    {
-            //        RowDetailsVisible = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-            //    }
-            //    else
-            //    {
-            //        RowDetailsVisible = DataGridRowDetailsVisibilityMode.Collapsed;
-            //    }
-            //});
 
             PatientDoubleClickCommand = new RelayCommand<Patient>(OpenPatientWindow);
             AddPatientClickCommand = new RelayCommand(OpenPatientWindow);
@@ -113,7 +88,7 @@ namespace docnote.ViewModel
             _dataService.DeletePatient(
                 async (isDeleted, error) =>
                 {
-                    if (window != null)
+                    if (window != null && isDeleted)
                         await window.ShowMessageAsync(null, $"{p.FirstName} {p.LastName} видалений");
                 }, p);
             LoadPatients();
@@ -123,7 +98,6 @@ namespace docnote.ViewModel
         {
             HospitalWindow dw = new HospitalWindow();
             dw.DataContext = new HospitalWindowVM(_dataService);
-            //pw.Owner = this;
             dw.ShowDialog();
         }
 
@@ -131,14 +105,13 @@ namespace docnote.ViewModel
         {
             DoctorWindow dw = new DoctorWindow();
             dw.DataContext = new DoctorWindowVM(_dataService);
-            //pw.Owner = this;
             dw.ShowDialog();
         }
 
         private void OpenPatientWindow(Patient p)
         {
             PatientWindow pw = new PatientWindow();
-            pw.DataContext = new PatientWindowVM(p, _dataService);
+            pw.DataContext = new PatientWindowVM(this, p, _dataService);
             //pw.Owner = this;
             pw.ShowDialog();
         }
@@ -146,12 +119,12 @@ namespace docnote.ViewModel
         private void OpenPatientWindow()
         {
             PatientWindow pw = new PatientWindow();
-            pw.DataContext = new PatientWindowVM(_dataService);
+            pw.DataContext = new PatientWindowVM(this, _dataService);
             //pw.Owner = this;
             pw.ShowDialog();
         }
 
-        private void LoadPatients()
+        public void LoadPatients()
         {
             _dataService.GetPatientsAsync(
                 (patients, error) =>

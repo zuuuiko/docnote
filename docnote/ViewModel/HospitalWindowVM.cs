@@ -34,23 +34,33 @@ namespace docnote.ViewModel
                 //ValidateUsername(_username);
             }
         }
-        public ICommand HospitalSaveClickCommand { get; private set; }
+        public ICommand HospitalSaveAndCloseClickCommand { get; private set; }
+        public ICommand HospitalCloseClickCommand { get; private set; }
 
         public HospitalWindowVM(IDataService dataService)
         {
             _dataService = dataService;
-            HospitalSaveClickCommand = new RelayCommand(SaveHospital);
+            HospitalSaveAndCloseClickCommand = new RelayCommand(SaveHospital);
+            HospitalCloseClickCommand = new RelayCommand(CloseHospital);
             LoadHospital();
+        }
+
+        private void CloseHospital()
+        {
+            Application.Current.Windows.OfType<HospitalWindow>().FirstOrDefault().Close();
         }
 
         private void SaveHospital()
         {
-            _dataService.UpdateHospitalAsync(
+            _dataService.UpdateHospital(
                 async (isUpdated, error) =>
                 {
                     var window = Application.Current.Windows.OfType<HospitalWindow>().FirstOrDefault();
                     if (window != null)
-                        await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                    {
+                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                        if (result == MessageDialogResult.Affirmative) window.Close();
+                    }
                 }, Hospital);
         }
 

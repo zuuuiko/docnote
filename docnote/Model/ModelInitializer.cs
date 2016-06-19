@@ -11,27 +11,121 @@ namespace docnote.Model
     {
         protected override void Seed(DocnoteContext context)
         {
-            #region Doctor
-            Doctor d = new Doctor
+            #region CardEntry
+            var ce1 = new CardEntry
             {
-                FirstName = "DoctorFName",
-                MiddleName = "DoctorMName",
-                LastName = "DoctorLName",
-                Rank = "DoctorRank",
-                JobPlace = "DoctorJobPlace",
-                PhoneNumber = "(000)000-00-00"
+                EntryText =
+                @"1. Ця Інструкція визначає порядок заповнення форми первинної облікової документації № 027/о “Виписка із медичної карти амбулаторного (стаціонарного) хворого” (далі - форма № 027/о).
+
+2. Форма № 027/о заповнюється лікарями  закладів охорони здоров’я, які надають амбулаторно-поліклінічну допомогу, при направленні хворого на консультацію в інші заклади охорони здоров’я, на стаціонарне лікування та лікарями стаціонарів при виписці або у випадку смерті хворого.
+
+3. У пунктах 1-3 вказуються прізвище, ім’я, по батькові хворого, дата народження, місце проживання згідно з паспортними даними.
+
+4. У пункті 4 зазначаються місце роботи та займана посада особи.",
+                CreationDate = new DateTime(2016, 4, 1)
+            };
+            var ce2 = new CardEntry
+            {
+                EntryText =
+                    @"5. У пункті 5 вказуються:
+
+в амбулаторно-поліклінічному закладі - дата (число, місяць, рік) початку захворювання та направлення у стаціонар (на консультацію);
+
+у стаціонарі - дата надходження та виписки (смерті) зі стаціонару.
+
+6. У пункті 6 вказуються повний клінічний діагноз основного захворювання, супутні захворювання та ускладнення, які виникли під час стаціонарного (амбулаторного) лікування.
+
+7. У пункті 7 вказуються короткий анамнез, стан при направленні, діагностичні дослідження, перебіг хвороби, проведене лікування.",
+                CreationDate = new DateTime(2016, 4, 17)
+            };
+            var ce3 = new CardEntry
+            {
+                EntryText =
+                    @"8. У пункті 8 вказуються необхідні лікувальні і трудові рекомендації. Для працюючих осіб необхідно вказати терміни тимчасової непрацездатності.
+
+9. У кінці форми проставляються дата заповнення та підпис лікаря, який заповнив виписку на хворого.",
+                CreationDate = new DateTime(2016, 5, 6)
+            };
+            var ce4 = new CardEntry
+            {
+                EntryText = null,
+                CreationDate = new DateTime(2016, 5, 6)
+            };
+            var ce5 = new CardEntry
+            {
+                EntryText = null,
+                CreationDate = new DateTime(2016, 5, 6)
+            };
+            #endregion
+
+            #region Cards
+
+            var c1 = new Card
+            {
+                CardNameCode = "КД-00234е34",
+                CreationDate = new DateTime(2016, 4, 1),
+                LastUpdateDate = new DateTime(2016, 4, 1)
+
+            };
+            var c2 = new Card
+            {
+                CardNameCode = "КД-00234е34",
+                CreationDate = new DateTime(2016, 4, 3),
+                LastUpdateDate = new DateTime(2016, 4, 3)
+            };
+            var c3 = new Card
+            {
+                CardNameCode = "КД-00234е34",
+                CreationDate = new DateTime(2016, 4, 3),
+                LastUpdateDate = new DateTime(2016, 4, 3)
             };
 
-            context.Doctors.Add(d);
-            context.SaveChanges();
+            c1.CardEntries.Add(ce1);
+            c1.CardEntries.Add(ce2);
+            c1.CardEntries.Add(ce3);
+            c2.CardEntries.Add(ce4);
+            c3.CardEntries.Add(ce5);
+
+            #endregion
+
+            #region Address
+            var a1 = new Address
+            {
+                Country = "Україна",
+                Region = "Івано-Франківська обл.",
+                CityVillage = "Яремче",
+                IsSity = true,
+                Street = "Славська",
+                Building = "87-Б",
+                Apartment = "22"
+            };
+
+            var a2 = new Address
+            {
+                Country = null,
+                Region = null,
+                CityVillage = null,
+                IsSity = null,
+                Street = null,
+                Building = null,
+                Apartment = null
+            };
+            var a3 = new Address
+            {
+                Country = null,
+                Region = null,
+                CityVillage = null,
+                IsSity = null,
+                Street = null,
+                Building = null,
+                Apartment = null
+            };
+
             #endregion
 
             #region Patient
-            d = context.Doctors.FirstOrDefault();
-
             Patient p1 = new Patient
             {
-                DoctorId = d.Id,
                 FirstName = "P1FName",
                 MiddleName = "P1MName",
                 LastName = "P1LName",
@@ -46,18 +140,19 @@ namespace docnote.Model
                 JobSchoolPnoneNumber = "(111)111-11-33",
                 Profession = "P1Profession",
                 Position = "P1Position",
-                RegistrationDate = new DateTime(2016, 4, 1)
+                RegistrationDate = new DateTime(2016, 4, 1),
+                Card = c1,
+                Address = a1
             };
 
             Patient p2 = new Patient
             {
-                DoctorId = d.Id,
                 FirstName = "P2FName",
                 MiddleName = "P2MName",
                 LastName = "P2LName",
                 ExLastName = "P2ExLName",
                 BirthDate = new DateTime(2010, 9, 23),
-                Sex = true,
+                Sex = null,
                 IdentificationCode = 222123,
                 PhoneNumber = "(222)111-11-11",
                 ParentName = "P2 Parent Name",
@@ -66,12 +161,13 @@ namespace docnote.Model
                 JobSchoolPnoneNumber = "(222)111-11-33",
                 Profession = "P2Profession",
                 Position = "P2Position",
-                RegistrationDate = new DateTime(2016, 4, 3)
+                RegistrationDate = new DateTime(2016, 4, 3),
+                Card = c2,
+                Address = a2
             };
 
             Patient p3 = new Patient
             {
-                DoctorId = d.Id,
                 FirstName = "P3FName",
                 MiddleName = "P3MName",
                 LastName = "P3LName",
@@ -86,115 +182,43 @@ namespace docnote.Model
                 JobSchoolPnoneNumber = "(333)111-11-33",
                 Profession = "P3Profession",
                 Position = "P3Position",
-                RegistrationDate = new DateTime(2016, 5, 6)
+                RegistrationDate = new DateTime(2016, 5, 6),
+                Card = c3,
+                Address = a3
             };
 
-            context.Patients.AddRange(new Patient[] { p1, p2, p3 });
-            context.SaveChanges();
             #endregion
 
-            #region Address
-            p1 = context.Patients.Find(1);
-            p2 = context.Patients.Find(2);
-
-            context.Addresses.AddRange(new Address[]
+            #region Doctor
+            Doctor d = new Doctor
             {
-                new Address
-                {
-                    PatientId = p1.Id,
-                    Country = "Україна",
-                    Region = "Івано-Франківська обл.",
-                    CityVillage = "Яремче",
-                    IsSity = true,
-                    Street = "Славська",
-                    Building = "87-Б",
-                    Apartment = "22"
-                }
-            });
-            #endregion
+                FirstName = "DoctorFName",
+                MiddleName = "DoctorMName",
+                LastName = "DoctorLName",
+                Rank = "DoctorRank",
+                JobPlace = "DoctorJobPlace",
+                PhoneNumber = "(000)000-00-00"
+            };
 
-            #region Cards
-            context.Cards.AddRange(new Card[]
-            {
-                new Card
-                {
-                    PatientId = p1.Id,
-                    CardNameCode = "КД-00234е34",
-                    CreationDate = new DateTime(2016, 4, 1),
-                    LastUpdateDate = new DateTime(2016, 4, 1)
+            d.Patients.Add(p1);
+            d.Patients.Add(p2);
+            d.Patients.Add(p3);
 
-                },
-                new Card
-                {
-                    PatientId = p2.Id,
-                    CardNameCode = "КД-00234е34",
-                    CreationDate = new DateTime(2016, 4, 3),
-                    LastUpdateDate = new DateTime(2016, 4, 3)
-                }
-            });
-            context.SaveChanges();
-            #endregion
-
-            #region CardEntry
-            var c1 = context.Cards.Find(1);
-
-            context.CardEntries.AddRange(new CardEntry[]
-            {
-                new CardEntry
-                {
-                    CardId = c1.Id,
-                    EntryText =
-                    @"1. Ця Інструкція визначає порядок заповнення форми первинної облікової документації № 027/о “Виписка із медичної карти амбулаторного (стаціонарного) хворого” (далі - форма № 027/о).
-
-2. Форма № 027/о заповнюється лікарями  закладів охорони здоров’я, які надають амбулаторно-поліклінічну допомогу, при направленні хворого на консультацію в інші заклади охорони здоров’я, на стаціонарне лікування та лікарями стаціонарів при виписці або у випадку смерті хворого.
-
-3. У пунктах 1-3 вказуються прізвище, ім’я, по батькові хворого, дата народження, місце проживання згідно з паспортними даними.
-
-4. У пункті 4 зазначаються місце роботи та займана посада особи.",
-                    CreationDate = new DateTime(2016, 4, 1)
-                },
-                new CardEntry
-                {
-                    CardId = c1.Id,
-                    EntryText =
-                    @"5. У пункті 5 вказуються:
-
-в амбулаторно-поліклінічному закладі - дата (число, місяць, рік) початку захворювання та направлення у стаціонар (на консультацію);
-
-у стаціонарі - дата надходження та виписки (смерті) зі стаціонару.
-
-6. У пункті 6 вказуються повний клінічний діагноз основного захворювання, супутні захворювання та ускладнення, які виникли під час стаціонарного (амбулаторного) лікування.
-
-7. У пункті 7 вказуються короткий анамнез, стан при направленні, діагностичні дослідження, перебіг хвороби, проведене лікування.",
-                    CreationDate = new DateTime(2016, 4, 17)
-                },
-                new CardEntry
-                {
-                    CardId = c1.Id,
-                    EntryText =
-                    @"8. У пункті 8 вказуються необхідні лікувальні і трудові рекомендації. Для працюючих осіб необхідно вказати терміни тимчасової непрацездатності.
-
-9. У кінці форми проставляються дата заповнення та підпис лікаря, який заповнив виписку на хворого.",
-                    CreationDate = new DateTime(2016, 5, 6)
-                }
-            });
             #endregion
 
             #region Hospital
-            context.Hospitals.AddRange(new Hospital[]
+            var h = new Hospital
             {
-                new Hospital
-                {
-                    Name = "Національний військово-медичний клінічний центр",
-                    Country = "Україна",
-                    CityVillage = "Київ",
-                    Street = "вулиця Госпітальна",
-                    Building = "16"
-                }
-            });
+                Name = "Національний військово-медичний клінічний центр",
+                Country = "Україна",
+                CityVillage = "Київ",
+                Street = "вулиця Госпітальна",
+                Building = "16"
+            };
+            h.Doctors.Add(d);
+            context.Hospitals.Add(h);
             context.SaveChanges();
             #endregion
-           
         }
     }
 }

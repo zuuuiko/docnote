@@ -10,22 +10,21 @@ namespace docnote.Model
     public class DataService : IDataService
     {
         #region Patient
-        public void AddUpdatePatient(Action<Patient, Exception> callback, Patient p)
+        public void AddUpdatePatient(Action<bool, Exception> callback, Patient p)
         {
-            //using (var context = new DocnoteContext())
-            //{
-            //    if (p.Id != 0) // Update
-            //    {
-            //        context.Entry<Patient>(p).State = EntityState.Modified;
-            //    }
-            //    else // Save
-            //    {
-            //        context.Patients.Add(p);
-            //    }
+            using (var context = new DocnoteContext())
+            {
+                if (p.Id != 0) // Update
+                {
+                    context.Entry<Patient>(p).State = EntityState.Modified;
+                }
+                else // Save
+                {
+                    context.Patients.Add(p);
+                }
 
-            //    if(context.SaveChanges() > 0)
-            //        callback(p, null);
-            //}
+                callback(context.SaveChanges() > 0, null);
+            }
         }
         public void DeletePatient(Action<bool, Exception> callback, Patient p)
         {
@@ -41,7 +40,6 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 await context.Patients.LoadAsync();
                 callback(context.Patients.Local, null);
             };
@@ -57,14 +55,12 @@ namespace docnote.Model
             };
         }
 
-        public async void UpdateHospitalAsync(Action<bool, Exception> callback, Hospital hospital)
+        public void UpdateHospital(Action<bool, Exception> callback, Hospital hospital)
         {
             using (var context = new DocnoteContext())
             {
-                //Doctor doctorToUpdate = context.Doctors.Where(d => d.Id == doc.Id).FirstOrDefault<Doctor>();
-                //doctorToUpdate.LastName = doc.LastName;
                 context.Entry<Hospital>(hospital).State = EntityState.Modified;
-                callback(await context.SaveChangesAsync() > 0, null);
+                callback(context.SaveChanges() > 0, null);
             }
         }
         #endregion
@@ -74,44 +70,46 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                //db.Doctors.Load();
                 callback(await context.Doctors.FirstOrDefaultAsync(), null);
             };
         }
-        public async void UpdateDoctorAsync(Action<bool, Exception> callback, Doctor doc)
+        public void UpdateDoctor(Action<bool, Exception> callback, Doctor doc)
         {
             using (var context = new DocnoteContext())
             {
-                //Doctor doctorToUpdate = context.Doctors.Where(d => d.Id == doc.Id).FirstOrDefault<Doctor>();
-                //doctorToUpdate.LastName = doc.LastName;
                 context.Entry<Doctor>(doc).State = EntityState.Modified;
-                callback(await context.SaveChangesAsync() > 0, null);
+                callback(context.SaveChanges() > 0, null);
             }
         }
         #endregion
 
-        public async void GetAddressAsync(Action<Address, Exception> callback, Patient p)
+        #region Address
+
+        public void GetAddress(Action<Address, Exception> callback, Patient p)
         {
             using (var context = new DocnoteContext())
             {
-                callback(await context.Addresses.Where(a => a.PatientId == p.Id).FirstOrDefaultAsync(), null);
+                callback(context.Addresses.Where(a => a.PatientId == p.Id).FirstOrDefault(), null);
             }
         }
+        #endregion
 
+        #region Card
         public void GetCard(Action<Card, Exception> callback, Patient p)
         {
             using (var context = new DocnoteContext())
             {
-                callback(context.Cards.Where(c => c.PatientId == p.Id).FirstOrDefault(), null);
+                callback(context.Cards.Where(c => c.CardPatientId == p.Id).FirstOrDefault(), null);
             }
         }
+        #endregion
 
         #region CardEntries
         public async void GetCardEntriesAsync(Action<ObservableCollection<CardEntry>, Exception> callback, Card c)
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.Id).LoadAsync();
+                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
         }
@@ -120,7 +118,7 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.Id && ce.CreationDate > earliestDate).LoadAsync();
+                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
         }
@@ -129,12 +127,12 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.Id && ce.CreationDate > earliestDate && ce.CreationDate < latestDate).LoadAsync();
+                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate && ce.CreationDate < latestDate).LoadAsync();
                 callback(context.CardEntries.Local, null);
             };
         }
 
-        public void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce)
+        public void AddUpdateCardEntry(Action<bool, Exception> callback, Card c, CardEntry ce)
         {
             using (var context = new DocnoteContext())
             {
@@ -144,9 +142,20 @@ namespace docnote.Model
                 }
                 else // Save
                 {
+                    ce.CardId = c.CardPatientId;
                     context.CardEntries.Add(ce);
                 }
 
+                callback(context.SaveChanges() > 0, null);
+            }
+        }
+
+        public void DeleteCardEntry(Action<bool, Exception> callback, CardEntry ce)
+        {
+            using (var context = new DocnoteContext())
+            {
+                context.CardEntries.Attach(ce);
+                context.CardEntries.Remove(ce);
                 callback(context.SaveChanges() > 0, null);
             }
         }

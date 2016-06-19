@@ -8,9 +8,9 @@ namespace docnote.Model
 
     public partial class Address
     {
-        public int Id { get; set; }
-
-        public int? PatientId { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int PatientId { get; set; }
 
         [StringLength(30)]
         public string Country { get; set; }

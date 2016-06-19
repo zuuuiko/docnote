@@ -18,6 +18,9 @@ namespace docnote.ViewModel
     {
         private readonly IDataService _dataService;
 
+        PatientWindowVM _patientVM;
+        private Card _card;
+
         private CardEntry _cardEntry;
         public CardEntry CardEntry
         {
@@ -31,24 +34,52 @@ namespace docnote.ViewModel
             }
         }
 
-        public ICommand SaveCardEntryClickCommand { get; private set; }
+        public ICommand SaveAndCloseCardEntryClickCommand { get; private set; }
+        public ICommand CloseCardEntryClickCommand { get; private set; }
 
-        public CardEntryWindowVM(CardEntry cardEntry, IDataService dataService)
+        public CardEntryWindowVM(PatientWindowVM patientVM, CardEntry cardEntry, IDataService dataService)
         {
             _dataService = dataService;
             CardEntry = cardEntry;
-            SaveCardEntryClickCommand = new RelayCommand(SaveCardEntryWindow);
+            Init(patientVM);         
+        }
+        //new CardEntry
+        public CardEntryWindowVM(PatientWindowVM patientVM, Card c, IDataService dataService)
+        {
+            _dataService = dataService;
+            _card = c;
+            CardEntry = new CardEntry();
+            Init(patientVM);
         }
 
-        private void SaveCardEntryWindow()
+        private void Init(PatientWindowVM patientVM)
+        {
+            _patientVM = patientVM;
+            SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
+            CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
+        }
+
+        private void CloseCardEntryWindow()
+        {
+            Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault().Close();
+        }
+
+        private void SaveAndCloseCardEntry()
         {
             _dataService.AddUpdateCardEntry(
                 async (isSaved, error) =>
                 {
                     var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
                     if (window != null)
-                        await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
-                }, CardEntry);
+                    {
+                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
+                        if (result == MessageDialogResult.Affirmative)
+                        {
+                            _patientVM.LoadCardEntries();
+                            CloseCardEntryWindow();
+                        }
+                    }
+                }, _card, CardEntry);
         }
     }
 }

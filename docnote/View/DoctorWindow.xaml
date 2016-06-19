@@ -81,7 +81,8 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <Button Command="{Binding Path=DoctorSaveClickCommand}" x:Name="button" Content="Зберегти" HorizontalAlignment="Left" Margin="38,42,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74"/>
+        <Button Command="{Binding Path=DoctorSaveAndCloseClickCommand}" Content="Зберегти і закрити" HorizontalAlignment="Center"  Grid.Row="6" VerticalAlignment="Top" Margin="10,25,27,0" />
+        <Button Command="{Binding Path=DoctorCloseClickCommand}" Content="Закрити" HorizontalAlignment="Left" Margin="26,25,0,0" Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" Width="74"/>
         <!--<TextBox Text="{Binding Doctor.MobileNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="5" />-->
     </Grid>
 </Controls:MetroWindow>
