@@ -49,7 +49,7 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.Patients.Where(p => p.LastName.StartsWith(lName)).LoadAsync();
+                await context.Patients.Where(p => p.LastName.Contains(lName)).LoadAsync();
                 callback(context.Patients.Local, null);
             };
         }
