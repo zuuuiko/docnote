@@ -16,6 +16,8 @@ namespace docnote.Model
             {
                 if (p.Id != 0) // Update
                 {
+                    context.Entry<Address>(p.Address).State = EntityState.Modified;
+                    context.Entry<Card>(p.Card).State = EntityState.Modified;
                     context.Entry<Patient>(p).State = EntityState.Modified;
                 }
                 else // Save
