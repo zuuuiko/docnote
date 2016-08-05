@@ -1,9 +1,12 @@
 ﻿using docnote.Model;
+using docnote.Model.Documents;
 using docnote.Resources;
 using docnote.View;
+using docnote.View.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -47,6 +50,32 @@ namespace docnote.ViewModel
             }
         }
 
+        private Document _selectedDocument;
+        private ObservableCollection<Document> _documents;
+        public Document SelectedDocument
+        {
+            get { return _selectedDocument; }
+            set { Set(ref _selectedDocument, value); }
+        }
+        public ObservableCollection<Document> Documents
+        {
+            get { return _documents; }
+            set { Set(ref _documents, value); }
+        }
+
+        private Document _selectedDocumentForm;
+        private ObservableCollection<Document> _documentFormList;
+        public Document SelectedDocumentForm
+        {
+            get { return _selectedDocumentForm; }
+            set { Set(ref _selectedDocumentForm, value); }
+        }
+        public ObservableCollection<Document> DocumentFormList
+        {
+            get { return _documentFormList; }
+            set { Set(ref _documentFormList, value); }
+        }
+
         private CardEntry _selectedCardEntry;
         private ObservableCollection<CardEntry> _cardEntries;
         public CardEntry SelectedCardEntry
@@ -78,6 +107,8 @@ namespace docnote.ViewModel
         public ICommand DeleteCardEntryClickCommand { get; private set; }
         public ICommand SaveAndClosePatientClickCommand { get; private set; }
         public ICommand ClosePatientClickCommand { get; private set; }
+        public ICommand OpenDocumentsFlyoutCommand { get; private set; }
+        public ICommand DocumentFormSelectClickCommand { get; private set; }
 
         [PreferredConstructor]
         public PatientWindowVM(MainViewModel mainVM, IDataService dataService)
@@ -91,11 +122,13 @@ namespace docnote.ViewModel
         {
             _dataService = dataService;
             Patient = p;
+            LoadDocuments();
             LoadAddress();
             LoadCard();
             LoadCardEntries();
             Init(mainVM);  
         }
+
 
         private void Init(MainViewModel mainVM)
         {
@@ -107,6 +140,33 @@ namespace docnote.ViewModel
             DeleteCardEntryClickCommand = new RelayCommand<CardEntry>(DeleteCardEntry);
             SaveAndClosePatientClickCommand = new RelayCommand(SaveAndClosePatient);
             ClosePatientClickCommand = new RelayCommand(ClosePatientWindow);
+            OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
+            DocumentFormList = new ObservableCollection<Document> { new Form_063_o(), new Form_063_o() };
+            DocumentFormSelectClickCommand = new RelayCommand<Document>(CreateNewDocument);
+        }
+
+        private void CreateNewDocument(Document doc)
+        {
+            if (Patient.Id == 0)
+            {
+                SavePatient();
+                _mainVM.LoadPatients();
+            }
+
+            Form_063_o_Window cew = new Form_063_o_Window();
+            MessageBox.Show(doc.DocumentName);
+            //cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
+            //cew.ShowDialog();
+        }
+
+        private void OpenDocumentsFlyout(Flyout flyout)
+        {
+            if (flyout == null)
+            {
+                return;
+            }
+
+            flyout.IsOpen = !flyout.IsOpen;
         }
 
         private async void DeleteCardEntry(CardEntry ce)
@@ -232,6 +292,20 @@ namespace docnote.ViewModel
                 }, Patient);
         }
 
+        private void LoadDocuments()
+        {
+            _dataService.GetDocumentsAsync(
+                (documents, error) =>
+                {
+                    if (error != null)
+                    {
+                        // Report error here
+                        return;
+                    }
+                    Documents = documents;
+                }, Patient);
+        }
+
         public void LoadCardEntries()
         {
             _dataService.GetCardEntriesAsync(
@@ -273,5 +347,12 @@ namespace docnote.ViewModel
                     CardEntries = cardEntries;
                 }, Patient.Card, earliestDate);
         }
+
+        //public override void Cleanup()
+        //{
+        //    // Clean up if needed
+
+        //    base.Cleanup();
+        //}
     }
 }

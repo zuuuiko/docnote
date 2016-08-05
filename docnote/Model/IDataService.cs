@@ -44,5 +44,9 @@ namespace docnote.Model
 
         void DeleteCardEntry(Action<bool, Exception> callback, CardEntry ce);
         #endregion
+
+        #region Documents
+        void GetDocumentsAsync(Action<ObservableCollection<Document>, Exception> callback, Patient p);
+        #endregion
     }
 }

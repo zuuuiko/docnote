@@ -28,6 +28,49 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="documentsFlyout" Header="Документи" Position="Right" Width="400" Theme="Accent">
+                <StackPanel>
+                    <Controls:SplitButton x:Name="DocumentFormButton"
+                                         Margin="0 0 10 0"
+                                         DisplayMemberPath="DocumentName"
+                                         ItemsSource="{Binding DocumentFormList}" 
+                                         SelectedItem="{Binding SelectedDocumentForm}"
+                                         Command="{Binding Path=DocumentFormSelectClickCommand}"
+                                         CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}">
+                        <!--<Controls:DropDownButton.Icon>
+                            <Viewbox Width="32"
+                                 Height="32"
+                                 Stretch="Uniform">
+                                <ContentControl Focusable="False"
+                                            Content="{DynamicResource appbar_music}" />
+                            </Viewbox>
+                        </Controls:DropDownButton.Icon>-->
+                    </Controls:SplitButton>
+                    <DataGrid x:Name="DocumentsGrid" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
+                            <DataGridTextColumn Header="Назва документа" Binding="{Binding Path=DocumentName}"/>
+                        </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=DocumentDoubleClickCommand}"
+                                          CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}"/>
+                        </DataGrid.InputBindings>
+
+                    </DataGrid>
+                </StackPanel>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Документи" 
+                    Command="{Binding OpenDocumentsFlyoutCommand}"
+                    CommandParameter="{Binding ElementName=documentsFlyout}"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
     <Grid Style="{StaticResource MyGridStyle}" >
         <Grid.Resources>
             <resources:EnumBooleanConverter x:Key="enumBooleanConverter" />
@@ -82,7 +125,7 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate}"  SelectedDateFormat="Long"/>
+        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
         <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" 
                  Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.PhoneNumber'}"
@@ -191,8 +234,8 @@
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
                         </i:Interaction.Behaviors>
                     </TextBox>
-                    <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long"/>
-                    <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long"/>
+                    <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                    <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
 
                     <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" 
                          Style="{StaticResource Validate}" 
@@ -221,7 +264,7 @@
                     <Label Content="Вулиця" Grid.Row="2"/>
                     <TextBox Grid.Column="1" 
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Country'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.Country'}"
                          Text="{Binding Path=Patient.Address.Country, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -229,7 +272,7 @@
                     </TextBox>
                     <TextBox Grid.Column="3" 
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Region'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.Region'}"
                          Text="{Binding Path=Patient.Address.Region, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -237,7 +280,7 @@
                     </TextBox>
                     <TextBox Grid.Column="1" Grid.Row="1"
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.CityVillage'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.CityVillage'}"
                          Text="{Binding Path=Patient.Address.CityVillage, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -245,7 +288,7 @@
                     </TextBox>
                     <TextBox Grid.Column="1" Grid.Row="2"
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Street'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.Street'}"
                          Text="{Binding Path=Patient.Address.Street, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Behaviors>
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -255,7 +298,7 @@
                         <Label Content="Будинок" />
                         <TextBox MinWidth="30"
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Building'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.Building'}"
                          Text="{Binding Path=Patient.Address.Building, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Behaviors>
                                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -264,7 +307,7 @@
                         <Label Content="Квартира" />
                         <TextBox MinWidth="30"
                          Style="{StaticResource Validate}" 
-                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Address.Apartment'}"
+                         MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Address.Apartment'}"
                          Text="{Binding Path=Patient.Address.Apartment, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="26" VerticalAlignment="Top">
                             <i:Interaction.Behaviors>
                                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
@@ -278,7 +321,7 @@
         <!--<Label Content="Остання дата оновлення" Grid.Row="7" Grid.Column="2" />-->
         <TextBox Grid.Row="7" Grid.Column="1" 
                  Style="{StaticResource Validate}" 
-                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.Card.CardNameCode'}"
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Card.CardNameCode'}"
                  Text="{Binding Path=Patient.Card.CardNameCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>

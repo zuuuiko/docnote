@@ -96,6 +96,8 @@
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\DocnoteContext.cs" />
     <Compile Include="Model\Doctor.cs" />
+    <Compile Include="Model\Document.cs" />
+    <Compile Include="Model\Documents\Form_063_o.cs" />
     <Compile Include="Model\Hospital.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ModelInitializer.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Resources\BoolInverterConverter.cs" />
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
     <Compile Include="ViewModel\DoctorWindowVM.cs" />
+    <Compile Include="ViewModel\Documents\Form_063_o_VM.cs" />
     <Compile Include="ViewModel\HospitalWindowVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PatientWindowVM.cs" />
@@ -117,6 +120,9 @@
     </Compile>
     <Compile Include="View\DoctorWindow.xaml.cs">
       <DependentUpon>DoctorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Documents\Form_063_o_Window.xaml.cs">
+      <DependentUpon>Form_063_o_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HospitalWindow.xaml.cs">
       <DependentUpon>HospitalWindow.xaml</DependentUpon>
@@ -145,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DoctorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Documents\Form_063_o_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

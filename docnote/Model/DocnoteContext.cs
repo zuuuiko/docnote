@@ -24,6 +24,7 @@ namespace docnote.Model
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -49,6 +50,12 @@ namespace docnote.Model
             modelBuilder.Entity<Patient>()
                 .HasOptional(e => e.Address)
                 .WithRequired(e => e.Patient)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Patient>()
+                .HasMany(e => e.Documents)
+                .WithOptional(e => e.Patient)
+                .HasForeignKey(e => e.PatientId)
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<Patient>()

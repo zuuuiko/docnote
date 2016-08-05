@@ -172,5 +172,16 @@ namespace docnote.Model
         }
         #endregion
 
+        #region Documents
+        public async void GetDocumentsAsync(Action<ObservableCollection<Document>, Exception> callback, Patient p)
+        {
+            using (var context = new DocnoteContext())
+            {
+                await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
+                callback(context.Documents.Local, null);
+            };
+        }
+        #endregion
+
     }
 }

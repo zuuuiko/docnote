@@ -1,0 +1,111 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.Documents.Form_063_o_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.View.Documents"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:resources="clr-namespace:docnote.Resources"
+        mc:Ignorable="d"
+        Title="Форма 063/o" 
+        SaveWindowPosition="True"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <!--<Style x:Key="Validate"я TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self},
+                                            Path=(Validation.Errors)[0].ErrorContent}" />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+        <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="VerticalContentAlignment" Value ="Center" />
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="VerticalContentAlignment" Value ="Center"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{StaticResource MyGridStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Label VerticalAlignment="Center" Margin="5,10,5,5">Дата</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Прізвище</Label>
+        <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >Тестовий текст</Label>
+        <Label 
+                 Content="{Binding Path=Form_063_o.CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}" 
+                 VerticalContentAlignment="Center" Margin="0,10,5,5" Grid.Column="1">
+        </Label>
+        <Label 
+                 Content="{Binding Path=Form_063_o.LastName}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="1" >
+        </Label>
+        <!--<TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Region'}"
+                 Text="{Binding Path=Form_063_o.TestText, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="2" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>-->
+        <TextBox 
+                 Text="{Binding Path=Form_063_o.TestText}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="2" >
+        </TextBox>
+
+        <!--<Label VerticalContentAlignment="Center" Margin="5" Content="Населений пункт" Grid.Row="3"/>
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Вулиця / Street" Grid.Row="4" />
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Будинок" Grid.Row="5" />
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.CityVillage'}"
+                 Text="{Binding Path=Hospital.CityVillage, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="3"  >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Street'}"
+                 Text="{Binding Path=Hospital.Street, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="4" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.Building'}"
+                 Text="{Binding Path=Hospital.Building, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="5" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>-->
+        <Button Command="{Binding Path=Form_063_o_SaveAndCloseClickCommand}" Content="Зберегти і закрити" HorizontalAlignment="Center" 
+                Grid.Row="6" VerticalAlignment="Top" Margin="10,25,27,0"/>
+        <Button Command="{Binding Path=Form_063_o_CloseClickCommand}"  Content="Закрити" HorizontalAlignment="Left" Margin="25,25,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
+        <Button Command="{Binding Path=Form_063_o_CreateAndSaveWordClickCommand}" Content="Згенерувати і зберегти Ворд" HorizontalAlignment="Center" 
+                Grid.Row="6" Grid.Column="2" VerticalAlignment="Top" Margin="10,25,27,0"/>
+    </Grid>
+</Controls:MetroWindow>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using docnote.Model.Documents;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -123,6 +124,20 @@ namespace docnote.Model
 
             #endregion
 
+            #region Document
+            var doc1 = new Form_063_o
+            {
+                LastName = "Ivanov",
+                TestText = "testText1"
+            };
+            var doc2 = new Form_063_o
+            {
+                LastName = "Petrov",
+                TestText = "testText2"
+            };
+
+            #endregion
+
             #region Patient
             Patient p1 = new Patient
             {
@@ -144,6 +159,8 @@ namespace docnote.Model
                 Card = c1,
                 Address = a1
             };
+            p1.Documents.Add(doc1);
+            p1.Documents.Add(doc2);
 
             Patient p2 = new Patient
             {
