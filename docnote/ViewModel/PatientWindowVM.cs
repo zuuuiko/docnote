@@ -3,6 +3,7 @@ using docnote.Model.Documents;
 using docnote.Resources;
 using docnote.View;
 using docnote.View.Documents;
+using docnote.ViewModel.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
@@ -108,7 +109,7 @@ namespace docnote.ViewModel
         public ICommand SaveAndClosePatientClickCommand { get; private set; }
         public ICommand ClosePatientClickCommand { get; private set; }
         public ICommand OpenDocumentsFlyoutCommand { get; private set; }
-        public ICommand DocumentFormSelectClickCommand { get; private set; }
+        public ICommand CreateOpenDocumentCommand { get; private set; }
 
         [PreferredConstructor]
         public PatientWindowVM(MainViewModel mainVM, IDataService dataService)
@@ -142,19 +143,23 @@ namespace docnote.ViewModel
             ClosePatientClickCommand = new RelayCommand(ClosePatientWindow);
             OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
             DocumentFormList = new ObservableCollection<Document> { new Form_063_o(), new Form_063_o() };
-            DocumentFormSelectClickCommand = new RelayCommand<Document>(CreateNewDocument);
+            CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
+
         }
 
-        private void CreateNewDocument(Document doc)
+        private void CreateOpenDocument(Document doc)
         {
             if (Patient.Id == 0)
             {
                 SavePatient();
                 _mainVM.LoadPatients();
             }
-
-            Form_063_o_Window cew = new Form_063_o_Window();
-            MessageBox.Show(doc.DocumentName);
+            //TODO: switch types of docs
+            Form_063_o_Window fw = new Form_063_o_Window();
+            fw.DataContext = new Form_063_o_VM(this, doc, _dataService);
+            fw.Show();
+            //System.Diagnostics.Debug.WriteLine(
+            //    $"DocumentName - {doc.DocumentName}, Patient.LastName ");
             //cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
             //cew.ShowDialog();
         }
@@ -239,6 +244,7 @@ namespace docnote.ViewModel
             }
 
             CardEntryWindow cew = new CardEntryWindow();
+            //TODO: delete Patient.Card
             cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
             cew.ShowDialog();
         }

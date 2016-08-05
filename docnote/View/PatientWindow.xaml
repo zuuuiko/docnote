@@ -37,7 +37,7 @@
                                          DisplayMemberPath="DocumentName"
                                          ItemsSource="{Binding DocumentFormList}" 
                                          SelectedItem="{Binding SelectedDocumentForm}"
-                                         Command="{Binding Path=DocumentFormSelectClickCommand}"
+                                         Command="{Binding Path=CreateOpenDocumentCommand}"
                                          CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}">
                         <!--<Controls:DropDownButton.Icon>
                             <Viewbox Width="32"
@@ -55,7 +55,7 @@
                         </DataGrid.Columns>
                         <DataGrid.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick"
-                                          Command="{Binding Path=DocumentDoubleClickCommand}"
+                                          Command="{Binding Path=CreateOpenDocumentCommand}"
                                           CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}"/>
                         </DataGrid.InputBindings>
 

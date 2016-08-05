@@ -45,7 +45,7 @@ namespace docnote.ViewModel
         }
         //new CardEntry
         public CardEntryWindowVM(PatientWindowVM patientVM, Card c, IDataService dataService)
-        {
+        {//TODO: delete Card, get it from patientVM.Patient.Card
             _dataService = dataService;
             _card = c;
             CardEntry = new CardEntry();
