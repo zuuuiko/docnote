@@ -32,22 +32,23 @@
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="documentsFlyout" Header="Документи" Position="Right" Width="400" Theme="Accent">
                 <StackPanel>
-                    <Controls:SplitButton x:Name="DocumentFormButton"
-                                         Margin="0 0 10 0"
+                    <ComboBox x:Name="DocumentFormButton"
+                                         Margin="10 0 10 50"
                                          DisplayMemberPath="DocumentName"
                                          ItemsSource="{Binding DocumentFormList}" 
-                                         SelectedItem="{Binding SelectedDocumentForm}"
-                                         Command="{Binding Path=CreateOpenDocumentCommand}"
-                                         CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}">
-                        <!--<Controls:DropDownButton.Icon>
-                            <Viewbox Width="32"
-                                 Height="32"
-                                 Stretch="Uniform">
-                                <ContentControl Focusable="False"
-                                            Content="{DynamicResource appbar_music}" />
-                            </Viewbox>
-                        </Controls:DropDownButton.Icon>-->
-                    </Controls:SplitButton>
+                                         SelectedItem="{Binding SelectedDocumentForm}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged" >
+                                <i:InvokeCommandAction Command="{Binding CreateOpenDocumentCommand}"
+                                                       CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <!--<ComboBox.InputBindings>
+                            <MouseBinding MouseAction="LeftClick"
+                                          Command="{Binding Path=CreateOpenDocumentCommand}"
+                                          CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}"/>
+                        </ComboBox.InputBindings>-->
+                    </ComboBox>
                     <DataGrid x:Name="DocumentsGrid" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>

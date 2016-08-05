@@ -1,5 +1,8 @@
 ﻿using docnote.Model;
+using docnote.Model.Documents;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +34,35 @@ namespace docnote.ViewModel.Documents
         public Form_063_o_VM(PatientWindowVM patientVM, Document doc, IDataService dataService)
         {
             _dataService = dataService;
-            _doc = doc;
-            Init(patientVM);
+            Init(patientVM, doc);
+            
         }
 
-        private void Init(PatientWindowVM patientVM)
+        private void Init(PatientWindowVM patientVM, Document doc)
         {
             _patientVM = patientVM;
+            CreateAndSaveWordClickCommand = new RelayCommand(CreateAndSaveWord);
+            if (doc.Id != 0)
+            {
+                _doc = doc;
+                return;
+            }
+            _doc = new Form_063_o
+            {
+                LastName = patientVM.Patient.LastName
+            };
+            
+        }
+
+        private void CreateAndSaveWord()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Word Documents| *.doc;*.docx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string fileName = System.IO.Directory.GetCurrentDirectory() + @"\Form_063_o.docx";
+                Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+            }
         }
     }
 }
