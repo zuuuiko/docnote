@@ -98,6 +98,7 @@
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\Documents\Form_063_o.cs" />
+    <Compile Include="Model\Form_025-6_o.cs" />
     <Compile Include="Model\Hospital.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ModelInitializer.cs" />

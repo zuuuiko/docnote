@@ -16,7 +16,7 @@ namespace docnote.Model
 
         public virtual Patient Patient { get; set; }
 
-        [StringLength(30)]
+        [StringLength(10)]
         public virtual string DocumentName { get; set; }
 
     }
