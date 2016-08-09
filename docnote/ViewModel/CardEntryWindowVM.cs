@@ -19,7 +19,6 @@ namespace docnote.ViewModel
         private readonly IDataService _dataService;
 
         PatientWindowVM _patientVM;
-        private Card _card;
 
         private CardEntry _cardEntry;
         public CardEntry CardEntry
@@ -44,10 +43,9 @@ namespace docnote.ViewModel
             Init(patientVM);         
         }
         //new CardEntry
-        public CardEntryWindowVM(PatientWindowVM patientVM, Card c, IDataService dataService)
-        {//TODO: delete Card, get it from patientVM.Patient.Card
+        public CardEntryWindowVM(PatientWindowVM patientVM, IDataService dataService)
+        {
             _dataService = dataService;
-            _card = c;
             CardEntry = new CardEntry();
             Init(patientVM);
         }
@@ -79,7 +77,7 @@ namespace docnote.ViewModel
                             CloseCardEntryWindow();
                         }
                     }
-                }, _card, CardEntry);
+                }, _patientVM.Patient.Card, CardEntry);
         }
     }
 }

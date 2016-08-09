@@ -55,7 +55,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedPatient}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" x:Name="PatientsGrid"  Margin="15" ItemsSource="{Binding Patients}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
 
             <DataGrid.Resources>
                 <!--<resources:SexConverter x:Key="sexConverter"/>-->

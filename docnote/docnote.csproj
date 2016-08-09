@@ -123,6 +123,9 @@
     <Compile Include="View\DoctorWindow.xaml.cs">
       <DependentUpon>DoctorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Documents\Form_025_6_o_Window.xaml.cs">
+      <DependentUpon>Form_025_6_o_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Documents\Form_063_o_Window.xaml.cs">
       <DependentUpon>Form_063_o_Window.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DoctorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Documents\Form_025_6_o_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,7 +25,7 @@ namespace docnote.ViewModel
 
         #region Patients
         private ObservableCollection<Patient> _patients;
-        private Patient _selectedPatient;
+        //private Patient _selectedPatient;
         public ObservableCollection<Patient> Patients
         {
             get
@@ -37,17 +37,17 @@ namespace docnote.ViewModel
                 Set(ref _patients, value);
             }
         }
-        public Patient SelectedPatient
-        {
-            get
-            {
-                return _selectedPatient;
-            }
-            set
-            {
-                Set(ref _selectedPatient, value);
-            }
-        }
+        //public Patient SelectedPatient
+        //{
+        //    get
+        //    {
+        //        return _selectedPatient;
+        //    }
+        //    set
+        //    {
+        //        Set(ref _selectedPatient, value);
+        //    }
+        //}
         //public ICommand PatientClickCommand { get; private set; }
         public ICommand PatientDoubleClickCommand { get; private set; }
         public ICommand DeletePatientClickCommand { get; private set; }
@@ -131,7 +131,7 @@ namespace docnote.ViewModel
             //pw.Owner = this;
             pw.ShowDialog();
         }
-
+        //New Patient
         private void OpenPatientWindow()
         {
             PatientWindow pw = new PatientWindow();

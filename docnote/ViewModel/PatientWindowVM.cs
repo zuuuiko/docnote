@@ -116,7 +116,7 @@ namespace docnote.ViewModel
         {
             _dataService = dataService;
             Init(mainVM);
-            Patient = new Patient { Address = new Address(), Card = new Card() };
+            Patient = new Patient { Address = new Address(), Card = new Card(), Documents = new HashSet<Document>() };
         }
 
         public PatientWindowVM(MainViewModel mainVM, Patient p, IDataService dataService)
@@ -127,7 +127,7 @@ namespace docnote.ViewModel
             LoadAddress();
             LoadCard();
             LoadCardEntries();
-            Init(mainVM);  
+            Init(mainVM);
         }
 
 
@@ -157,7 +157,7 @@ namespace docnote.ViewModel
             //TODO: switch types of docs
             Form_063_o_Window fw = new Form_063_o_Window();
             fw.DataContext = new Form_063_o_VM(this, doc, _dataService);
-            fw.Show();
+            fw.ShowDialog();
             //System.Diagnostics.Debug.WriteLine(
             //    $"DocumentName - {doc.DocumentName}, Patient.LastName ");
             //cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
@@ -244,8 +244,7 @@ namespace docnote.ViewModel
             }
 
             CardEntryWindow cew = new CardEntryWindow();
-            //TODO: delete Patient.Card
-            cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
+            cew.DataContext = new CardEntryWindowVM(this, _dataService);
             cew.ShowDialog();
         }
 
