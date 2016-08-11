@@ -14,8 +14,9 @@ namespace docnote.Model
         public override string DocumentName { get; set; } = @"Форма 025-6/o";
 
         //Наказ МОЗ України
-        //29 травня 2013 року №435
-
+        //29 травня 2013 року №435 
+        [StringLength(50)]
+        public string DecreeMOZDateNumber { get; set; }     //from ??
         [StringLength(50)]
         public string HospitalSubordination { get; set; }   //from hospital
         [StringLength(50)]
@@ -39,8 +40,10 @@ namespace docnote.Model
         public byte? Contingent { get; set; }               //from view
         public byte? Purpose { get; set; }                  //from view
         public bool? IsFirstVisit { get; set; }             //from view
-        //<<datesHospital>>	<<countOfVisitsInHospital>>
-        //<<datesAtHome>>	<<countOfVisitsAtHome>>
+        public string VisitDatesHospital { get; set; }      //from card
+        public byte? CountVisitsHospital { get; set; }
+        public string VisitDatesHome { get; set; }          //from card
+        public byte? CountVisitsHome { get; set; }
         [StringLength(30)]
         public string DiagnosisMain { get; set; }           //from view
         [StringLength(20)]
@@ -59,8 +62,8 @@ namespace docnote.Model
         public byte? InvGroupFirst { get; set; }            //from view
         public byte? InvGroupChornobyl { get; set; }        //from view
         public byte? InvGroupConfirmed { get; set; }        //from view
-        [StringLength(20)]
-        public string IllSheetCode { get; set; }            //from view
+        //[StringLength(20)]
+        //public string IllSheetCode { get; set; }            //from view
         public DateTime? IllSheetOpenDate { get; set; }     //from view
         public DateTime? IllSheetCloseDate { get; set; }    //from view
         public DateTime? DovidkaOpenDate { get; set; }      //from view

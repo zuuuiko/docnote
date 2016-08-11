@@ -119,8 +119,8 @@ namespace docnote.ViewModel
 
         private void OpenDoctorWindow()
         {
-            DoctorWindow dw = new DoctorWindow();
-            dw.DataContext = new DoctorWindowVM(_dataService);
+            var dw = new View.Documents.Form_025_6_o_Window();
+            //dw.DataContext = new DoctorWindowVM(_dataService);
             dw.ShowDialog();
         }
 
