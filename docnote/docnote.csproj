@@ -97,7 +97,7 @@
     <Compile Include="Model\DocnoteContext.cs" />
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\Documents\Form_063_o.cs" />
+    <Compile Include="Model\Form_063_o.cs" />
     <Compile Include="Model\Form_025-6_o.cs" />
     <Compile Include="Model\Hospital.cs" />
     <Compile Include="Model\IDataService.cs" />
@@ -107,11 +107,13 @@
     <Compile Include="Resources\LengthConverter.cs" />
     <Compile Include="Resources\PeriodsRadioButtons.cs" />
     <Compile Include="Resources\SelectAllTextBoxBehavior.cs" />
-    <Compile Include="Resources\SexConverter.cs" />
+    <Compile Include="Resources\BoolConverter.cs" />
     <Compile Include="Resources\BoolInverterConverter.cs" />
     <Compile Include="Resources\WordManager.cs" />
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
     <Compile Include="ViewModel\DoctorWindowVM.cs" />
+    <Compile Include="ViewModel\Documents\AbstractFormVM.cs" />
+    <Compile Include="ViewModel\Documents\Form_025_6_o_VM.cs" />
     <Compile Include="ViewModel\Documents\Form_063_o_VM.cs" />
     <Compile Include="ViewModel\HospitalWindowVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

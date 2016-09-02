@@ -119,15 +119,15 @@ namespace docnote.ViewModel
 
         private void OpenDoctorWindow()
         {
-            var dw = new View.Documents.Form_025_6_o_Window();
-            //dw.DataContext = new DoctorWindowVM(_dataService);
+            var dw = new DoctorWindow();
+            dw.DataContext = new DoctorWindowVM(_dataService);
             dw.ShowDialog();
         }
 
         private void OpenPatientWindow(Patient p)
         {
             PatientWindow pw = new PatientWindow();
-            pw.DataContext = new PatientWindowVM(this, p, _dataService);
+            pw.DataContext = new PatientWindowVM(LoadPatients, p, _dataService);
             //pw.Owner = this;
             pw.ShowDialog();
         }
@@ -135,7 +135,7 @@ namespace docnote.ViewModel
         private void OpenPatientWindow()
         {
             PatientWindow pw = new PatientWindow();
-            pw.DataContext = new PatientWindowVM(this, _dataService);
+            pw.DataContext = new PatientWindowVM(LoadPatients, _dataService);
             //pw.Owner = this;
             pw.ShowDialog();
         }

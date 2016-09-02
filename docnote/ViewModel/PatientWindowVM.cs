@@ -1,5 +1,4 @@
 ﻿using docnote.Model;
-using docnote.Model.Documents;
 using docnote.Resources;
 using docnote.View;
 using docnote.View.Documents;
@@ -35,8 +34,8 @@ namespace docnote.ViewModel
                 Set(ref _periodsRadioButtons, value);
             }
         }
-
-        MainViewModel _mainVM;
+        Action _updatePatientsDataGrid;
+       // MainViewModel _mainVM;
 
         private Patient _patient;
         public Patient Patient
@@ -112,14 +111,14 @@ namespace docnote.ViewModel
         public ICommand CreateOpenDocumentCommand { get; private set; }
 
         [PreferredConstructor]
-        public PatientWindowVM(MainViewModel mainVM, IDataService dataService)
+        public PatientWindowVM(Action reloadPatients, IDataService dataService)
         {
             _dataService = dataService;
-            Init(mainVM);
+            Init(reloadPatients);
             Patient = new Patient { Address = new Address(), Card = new Card(), Documents = new HashSet<Document>() };
         }
 
-        public PatientWindowVM(MainViewModel mainVM, Patient p, IDataService dataService)
+        public PatientWindowVM(Action reloadPatients, Patient p, IDataService dataService)
         {
             _dataService = dataService;
             Patient = p;
@@ -127,13 +126,14 @@ namespace docnote.ViewModel
             LoadAddress();
             LoadCard();
             LoadCardEntries();
-            Init(mainVM);
+            Init(reloadPatients);
         }
 
 
-        private void Init(MainViewModel mainVM)
+        private void Init(Action reloadPatients)
         {
-            _mainVM = mainVM;
+            //_mainVM = mainVM;
+            _updatePatientsDataGrid = reloadPatients;
             PeriodsRadioButtons = PeriodsRadioButtons.All;
             ShowCardEntriesCommand = new RelayCommand<PeriodsRadioButtons>(ShowCardEntries);
             CardEntryDoubleClickCommand = new RelayCommand<CardEntry>(OpenCardEntryWindow);
@@ -142,7 +142,7 @@ namespace docnote.ViewModel
             SaveAndClosePatientClickCommand = new RelayCommand(SaveAndClosePatient);
             ClosePatientClickCommand = new RelayCommand(ClosePatientWindow);
             OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
-            DocumentFormList = new ObservableCollection<Document> { new Form_063_o(), new Form_063_o() };
+            DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(), new Form_063_o() };
             CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
 
         }
@@ -152,12 +152,25 @@ namespace docnote.ViewModel
             if (Patient.Id == 0)
             {
                 SavePatient();
-                _mainVM.LoadPatients();
+                _updatePatientsDataGrid();
             }
-            //TODO: switch types of docs
-            Form_063_o_Window fw = new Form_063_o_Window();
-            fw.DataContext = new Form_063_o_VM(this, doc, _dataService);
-            fw.ShowDialog();
+            doc.Patient = Patient;
+
+            MetroWindow fw = null;
+            switch (doc.DocumentName)
+            {
+                case @"Форма 025-6/o":
+                    fw = new Form_025_6_o_Window();
+                    fw.DataContext = new Form_025_6_o_VM(doc, _dataService, LoadDocuments);
+                    break;
+                case @"Форма 063/о":
+                    fw = new Form_063_o_Window();
+                    fw.DataContext = new Form_063_o_VM(doc, _dataService, LoadDocuments);
+                    break;
+                default:
+                    break;
+            }
+            fw?.ShowDialog();
             //System.Diagnostics.Debug.WriteLine(
             //    $"DocumentName - {doc.DocumentName}, Patient.LastName ");
             //cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);
@@ -211,7 +224,7 @@ namespace docnote.ViewModel
                         var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
                         if (result == MessageDialogResult.Affirmative)
                         {
-                            _mainVM.LoadPatients();
+                            _updatePatientsDataGrid();
                             ClosePatientWindow();
                         }
                     }
@@ -229,9 +242,10 @@ namespace docnote.ViewModel
 
         private void OpenCardEntryWindow(CardEntry ce)
         {
-            CardEntryWindow pw = new CardEntryWindow();
-            pw.DataContext = new CardEntryWindowVM(this, ce, _dataService);
-            pw.ShowDialog();
+            CardEntryWindow cew = new CardEntryWindow();
+            ce.Card = Patient.Card;
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
+            cew.ShowDialog();
         }
 
         //New CardEntry
@@ -240,11 +254,12 @@ namespace docnote.ViewModel
             if (Patient.Id == 0)
             {
                 SavePatient();
-                _mainVM.LoadPatients();
+                _updatePatientsDataGrid();
             }
 
             CardEntryWindow cew = new CardEntryWindow();
-            cew.DataContext = new CardEntryWindowVM(this, _dataService);
+            CardEntry ce = new CardEntry { CardId = Patient.Card.CardPatientId };
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
             cew.ShowDialog();
         }
 

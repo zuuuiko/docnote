@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace docnote.Resources
 {
-    public class SexConverter : IValueConverter
+    public class BoolConverter : IValueConverter
     {
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -18,9 +18,9 @@ namespace docnote.Resources
             bool b = System.Convert.ToBoolean(value);
 
             if (b)
-                return "чоловік";
+                return "1";
 
-            return "жінка";
+            return "2";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

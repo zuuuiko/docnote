@@ -33,6 +33,8 @@
 
                     <resources:BoolInverterConverter x:Key="BoolInverterConverter" />
 
+                    <resources:BoolConverter x:Key="BoolConverter" />
+
                     <Style x:Key="Validate" TargetType="{x:Type TextBox}">
                         <Style.Triggers>
                             <Trigger Property="Validation.HasError" Value="True">

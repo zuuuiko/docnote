@@ -1,5 +1,4 @@
 ﻿using docnote.Model;
-using docnote.Model.Documents;
 using docnote.View.Documents;
 using System;
 using System.Collections.Generic;
@@ -43,8 +42,6 @@ namespace docnote.Resources
                         ref matchDiactitics, ref matchAlefHamza,
                         ref matchControl);
         }
-
-
 
         //Methode Create the document :
         public static void CreateWordDocument(object filename, object savaAs, Document doc)
@@ -116,7 +113,6 @@ namespace docnote.Resources
             }
             return ProcessIDs;
         }
-
 
         private static void killProcesses(List<int> processesbeforegen, List<int> processesaftergen)
         {

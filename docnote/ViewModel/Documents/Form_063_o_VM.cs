@@ -1,5 +1,4 @@
 ﻿using docnote.Model;
-using docnote.Model.Documents;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
@@ -9,60 +8,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace docnote.ViewModel.Documents
 {
-    class Form_063_o_VM : ViewModelBase
+    class Form_063_o_VM : AbstractFormVM
     {
-        private readonly IDataService _dataService;
-        PatientWindowVM _patientVM;
-        Document _doc;
-        public Document Document
+        public Form_063_o_VM(Document doc, IDataService dataService, Action reloadDocs)
+            :base(doc, dataService, reloadDocs, @"\Form_063_o.docx")
         {
-            get
-            {
-                return _doc;
-            }
-            set
-            {
-                Set(ref _doc, value);
-            }
         }
 
-        public ICommand CreateAndSaveWordClickCommand { get; private set; }
-
-        public Form_063_o_VM(PatientWindowVM patientVM, Document doc, IDataService dataService)
+        protected override MetroWindow GetCurrentWindow()
         {
-            _dataService = dataService;
-            Init(patientVM, doc);
-            
+            return Application.Current.Windows.OfType<View.Documents.Form_063_o_Window>().FirstOrDefault();
         }
 
-        private void Init(PatientWindowVM patientVM, Document doc)
+        protected override void Init(Document doc)
         {
-            _patientVM = patientVM;
-            CreateAndSaveWordClickCommand = new RelayCommand(CreateAndSaveWord);
-            if (doc.Id != 0)
-            {
-                _doc = doc;
-                return;
-            }
+            //_patientVM = patientVM;
+            //if (doc.Id != 0)
+            //{
+            //    _doc = doc;
+            //    return;
+            //}
+            var p = doc.Patient;
             _doc = new Form_063_o
             {
-                LastName = patientVM.Patient.LastName
+                //LastName = patientVM.Patient.LastName
             };
-            
-        }
-
-        private void CreateAndSaveWord()
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Word Documents| *.doc;*.docx";
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                string fileName = System.IO.Directory.GetCurrentDirectory() + @"\Form_063_o.docx";
-                Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
-            }
         }
     }
 }

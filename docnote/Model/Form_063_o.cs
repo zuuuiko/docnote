@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace docnote.Model.Documents
+namespace docnote.Model
 {
     [Table("Form_063_o_Table")]
     class Form_063_o : Document

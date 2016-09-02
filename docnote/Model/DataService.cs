@@ -59,6 +59,13 @@ namespace docnote.Model
         #endregion
 
         #region Hospital
+        public void GetHospital(Action<Hospital, Exception> callback)
+        {
+            using (var db = new DocnoteContext())
+            {
+                callback(db.Hospitals.FirstOrDefault(), null);
+            };
+        }
         public async void GetHospitalAsync(Action<Hospital, Exception> callback)
         {
             using (var db = new DocnoteContext())
@@ -144,7 +151,7 @@ namespace docnote.Model
             };
         }
 
-        public void AddUpdateCardEntry(Action<bool, Exception> callback, Card c, CardEntry ce)
+        public void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce)
         {
             using (var context = new DocnoteContext())
             {
@@ -154,7 +161,7 @@ namespace docnote.Model
                 }
                 else // Save
                 {
-                    ce.CardId = c.CardPatientId;
+                    //ce.CardId = c.CardPatientId;
                     context.CardEntries.Add(ce);
                 }
 
@@ -181,6 +188,23 @@ namespace docnote.Model
                 await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
                 callback(context.Documents.Local, null);
             };
+        }
+
+        public void AddUpdateDocument(Action<bool, Exception> callback, Document document)
+        {
+            using (var context = new DocnoteContext())
+            {
+                if (document.Id != 0) // Update
+                {
+                    context.Entry(document).State = EntityState.Modified;
+                }
+                else // Save
+                {
+                    context.Documents.Add(document);
+                }
+
+                callback(context.SaveChanges() > 0, null);
+            }
         }
         #endregion
 
