@@ -92,13 +92,13 @@ namespace docnote.ViewModel.Documents
 
         private void CreateAndSaveWord()
         {
-            //SaveFileDialog saveFileDialog = new SaveFileDialog();
-            //saveFileDialog.Filter = "Word Documents| *.doc;*.docx";
-            //if (saveFileDialog.ShowDialog() == true)
-            //{
-            //    string fileName = System.IO.Directory.GetCurrentDirectory() + _path;
-            //    Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
-            //}
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Word Documents| *.doc;*.docx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string fileName = System.IO.Directory.GetCurrentDirectory() + _path;
+                Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+            }
         }
 
 

@@ -120,6 +120,7 @@ namespace docnote.ViewModel
 
         public PatientWindowVM(Action reloadPatients, Patient p, IDataService dataService)
         {
+            GC.Collect();
             _dataService = dataService;
             Patient = p;
             LoadDocuments();
@@ -149,6 +150,7 @@ namespace docnote.ViewModel
 
         private void CreateOpenDocument(Document doc)
         {
+            if (SelectedDocumentForm == null && doc.Id == 0) return;
             if (Patient.Id == 0)
             {
                 SavePatient();
@@ -171,6 +173,7 @@ namespace docnote.ViewModel
                     break;
             }
             fw?.ShowDialog();
+            SelectedDocumentForm = null;
             //System.Diagnostics.Debug.WriteLine(
             //    $"DocumentName - {doc.DocumentName}, Patient.LastName ");
             //cew.DataContext = new CardEntryWindowVM(this, Patient.Card, _dataService);

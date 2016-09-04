@@ -106,7 +106,7 @@
                 </StackPanel>
                 <TextBlock Margin="5 0" TextWrapping="Wrap" TextAlignment="Justify">8. Контингенти: інваліди війни – 1; учасники війни – 2; учасники бойових дій – 3; контингенти осіб, які прирівняні за пільгами до ветеранів війни – 4; інваліди – 5; учасники ліквідації наслідків аварії на Чорнобильській АЕС – 6; евакуйовані – 7; особи, які проживають на території зони радіоекологічного контролю – 8; діти, які народились від батьків, що віднесені до 1, 2, 3 категорій осіб, які постраждали внаслідок Чорнобильської катастрофи, із зони відчуження, а також відселені із зон безумовного (обов’язкового) і гарантованого добровільного</TextBlock>
                 <DockPanel>
-                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.Contingent}">
+                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -122,7 +122,7 @@
                 </DockPanel>
                 <Label Padding="5 0">9. Мета обслуговування: лікувально-діагностична – 1; консультативна – 2; диспансерний</Label>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.Purpose}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.Purpose, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -184,7 +184,7 @@
                 </StackPanel>
                 <Label Padding="5 15 5 0">Для кожного із захворювань: гостре захворювання – 1; вперше зареєстроване хронічне – 2;</Label>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DiagnosisSeverity}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DiagnosisSeverity, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -194,7 +194,7 @@
                 </DockPanel>
                 <TextBlock Padding="5 0" TextWrapping="Wrap" TextAlignment="Justify"><Run Text="13. Травми, пов'язані з виробництвом: у промисловості – 1; у сільському господарстві – 2; "/><LineBreak/><Run Text="дорожньо-транспортні – 3; інші – 4; не пов'язані з виробництвом: побутові – 5; вуличні – 6;"/></TextBlock>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.TraumaPlace}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.TraumaPlace, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -213,7 +213,7 @@
                     <TextBox Text="{Binding Document.OperationName}" DockPanel.Dock="Right" Margin="15 0 5 0" BorderBrush="Black" BorderThickness="0 0 0 1" TextWrapping="Wrap"/>
                 </DockPanel>
                 <DockPanel>
-                    <ComboBox Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispGroupIsOnRegister}">
+                    <ComboBox Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispGroupIsOnRegister, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -221,7 +221,7 @@
                     <Label DockPanel.Dock="Right">15. Диспансеризація: перебуває на обліку, група (І, ІІ, ІІІ)</Label>
                 </DockPanel>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispGroupTakenOnRegister}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispGroupTakenOnRegister, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -237,7 +237,7 @@
                 </StackPanel>
                 <Label Margin="30 0">Знятий з обліку з причини: поліпшення – 1; смерті – 2;</Label>
                 <DockPanel Margin="30 0 0 0">
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispRemovedRegisterReason}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.DispRemovedRegisterReason, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -253,7 +253,7 @@
                     </StackPanel>
                 </StackPanel>
                 <DockPanel>
-                    <ComboBox Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupFirst}">
+                    <ComboBox Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupFirst, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -261,7 +261,7 @@
                     <Label DockPanel.Dock="Right">16. Інвалідність: установлена вперше (гр. І, ІІ, ІІІ)</Label>
                 </DockPanel>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupChornobyl}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupChornobyl, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -269,7 +269,7 @@
                     <Label Margin="90 0 0 0" DockPanel.Dock="Right">у тому числі потерпілі від аварії на Чорнобильській АЕС (гр. І, ІІ, ІІІ)</Label>
                 </DockPanel>
                 <DockPanel>
-                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupConfirmed}">
+                    <ComboBox Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.InvGroupConfirmed, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -308,7 +308,7 @@
                 <TextBlock Padding="5 0" TextWrapping="Wrap" TextAlignment="Justify">18. Результат лікування: одужання – 1; поліпшення – 2; без змін – 3; госпіталізація в стаціонар – 4; смерть – 5; рекомендовано: санаторно-курортне лікування – 6;
                 </TextBlock>
                 <DockPanel>
-                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.TreatmentResult}">
+                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.TreatmentResult, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>

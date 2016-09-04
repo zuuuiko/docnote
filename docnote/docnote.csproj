@@ -103,6 +103,7 @@
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ModelInitializer.cs" />
     <Compile Include="Model\Patient.cs" />
+    <Compile Include="Resources\ComboBoxConverter.cs" />
     <Compile Include="Resources\EnumBooleanConverter.cs" />
     <Compile Include="Resources\LengthConverter.cs" />
     <Compile Include="Resources\PeriodsRadioButtons.cs" />

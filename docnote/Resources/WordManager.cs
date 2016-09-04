@@ -12,7 +12,7 @@ using System.Windows;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace docnote.Resources
-{   //TODO: static class WordManager is shit
+{   
     public static class WordManager
     {
         private static void FindAndReplace(Word.Application wordApp, object findText, object replaceWithText)
@@ -45,18 +45,16 @@ namespace docnote.Resources
 
         //Methode Create the document :
         public static void CreateWordDocument(object filename, object savaAs, Document doc)
-        {
+        {            
             List<int> processesbeforegen = getRunningProcesses();
             object missing = Missing.Value;
 
             Word.Application wordApp = new Word.Application();
 
             Word.Document aDoc = null;
-            //Form_063_o
+
             if (File.Exists((string)filename))
             {
-                DateTime today = DateTime.Now;
-
                 object readOnly = false; //default
                 object isVisible = false;
 
@@ -71,11 +69,14 @@ namespace docnote.Resources
                 aDoc.Activate();
                 //TODO:
                 //Find and replace:
-                Form_063_o document = doc as Form_063_o;
-                FindAndReplace(wordApp, "<<DocumentName>>", document.DocumentName);
-                FindAndReplace(wordApp, "<<CreationDate>>", document.CreationDate);
-                FindAndReplace(wordApp, "<<LastName>>", document.LastName);
-                FindAndReplace(wordApp, "<<TestText>>", document.TestText);
+
+                Type type = doc.GetType();
+                PropertyInfo[] properties = type.GetProperties();
+
+                foreach (PropertyInfo property in properties)
+                {
+                    FindAndReplace(wordApp, $"<<{property.Name}>>", property.GetValue(doc));
+                }
             }
             else
             {
@@ -95,7 +96,6 @@ namespace docnote.Resources
             List<int> processesaftergen = getRunningProcesses();
             killProcesses(processesbeforegen, processesaftergen);
         }
-
 
         private static List<int> getRunningProcesses()
         {

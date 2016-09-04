@@ -29,10 +29,15 @@ namespace docnote.Model
                 callback(context.SaveChanges() > 0, null);
             }
         }
-        public void DeletePatient(Action<bool, Exception> callback, Patient p)
+        public void DeletePatient(Action<bool, Exception> callback, Patient patient)
         {
             using (var context = new DocnoteContext())
             {
+                //http://stackoverflow.com/questions/6746804/code-first-tpt-and-cascade-on-delete
+                Patient p = context.Patients
+                    .Include(e => e.Documents)
+                    .Single(e => e.Id == patient.Id);
+
                 context.Patients.Attach(p);
                 context.Patients.Remove(p);
                 callback(context.SaveChanges() > 0, null);

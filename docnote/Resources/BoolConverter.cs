@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace docnote.Resources
@@ -25,7 +26,13 @@ namespace docnote.Resources
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is ComboBoxItem)
+            {
+                if ((value as ComboBoxItem).Content.ToString() == "1") return true;
+                return false;
+            }
+            return null;
+            
         }
     }
 }

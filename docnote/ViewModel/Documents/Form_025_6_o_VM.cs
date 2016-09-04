@@ -54,6 +54,7 @@ namespace docnote.ViewModel.Documents
                 //CountVisitsHospital
                 //VisitDatesHome
                 //CountVisitsHome
+                PatientId = p.Id
             };
         }
     }
