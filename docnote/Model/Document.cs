@@ -20,4 +20,9 @@ namespace docnote.Model
         public virtual string DocumentName { get; set; }
 
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class RomanAttribute : Attribute
+    {
+    }
 }

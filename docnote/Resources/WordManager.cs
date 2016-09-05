@@ -67,15 +67,23 @@ namespace docnote.Resources
                                             ref missing, ref missing, ref missing, ref missing);
 
                 aDoc.Activate();
-                //TODO:
                 //Find and replace:
-
                 Type type = doc.GetType();
                 PropertyInfo[] properties = type.GetProperties();
 
                 foreach (PropertyInfo property in properties)
                 {
-                    FindAndReplace(wordApp, $"<<{property.Name}>>", property.GetValue(doc));
+                    if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+
+                    var value = property.GetValue(doc);
+
+                    if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
+                        value = ConvertByteToRome(value);
+
+                    if (value is Boolean)
+                        value = (bool)value ? 1 : 2;
+
+                    FindAndReplace(wordApp, $"<<{property.Name}>>", value);
                 }
             }
             else
@@ -95,6 +103,18 @@ namespace docnote.Resources
             //aDoc.Close(ref missing, ref missing, ref missing);
             List<int> processesaftergen = getRunningProcesses();
             killProcesses(processesbeforegen, processesaftergen);
+        }
+
+        private static object ConvertByteToRome(object value)
+        {
+            switch (value.ToString())
+            {
+                case "1": return "I";
+                case "2": return "II";
+                case "3": return "III";
+                default:
+                    return null;
+            }
         }
 
         private static List<int> getRunningProcesses()

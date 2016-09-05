@@ -27,9 +27,9 @@ namespace docnote.Resources
                 var v = (value as ComboBoxItem).Content.ToString();
                 switch (v)
                 {
-                    case "І": return (byte)1;
-                    case "ІІ": return (byte)2;
-                    case "ІІІ": return (byte)3;
+                    case "I": return (byte)1;
+                    case "II": return (byte)2;
+                    case "III": return (byte)3;
                     default:
                         try
                         {

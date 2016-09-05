@@ -82,7 +82,7 @@
                     <Label Margin="0 0 30 0">5. Дата народження</Label>
                     <StackPanel>
                         <Border BorderBrush="Black" BorderThickness="1 0 1 1">
-                            <Label Content="{Binding Document.PatientBirthDate}" Padding="0 10" MinWidth="120" ContentStringFormat="dd/MM/yyyy HH:mm"/>
+                            <Label HorizontalContentAlignment="Center"  Content="{Binding Document.PatientBirthDate}" Padding="0 10" MinWidth="120" ContentStringFormat="dd/MM/yyyy"/>
                         </Border>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
@@ -106,7 +106,8 @@
                 </StackPanel>
                 <TextBlock Margin="5 0" TextWrapping="Wrap" TextAlignment="Justify">8. Контингенти: інваліди війни – 1; учасники війни – 2; учасники бойових дій – 3; контингенти осіб, які прирівняні за пільгами до ветеранів війни – 4; інваліди – 5; учасники ліквідації наслідків аварії на Чорнобильській АЕС – 6; евакуйовані – 7; особи, які проживають на території зони радіоекологічного контролю – 8; діти, які народились від батьків, що віднесені до 1, 2, 3 категорій осіб, які постраждали внаслідок Чорнобильської катастрофи, із зони відчуження, а також відселені із зон безумовного (обов’язкового) і гарантованого добровільного</TextBlock>
                 <DockPanel>
-                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" SelectedItem="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}}">
+                    <ComboBox Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
+                              SelectedItem="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}}">
                         <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>

@@ -129,10 +129,52 @@ namespace docnote.Model
                 LastName = "Ivanov",
                 TestText = "testText1"
             };
-            var doc2 = new Form_063_o
+            var doc2 = new Form_025_6_o
             {
-                LastName = "Petrov",
-                TestText = "testText2"
+                HospitalSubordination = "Міністерство охорони та здоров'я України",
+                HospitalNamePostAddress = "01234, Україна, м. Київ, вул. Алішера Навої, 1",
+                EDRPOU = 123456789,
+                OpeningDoctorName = "Петренко Петро Петрович",
+                PatientCardNameCode = "КД-00234е34",
+                PatientFLMName = "Іваненко Іван Іванович",
+                PatientSex = true,
+                PatientBirthDate = new DateTime(2012, 8, 12),
+                PatientStreet = "Славська",
+                PatientBuilding = "87-Б",
+                PatientApartment = "22",
+                PatientIsWorking = true,
+                Contingent = 3,
+                Purpose = 4,
+                IsFirstVisit = false,
+                VisitDatesHospital = new DateTime(2016, 8, 12).ToShortDateString() + ", " +
+                                    new DateTime(2016, 8, 13).ToShortDateString() + ", " +
+                                    new DateTime(2016, 9, 14).ToShortDateString(),
+                CountVisitsHospital = 3,
+                VisitDatesHome = new DateTime(2016, 8, 15).ToShortDateString() + ", " +
+                                    new DateTime(2016, 9, 16).ToShortDateString(),
+                CountVisitsHome = 2,
+                DiagnosisMain = "головний діагноз",
+                DiagnosisCode = "код123321",
+                DiagnosisSecondary = "супутні діагнози",
+                DiagnosisSeverity = 3,
+                TraumaPlace = 5,
+                OperationName = "назва операції",
+                DispGroupIsOnRegister = 3,
+                DispGroupTakenOnRegister = 3,
+                DispRemovedRegisterDate = new DateTime(2016, 8, 12),
+                DispRemovedRegisterReason = 3,
+                DispDateOfNextVisit = new DateTime(2016, 8, 12),
+                InvGroupFirst = 3,
+                InvGroupChornobyl = 3,
+                InvGroupConfirmed = 3,
+                IllSheetOpenDate = new DateTime(2016, 8, 12),
+                IllSheetCloseDate = new DateTime(2016, 8, 12),
+                DovidkaOpenDate = new DateTime(2016, 8, 12),
+                DovidkaCloseDate = new DateTime(2016, 8, 12),
+                TreatmentResult = 3,
+                ServiceCase = false,
+                ClosingDoctorName = "Гарбуз Дмитро",
+                SignDate = DateTime.Now.Date
             };
 
             #endregion

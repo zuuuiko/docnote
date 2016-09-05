@@ -54,13 +54,18 @@ namespace docnote.Model
         public byte? TraumaPlace { get; set; }              //from view
         [StringLength(30)]
         public string OperationName { get; set; }           //from view
+        [Roman]
         public byte? DispGroupIsOnRegister { get; set; }    //from view
+        [Roman]
         public byte? DispGroupTakenOnRegister { get; set; } //from view
         public DateTime? DispRemovedRegisterDate { get; set; }     //from view
         public byte? DispRemovedRegisterReason { get; set; }//from view
         public DateTime? DispDateOfNextVisit { get; set; }  //from view
+        [Roman]
         public byte? InvGroupFirst { get; set; }            //from view
+        [Roman]
         public byte? InvGroupChornobyl { get; set; }        //from view
+        [Roman]
         public byte? InvGroupConfirmed { get; set; }        //from view
         //[StringLength(20)]
         //public string IllSheetCode { get; set; }            //from view
