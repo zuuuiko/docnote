@@ -15,13 +15,14 @@ namespace docnote.Model
 
         //Наказ МОЗ України
         //29 травня 2013 року №435 
-        [StringLength(50)]
-        public string DecreeMOZDateNumber { get; set; }     //from ??
+        //[StringLength(50)]
+        //public string DecreeMOZDateNumber { get; set; }     //from ??
         [StringLength(50)]
         public string HospitalSubordination { get; set; }   //from hospital
         [StringLength(50)]
         public string HospitalNamePostAddress { get; set; } //from hospital
-        public int EDRPOU { get; set; }                     //from hospital
+        [StringLength(10)]
+        public string EDRPOU { get; set; }                     //from hospital
         [StringLength(50)]
         public string OpeningDoctorName { get; set; }       //from view
         [StringLength(20)]

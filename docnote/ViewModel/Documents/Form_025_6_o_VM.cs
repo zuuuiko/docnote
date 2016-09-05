@@ -17,7 +17,7 @@ namespace docnote.ViewModel.Documents
     {
         //PatientWindowVM _patientVM;
         public Form_025_6_o_VM(Document doc, IDataService dataService, Action reloadDocs)
-            :base(doc, dataService, reloadDocs, @"\Form_025_6_o_VM.docx")
+            :base(doc, dataService, reloadDocs, @"\f025-6_oWT.docx")
         {
         }
 
@@ -38,7 +38,8 @@ namespace docnote.ViewModel.Documents
             _doc = new Form_025_6_o
             {
                 //DecreeMOZDateNumber
-                //HospitalSubordination = doc.Patient.Doctor.Hospital.//
+                HospitalSubordination = Hospital.HospitalSubordination,
+                EDRPOU = Hospital.EDRPOU,
                 HospitalNamePostAddress = $"{Hospital.Country}, " +
                 $"{Hospital.Region}, {Hospital.CityVillage}, " +
                 $"{Hospital.Street}, {Hospital.Building}",
@@ -49,7 +50,7 @@ namespace docnote.ViewModel.Documents
                 PatientStreet = p.Address.Street,
                 PatientBuilding = p.Address.Building,
                 PatientApartment = p.Address.Apartment,
-                //PatientIsWorking,
+                PatientIsWorking = p.IsWorking,
                 //VisitDatesHospital
                 //CountVisitsHospital
                 //VisitDatesHome

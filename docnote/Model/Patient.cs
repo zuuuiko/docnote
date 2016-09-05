@@ -45,6 +45,8 @@ namespace docnote.Model
         [StringLength(20)]
         public string JobSchoolPnoneNumber { get; set; }
 
+        public bool? IsWorking { get; set; }
+
         [StringLength(20)]
         public string Profession { get; set; }
 

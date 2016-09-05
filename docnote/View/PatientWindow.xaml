@@ -164,6 +164,7 @@
                     </Grid.RowDefinitions>
                     <Label>Старе прізвище</Label>
                     <Label Grid.Row="1" >Ідентифікаійний код</Label>
+                    <Label Grid.Row="1" Grid.Column="2">Працює</Label>
                     <TextBox Grid.Column="1" 
                          Style="{StaticResource Validate}" 
                          MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.ExLastName'}"
@@ -182,11 +183,14 @@
                     </TextBox>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="2" >
-
                         <RadioButton GroupName="Sex" IsChecked="{Binding Path=Patient.Sex}" Content="чоловік" Margin="15,0,15,0"/>
                         <RadioButton GroupName="Sex" IsChecked="{Binding Path=Patient.Sex, Converter={StaticResource BoolInverterConverter}}" Content="жінка" Margin="0,0,10,0"/>
-
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="1">
+                        <RadioButton GroupName="Work" IsChecked="{Binding Path=Patient.IsWorking}" Content="так" Margin="15,0,15,0"/>
+                        <RadioButton GroupName="Work" IsChecked="{Binding Path=Patient.IsWorking, Converter={StaticResource BoolInverterConverter}}" Content="ні" Margin="0,0,10,0"/>
+                    </StackPanel>
+                    
                     <Label Content="Телефон батьків" Grid.Row="2" />
                     <Label Content="Місце навчання / роботи" Grid.Row="3" />
                     <Label Content="Телефон" Grid.Row="3" Grid.Column="2"/>

@@ -133,7 +133,7 @@ namespace docnote.Model
             {
                 HospitalSubordination = "Міністерство охорони та здоров'я України",
                 HospitalNamePostAddress = "01234, Україна, м. Київ, вул. Алішера Навої, 1",
-                EDRPOU = 123456789,
+                EDRPOU = "0123456789",
                 OpeningDoctorName = "Петренко Петро Петрович",
                 PatientCardNameCode = "КД-00234е34",
                 PatientFLMName = "Іваненко Іван Іванович",
@@ -142,7 +142,7 @@ namespace docnote.Model
                 PatientStreet = "Славська",
                 PatientBuilding = "87-Б",
                 PatientApartment = "22",
-                PatientIsWorking = true,
+                PatientIsWorking = false,
                 Contingent = 3,
                 Purpose = 4,
                 IsFirstVisit = false,
@@ -194,6 +194,7 @@ namespace docnote.Model
                 ParentPhoneNumber = "(111)111-11-22",
                 JobSchoolPlace = "P1JobSchoolPlace",
                 JobSchoolPnoneNumber = "(111)111-11-33",
+                IsWorking = false,
                 Profession = "P1Profession",
                 Position = "P1Position",
                 RegistrationDate = new DateTime(2016, 4, 1),
@@ -217,6 +218,7 @@ namespace docnote.Model
                 ParentPhoneNumber = "(222)111-11-22",
                 JobSchoolPlace = "P2JobSchoolPlace",
                 JobSchoolPnoneNumber = "(222)111-11-33",
+                IsWorking = true,
                 Profession = "P2Profession",
                 Position = "P2Position",
                 RegistrationDate = new DateTime(2016, 4, 3),
@@ -238,6 +240,7 @@ namespace docnote.Model
                 ParentPhoneNumber = "(333)111-11-22",
                 JobSchoolPlace = "P3JobSchoolPlace",
                 JobSchoolPnoneNumber = "(333)111-11-33",
+                IsWorking = false,
                 Profession = "P3Profession",
                 Position = "P3Position",
                 RegistrationDate = new DateTime(2016, 5, 6),
@@ -271,7 +274,9 @@ namespace docnote.Model
                 Country = "Україна",
                 CityVillage = "Київ",
                 Street = "вулиця Госпітальна",
-                Building = "16"
+                Building = "16",
+                HospitalSubordination = "Міністерство охорони здоров'я України",
+                EDRPOU = "0123456789"
             };
             h.Doctors.Add(d);
             context.Hospitals.Add(h);

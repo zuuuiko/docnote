@@ -35,6 +35,11 @@ namespace docnote.Model
         [StringLength(10)]
         public string Building { get; set; }
 
+        [StringLength(50)]
+        public string HospitalSubordination { get; set; }
+        [StringLength(10)]
+        public string EDRPOU { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Doctor> Doctors { get; set; }
 

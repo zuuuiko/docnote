@@ -48,6 +48,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
@@ -82,6 +84,8 @@
         <Label VerticalContentAlignment="Center" Margin="5" Content="Населений пункт" Grid.Row="3"/>
         <Label VerticalContentAlignment="Center" Margin="5" Content="Вулиця / Street" Grid.Row="4" />
         <Label VerticalContentAlignment="Center" Margin="5" Content="Будинок" Grid.Row="5" />
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Код ЄДРПОУ" Grid.Row="6" />
+        <Label VerticalContentAlignment="Center" Margin="5" Content="Підпорядкування" Grid.Row="7" />
         <TextBox Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.CityVillage'}"
                  Text="{Binding Path=Hospital.CityVillage, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
@@ -106,8 +110,24 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.EDRPOU'}"
+                 Text="{Binding Path=Hospital.EDRPOU, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="6" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
+        <TextBox Style="{StaticResource Validate}" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Hospital.HospitalSubordination'}"
+                 Text="{Binding Path=Hospital.HospitalSubordination, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="7" >
+            <i:Interaction.Behaviors>
+                <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Button Command="{Binding Path=HospitalSaveAndCloseClickCommand}" Content="Зберегти і закрити" HorizontalAlignment="Center" 
-                Grid.Row="6" VerticalAlignment="Top" Margin="10,25,27,0"/>
-        <Button Command="{Binding Path=HospitalCloseClickCommand}"  Content="Закрити" HorizontalAlignment="Left" Margin="25,25,0,0" Grid.Row="6" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
+                Grid.Row="8" VerticalAlignment="Top" Margin="10,25,27,0"/>
+        <Button Command="{Binding Path=HospitalCloseClickCommand}"  Content="Закрити" HorizontalAlignment="Left" Margin="25,25,0,0" Grid.Row="8" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
     </Grid>
 </Controls:MetroWindow>
