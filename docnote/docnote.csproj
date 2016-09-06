@@ -103,6 +103,7 @@
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ModelInitializer.cs" />
     <Compile Include="Model\Patient.cs" />
+    <Compile Include="Resources\DateConverter.cs" />
     <Compile Include="Resources\ComboBoxConverter.cs" />
     <Compile Include="Resources\EnumBooleanConverter.cs" />
     <Compile Include="Resources\LengthConverter.cs" />
@@ -197,6 +198,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bin\Debug\f025-6_oWT.docx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

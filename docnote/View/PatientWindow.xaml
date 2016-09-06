@@ -126,7 +126,7 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+        <DatePicker Grid.Column="1" Grid.Row="3" Text="{Binding Patient.BirthDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
         <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" 
                  Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Patient.PhoneNumber'}"
@@ -239,8 +239,8 @@
                             <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
                         </i:Interaction.Behaviors>
                     </TextBox>
-                    <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate}"        SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
-                    <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                    <DatePicker Grid.Column="1" Grid.Row="5" Text="{Binding Patient.RegistrationDate, Converter={StaticResource DateConverter}, Mode=TwoWay}"        SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                    <DatePicker Grid.Column="3" Grid.Row="5" Text="{Binding Path=Patient.UnregistrationDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
 
                     <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" 
                          Style="{StaticResource Validate}" 
