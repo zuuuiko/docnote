@@ -35,6 +35,7 @@
 
                     <resources:BoolConverter x:Key="BoolConverter" />
                     <resources:ComboBoxConverter x:Key="ComboBoxConverter" />
+                    <resources:ComboBoxRomeConverter x:Key="ComboBoxRomeConverter" />
                     
                     <Style x:Key="Validate" TargetType="{x:Type TextBox}">
                         <Style.Triggers>

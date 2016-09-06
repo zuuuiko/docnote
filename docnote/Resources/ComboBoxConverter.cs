@@ -25,20 +25,49 @@ namespace docnote.Resources
             if (val != null)
             {
                 var v = (value as ComboBoxItem).Content.ToString();
+
+                try
+                {
+                    return System.Convert.ToByte(v);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+
+            }
+            return null;
+        }
+    }
+
+    public class ComboBoxRomeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+                return String.Empty;
+
+            switch (value.ToString())
+            {
+                case "1": return "I";
+                case "2": return "II";
+                case "3": return "III";
+            }
+
+            return String.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var val = value as ComboBoxItem;
+            if (val != null)
+            {
+                var v = (value as ComboBoxItem).Content.ToString();
                 switch (v)
                 {
                     case "I": return (byte)1;
                     case "II": return (byte)2;
                     case "III": return (byte)3;
-                    default:
-                        try
-                        {
-                            return System.Convert.ToByte(v);
-                        }
-                        catch (Exception)
-                        {
-                            return null;
-                        }
                 }
             }
             return null;
