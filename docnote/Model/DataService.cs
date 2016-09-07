@@ -14,33 +14,53 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                if (p.Id != 0) // Update
+                bool correct = false;
+                Exception exeption = null;
+                try
                 {
-                    //context.Entry(p.Documents).State = EntityState.Modified;
-                    context.Entry(p.Address).State = EntityState.Modified;
-                    context.Entry(p.Card).State = EntityState.Modified;
-                    context.Entry(p).State = EntityState.Modified;
+                    if (p.Id != 0) // Update
+                    {
+                        //context.Entry(p.Documents).State = EntityState.Modified;
+                        context.Entry(p.Address).State = EntityState.Modified;
+                        context.Entry(p.Card).State = EntityState.Modified;
+                        context.Entry(p).State = EntityState.Modified;
+                    }
+                    else // Save
+                    {
+                        context.Patients.Add(p);
+                    }
+                    correct = context.SaveChanges() > 0;
                 }
-                else // Save
+                catch (Exception ex)
                 {
-                    context.Patients.Add(p);
+                    exeption = ex;
                 }
-
-                callback(context.SaveChanges() > 0, null);
+                callback(correct, exeption);
             }
         }
         public void DeletePatient(Action<bool, Exception> callback, Patient patient)
         {
             using (var context = new DocnoteContext())
             {
-                //http://stackoverflow.com/questions/6746804/code-first-tpt-and-cascade-on-delete
-                Patient p = context.Patients
-                    .Include(e => e.Documents)
-                    .Single(e => e.Id == patient.Id);
+                bool correct = false;
+                Exception exeption = null;
+                try
+                {
+                    //http://stackoverflow.com/questions/6746804/code-first-tpt-and-cascade-on-delete
+                    Patient p = context.Patients
+                        .Include(e => e.Documents)
+                        .Single(e => e.Id == patient.Id);
 
-                context.Patients.Attach(p);
-                context.Patients.Remove(p);
-                callback(context.SaveChanges() > 0, null);
+                    context.Patients.Attach(p);
+                    context.Patients.Remove(p);
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
+               
             }
         }
 
@@ -48,8 +68,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.Patients.LoadAsync();
-                callback(context.Patients.Local, null);
+                ObservableCollection<Patient> patients = null;
+                Exception exeption = null;
+                try
+                {
+                    await context.Patients.LoadAsync();
+                    patients = context.Patients.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(patients, exeption);
             };
         }
 
@@ -57,8 +87,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.Patients.Where(p => p.LastName.Contains(lName)).LoadAsync();
-                callback(context.Patients.Local, null);
+                ObservableCollection<Patient> patients = null;
+                Exception exeption = null;
+                try
+                {
+                    await context.Patients.Where(p => p.LastName.Contains(lName)).LoadAsync();
+                    patients = context.Patients.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(patients, exeption);
             };
         }
         #endregion
@@ -68,14 +108,34 @@ namespace docnote.Model
         {
             using (var db = new DocnoteContext())
             {
-                callback(db.Hospitals.FirstOrDefault(), null);
+                Exception exeption = null;
+                Hospital hospital = null;
+                try
+                {
+                    hospital = db.Hospitals.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(hospital, exeption);
             };
         }
         public async void GetHospitalAsync(Action<Hospital, Exception> callback)
         {
             using (var db = new DocnoteContext())
             {
-                callback(await db.Hospitals.FirstOrDefaultAsync(), null);
+                Exception exeption = null;
+                Hospital hospital = null;
+                try
+                {
+                    hospital = await db.Hospitals.FirstOrDefaultAsync();
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(hospital, exeption);
             };
         }
 
@@ -83,8 +143,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                context.Entry<Hospital>(hospital).State = EntityState.Modified;
-                callback(context.SaveChanges() > 0, null);
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    context.Entry<Hospital>(hospital).State = EntityState.Modified;
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
             }
         }
         #endregion
@@ -94,15 +164,35 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                callback(await context.Doctors.FirstOrDefaultAsync(), null);
+                Exception exeption = null;
+                Doctor doctor = null;
+                try
+                {
+                    doctor = await context.Doctors.FirstOrDefaultAsync();
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(doctor, exeption);
             };
         }
         public void UpdateDoctor(Action<bool, Exception> callback, Doctor doc)
         {
             using (var context = new DocnoteContext())
             {
-                context.Entry<Doctor>(doc).State = EntityState.Modified;
-                callback(context.SaveChanges() > 0, null);
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    context.Entry<Doctor>(doc).State = EntityState.Modified;
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
             }
         }
         #endregion
@@ -113,7 +203,17 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                callback(context.Addresses.Where(a => a.PatientId == p.Id).FirstOrDefault(), null);
+                Exception exeption = null;
+                Address address = null;
+                try
+                {
+                    address = context.Addresses.Where(a => a.PatientId == p.Id).FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(address, exeption);
             }
         }
         #endregion
@@ -123,7 +223,17 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                callback(context.Cards.Where(c => c.CardPatientId == p.Id).FirstOrDefault(), null);
+                Exception exeption = null;
+                Card card = null;
+                try
+                {
+                    card = context.Cards.Where(c => c.CardPatientId == p.Id).FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(card, exeption);
             }
         }
         #endregion
@@ -133,8 +243,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId).LoadAsync();
-                callback(context.CardEntries.Local, null);
+                Exception exeption = null;
+                ObservableCollection<CardEntry> cardEntries = null;
+                try
+                {
+                    await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId).LoadAsync();
+                    cardEntries = context.CardEntries.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(cardEntries, exeption);
             };
         }
 
@@ -142,8 +262,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate).LoadAsync();
-                callback(context.CardEntries.Local, null);
+                Exception exeption = null;
+                ObservableCollection<CardEntry> cardEntries = null;
+                try
+                {
+                    await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate).LoadAsync();
+                    cardEntries = context.CardEntries.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(cardEntries, exeption);
             };
         }
 
@@ -151,8 +281,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate && ce.CreationDate < latestDate).LoadAsync();
-                callback(context.CardEntries.Local, null);
+                Exception exeption = null;
+                ObservableCollection<CardEntry> cardEntries = null;
+                try
+                {
+                    await context.CardEntries.Where(ce => ce.CardId == c.CardPatientId && ce.CreationDate > earliestDate && ce.CreationDate < latestDate).LoadAsync();
+                    cardEntries = context.CardEntries.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(cardEntries, exeption);
             };
         }
 
@@ -160,17 +300,26 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                if (ce.Id != 0) // Update
+                Exception exeption = null;
+                bool correct = false;
+                try
                 {
-                    context.Entry<CardEntry>(ce).State = EntityState.Modified;
+                    if (ce.Id != 0) // Update
+                    {
+                        context.Entry<CardEntry>(ce).State = EntityState.Modified;
+                    }
+                    else // Save
+                    {
+                        //ce.CardId = c.CardPatientId;
+                        context.CardEntries.Add(ce);
+                    }
+                    correct = context.SaveChanges() > 0;
                 }
-                else // Save
+                catch (Exception ex)
                 {
-                    //ce.CardId = c.CardPatientId;
-                    context.CardEntries.Add(ce);
+                    exeption = ex;
                 }
-
-                callback(context.SaveChanges() > 0, null);
+                callback(correct, exeption);
             }
         }
 
@@ -178,9 +327,19 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                context.CardEntries.Attach(ce);
-                context.CardEntries.Remove(ce);
-                callback(context.SaveChanges() > 0, null);
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    context.CardEntries.Attach(ce);
+                    context.CardEntries.Remove(ce);
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
             }
         }
         #endregion
@@ -190,8 +349,18 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
-                callback(context.Documents.Local, null);
+                Exception exeption = null;
+                ObservableCollection<Document> documents = null;
+                try
+                {
+                    await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
+                    documents = context.Documents.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(documents, exeption);
             };
         }
 
@@ -199,16 +368,25 @@ namespace docnote.Model
         {
             using (var context = new DocnoteContext())
             {
-                if (document.Id != 0) // Update
+                Exception exeption = null;
+                bool correct = false;
+                try
                 {
-                    context.Entry(document).State = EntityState.Modified;
+                    if (document.Id != 0) // Update
+                    {
+                        context.Entry(document).State = EntityState.Modified;
+                    }
+                    else // Save
+                    {
+                        context.Documents.Add(document);
+                    }
+                    correct = context.SaveChanges() > 0;
                 }
-                else // Save
+                catch (Exception ex)
                 {
-                    context.Documents.Add(document);
+                    exeption = ex;
                 }
-
-                callback(context.SaveChanges() > 0, null);
+                callback(correct, exeption);
             }
         }
         #endregion

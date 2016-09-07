@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace docnote.ViewModel.Documents
@@ -59,10 +60,15 @@ namespace docnote.ViewModel.Documents
             _dataService.AddUpdateDocument(
                 async (isSaved, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     MetroWindow window = GetCurrentWindow();
                     if (window != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error?.Message);
+                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error?.Message);//TODO: No
                         if (result == MessageDialogResult.Affirmative)
                         {
                             _updateDocsDataGrid();
@@ -81,7 +87,7 @@ namespace docnote.ViewModel.Documents
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Hospital = hospital;
@@ -97,7 +103,14 @@ namespace docnote.ViewModel.Documents
             if (saveFileDialog.ShowDialog() == true)
             {
                 string fileName = System.IO.Directory.GetCurrentDirectory() + _path;
-                Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+                try
+                {
+                    Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.StackTrace);
+                }
             }
         }
 

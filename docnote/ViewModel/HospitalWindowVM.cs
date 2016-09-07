@@ -55,10 +55,15 @@ namespace docnote.ViewModel
             _dataService.UpdateHospital(
                 async (isUpdated, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     var window = Application.Current.Windows.OfType<HospitalWindow>().FirstOrDefault();
                     if (window != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : ""); //TODO:
                         if (result == MessageDialogResult.Affirmative) window.Close();
                     }
                 }, Hospital);
@@ -71,7 +76,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Hospital = hospital;

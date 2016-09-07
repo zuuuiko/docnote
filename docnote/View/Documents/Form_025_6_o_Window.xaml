@@ -266,7 +266,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Label>Дата наступного відвідування</Label>
                     <StackPanel>
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.DispDateOfNextVisit, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.DispDateOfNextVisit, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
                 </StackPanel>
@@ -303,28 +303,28 @@
                 <Label Padding="5 0">17. Документ про тимчасову непрацездатність</Label>
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
                     <Label DockPanel.Dock="Right" Margin="20 0 0 0">лікарняний листок виданий</Label>
                 </DockPanel>
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
                     <Label DockPanel.Dock="Right" Margin="125 0 0 0">закритий</Label>
                 </DockPanel>
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
                     <Label DockPanel.Dock="Right" Margin="20 0 0 0">довідка видана</Label>
                 </DockPanel>
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                         <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                     </StackPanel>
                     <Label DockPanel.Dock="Right" Margin="65 0 0 0">закрита</Label>
@@ -369,7 +369,7 @@
                 </DockPanel>
                 <Label HorizontalContentAlignment="Right" Margin="0 0 30 0" FontSize="10">(прізвище, підпис)</Label>
                 <DockPanel>
-                    <DatePicker FontWeight="Bold" Text="{Binding Document.SignDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Margin="10 0 50 0" DockPanel.Dock="Right" SelectedDateFormat="Long" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                    <DatePicker FontWeight="Bold" Text="{Binding Document.SignDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Margin="10 0 50 0" DockPanel.Dock="Right" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                     <Label Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Right">Дата</Label>
                 </DockPanel>
             </StackPanel>

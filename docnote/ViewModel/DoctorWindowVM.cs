@@ -53,10 +53,15 @@ namespace docnote.ViewModel
             _dataService.UpdateDoctor(
                 async (isUpdated, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     var window = Application.Current.Windows.OfType<DoctorWindow>().FirstOrDefault();
                     if (window != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : error.Message);
+                        var result = await window.ShowMessageAsync(null, isUpdated ? "збережено" : "");//TODO
                         if(result == MessageDialogResult.Affirmative) window.Close();
                     }
                 }, Doctor);
@@ -69,7 +74,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Doctor = doctor;

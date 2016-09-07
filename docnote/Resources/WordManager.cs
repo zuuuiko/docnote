@@ -12,7 +12,7 @@ using System.Windows;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace docnote.Resources
-{   
+{
     public static class WordManager
     {
         private static void FindAndReplace(Word.Application wordApp, object findText, object replaceWithText)
@@ -45,7 +45,7 @@ namespace docnote.Resources
 
         //Methode Create the document :
         public static void CreateWordDocument(object filename, object savaAs, Document doc)
-        {            
+        {
             List<int> processesbeforegen = getRunningProcesses();
             object missing = Missing.Value;
 
@@ -53,56 +53,67 @@ namespace docnote.Resources
 
             Word.Document aDoc = null;
 
-            if (File.Exists((string)filename))
+            try
             {
-                object readOnly = false; //default
-                object isVisible = false;
-
-                wordApp.Visible = false;
-
-                aDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing, ref missing);
-
-                aDoc.Activate();
-                //Find and replace:
-                Type type = doc.GetType();
-                PropertyInfo[] properties = type.GetProperties();
-
-                foreach (PropertyInfo property in properties)
+                if (File.Exists((string)filename))
                 {
-                    if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+                    object readOnly = false; //default
+                    object isVisible = false;
 
-                    var value = property.GetValue(doc);
+                    wordApp.Visible = false;
 
-                    if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
-                        value = ConvertByteToRome(value);
+                    aDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing, ref missing);
 
-                    if (value is Boolean)
-                        value = (bool)value ? 1 : 2;
+                    aDoc.Activate();
+                    //Find and replace:
+                    Type type = doc.GetType();
+                    PropertyInfo[] properties = type.GetProperties();
 
-                    FindAndReplace(wordApp, $"<<{property.Name}>>", value);
+                    foreach (PropertyInfo property in properties)
+                    {
+                        if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+
+                        var value = property.GetValue(doc);
+
+                        if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
+                            value = ConvertByteToRome(value);
+
+                        if (value is Boolean)
+                            value = (bool)value ? 1 : 2;
+
+                        FindAndReplace(wordApp, $"<<{property.Name}>>", value);
+                    }
                 }
+                else
+                {
+                    MessageBox.Show($"Файл відсутній: {filename}");
+                    return;
+                }
+
+                //Save as: filename
+                aDoc.SaveAs(ref savaAs, ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing);
+
             }
-            else
+            catch(Exception ex)
             {
-               //TODO: Show Message
-                return;
+                MessageBox.Show(ex.StackTrace);
             }
-
-            //Save as: filename
-            aDoc.SaveAs(ref savaAs, ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing);
-
+            finally
+            {
+                List<int> processesaftergen = getRunningProcesses();
+                killProcesses(processesbeforegen, processesaftergen);
+            }
             //Close Document:
             //aDoc.Close(ref missing, ref missing, ref missing);
-            List<int> processesaftergen = getRunningProcesses();
-            killProcesses(processesbeforegen, processesaftergen);
+            
         }
 
         private static object ConvertByteToRome(object value)

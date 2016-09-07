@@ -82,7 +82,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Patients = patients;
@@ -104,6 +104,11 @@ namespace docnote.ViewModel
             _dataService.DeletePatient(
                 async (isDeleted, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     if (window != null && isDeleted)
                         await window.ShowMessageAsync(null, $"{p.FirstName} {p.LastName} видалений");
                 }, p);
@@ -147,7 +152,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Patients = patients;

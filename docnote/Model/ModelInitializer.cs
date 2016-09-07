@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace docnote.Model
 {
-    class ModelInitializer : DropCreateDatabaseAlways<DocnoteContext>
+    class ModelInitializer : CreateDatabaseIfNotExists<DocnoteContext>
     {
         protected override void Seed(DocnoteContext context)
         {
@@ -280,7 +280,15 @@ namespace docnote.Model
             };
             h.Doctors.Add(d);
             context.Hospitals.Add(h);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.StackTrace);
+            }
+            
             #endregion
         }
     }

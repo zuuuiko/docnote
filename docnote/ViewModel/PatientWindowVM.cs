@@ -205,6 +205,11 @@ namespace docnote.ViewModel
             _dataService.DeleteCardEntry(
                 async (isDeleted, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     if (window != null && isDeleted)
                         await window.ShowMessageAsync(null, $"{ce.CreationDate} видалений");
                 }, ce);
@@ -221,10 +226,15 @@ namespace docnote.ViewModel
             _dataService.AddUpdatePatient(
                 async (isSaved, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
                     if (window != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error.Message);
+                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : ""); //TODO:
                         if (result == MessageDialogResult.Affirmative)
                         {
                             _updatePatientsDataGrid();
@@ -239,7 +249,11 @@ namespace docnote.ViewModel
             _dataService.AddUpdatePatient(
                (isSaved, error) =>
                 {
-                    
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                 }, Patient);
         }
 
@@ -294,7 +308,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Patient.Address = address;
@@ -308,7 +322,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Patient.Card = card;
@@ -322,7 +336,7 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     Documents = documents;
@@ -336,11 +350,11 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Patient.Card);
+                }, Patient?.Card);
         }
 
         private void LoadCardEntriesByPeriod(DateTime earliestDate, DateTime latestDate)
@@ -350,11 +364,11 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Patient.Card, earliestDate, latestDate);
+                }, Patient?.Card, earliestDate, latestDate);
         }
 
         private void LoadCardEntriesByPeriod(DateTime earliestDate)
@@ -364,11 +378,11 @@ namespace docnote.ViewModel
                 {
                     if (error != null)
                     {
-                        // Report error here
+                        MessageBox.Show(error.StackTrace);
                         return;
                     }
                     CardEntries = cardEntries;
-                }, Patient.Card, earliestDate);
+                }, Patient?.Card, earliestDate);
         }
 
         //public override void Cleanup()

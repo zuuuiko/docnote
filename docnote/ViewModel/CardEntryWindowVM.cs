@@ -67,10 +67,15 @@ namespace docnote.ViewModel
             _dataService.AddUpdateCardEntry(
                 async (isSaved, error) =>
                 {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
                     var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
                     if (window != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error?.Message);
+                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error?.Message);//TODO: NO
                         if (result == MessageDialogResult.Affirmative)
                         {
                             _updateCardEntriesDataGrid();
