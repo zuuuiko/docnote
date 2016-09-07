@@ -118,7 +118,7 @@ namespace docnote.Resources
 
         private static object ConvertByteToRome(object value)
         {
-            switch (value.ToString())
+            switch (value?.ToString())
             {
                 case "1": return "I";
                 case "2": return "II";
