@@ -374,7 +374,7 @@ namespace docnote.Model
                 {
                     if (document.Id != 0) // Update
                     {
-                        context.Entry(document).State = EntityState.Modified;
+                        context.Entry<Document>(document).State = EntityState.Modified;
                     }
                     else // Save
                     {
