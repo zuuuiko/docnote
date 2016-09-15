@@ -33,10 +33,10 @@
             <Controls:Flyout x:Name="documentsFlyout" Header="Документи" Position="Right" Width="400" Theme="Accent">
                 <StackPanel>
                     <ComboBox x:Name="DocumentFormButton"
-                                         Margin="10 0 10 50"
-                                         DisplayMemberPath="DocumentName"
-                                         ItemsSource="{Binding DocumentFormList}" 
-                                         SelectedItem="{Binding SelectedDocumentForm}">
+                                        Margin="10 0 10 50"
+                                        DisplayMemberPath="DocumentName"
+                                        ItemsSource="{Binding DocumentFormList}" 
+                                        SelectedItem="{Binding SelectedDocumentForm}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged" >
                                 <i:InvokeCommandAction Command="{Binding CreateOpenDocumentCommand}"
