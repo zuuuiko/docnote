@@ -36,6 +36,7 @@ namespace docnote.ViewModel.Documents
 
         public ICommand CreateAndSaveWordClickCommand { get; protected set; }
         public ICommand SaveToDBCommand { get; protected set; }
+        public ICommand CloseDocumentClickCommand { get; private set; }
 
         public AbstractFormVM(Document doc, IDataService dataService, Action reloadDocs, string path)
         {
@@ -44,6 +45,7 @@ namespace docnote.ViewModel.Documents
             _path = path;
             CreateAndSaveWordClickCommand = new RelayCommand(CreateAndSaveWord);
             SaveToDBCommand = new RelayCommand(SaveDocumentToDB);
+            CloseDocumentClickCommand = new RelayCommand(CloseDocumentWindow);
             if (doc.Id != 0)
             {
                 _doc = doc;
@@ -53,6 +55,11 @@ namespace docnote.ViewModel.Documents
                 LoadHospital();
                 Init(doc);
             }
+        }
+
+        private void CloseDocumentWindow()
+        {
+            GetCurrentWindow().Close();
         }
 
         private void SaveDocumentToDB()

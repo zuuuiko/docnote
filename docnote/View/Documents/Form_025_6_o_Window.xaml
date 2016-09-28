@@ -25,8 +25,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-        <Button Content="Зберегти" Command="{Binding SaveToDBCommand}"/>
-        <Button Content="Згенерувати і зберегти Ворд" Command="{Binding CreateAndSaveWordClickCommand}"/>
+            <Button Content="Зберегти" Command="{Binding SaveToDBCommand}"/>
+            <Button Content="Закрити"  Command="{Binding CloseDocumentClickCommand}" Margin="10 0"/>
+            <Button Content="Згенерувати і зберегти Ворд" Command="{Binding CreateAndSaveWordClickCommand}"/>
         </StackPanel>
         <Border Padding="5" BorderBrush="Black" BorderThickness="2" Grid.Row="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -386,6 +387,6 @@
             </ScrollViewer>
         </Border>
     </Grid>
-        
+
     <!--</StackPanel>-->
 </Controls:MetroWindow>

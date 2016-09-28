@@ -319,6 +319,7 @@ namespace docnote.Model
                 {
                     exeption = ex;
                 }
+                context.Entry<CardEntry>(ce).State = EntityState.Detached;
                 callback(correct, exeption);
             }
         }
