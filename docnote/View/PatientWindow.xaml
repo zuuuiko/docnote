@@ -49,18 +49,24 @@
                                           CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}"/>
                         </ComboBox.InputBindings>-->
                     </ComboBox>
-                    <DataGrid x:Name="DocumentsGrid" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="False" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
-                            <DataGridTextColumn Header="Назва документа" Binding="{Binding Path=DocumentName}"/>
-                        </DataGrid.Columns>
-                        <DataGrid.InputBindings>
-                            <MouseBinding MouseAction="LeftDoubleClick"
+                    <DockPanel>
+                        <DataGrid Margin="10 0 0 0" DockPanel.Dock="Left" x:Name="DocumentsGrid" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
+                                <DataGridTextColumn Header="Назва документа" Binding="{Binding Path=DocumentName}"/>
+                            </DataGrid.Columns>
+                            <DataGrid.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick"
                                           Command="{Binding Path=CreateOpenDocumentCommand}"
                                           CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}"/>
-                        </DataGrid.InputBindings>
-
-                    </DataGrid>
+                            </DataGrid.InputBindings>
+                        </DataGrid>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Width="50" Height="50" Content="-" 
+                            Command="{Binding DeleteDocumentClickCommand}"
+                            CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}" Background="White"/>
+                    </DockPanel>
                 </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
@@ -190,7 +196,7 @@
                         <RadioButton GroupName="Work" IsChecked="{Binding Path=Patient.IsWorking}" Content="так" Margin="15,0,15,0"/>
                         <RadioButton GroupName="Work" IsChecked="{Binding Path=Patient.IsWorking, Converter={StaticResource BoolInverterConverter}}" Content="ні" Margin="0,0,10,0"/>
                     </StackPanel>
-                    
+
                     <Label Content="Телефон батьків" Grid.Row="2" />
                     <Label Content="Місце навчання / роботи" Grid.Row="3" />
                     <Label Content="Телефон" Grid.Row="3" Grid.Column="2"/>

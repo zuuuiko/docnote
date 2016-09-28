@@ -109,6 +109,7 @@ namespace docnote.ViewModel
         public ICommand ClosePatientClickCommand { get; private set; }
         public ICommand OpenDocumentsFlyoutCommand { get; private set; }
         public ICommand CreateOpenDocumentCommand { get; private set; }
+        public ICommand DeleteDocumentClickCommand { get; private set; }
 
         [PreferredConstructor]
         public PatientWindowVM(Action reloadPatients, IDataService dataService)
@@ -145,7 +146,33 @@ namespace docnote.ViewModel
             OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
             DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(), new Form_063_o() };
             CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
+            DeleteDocumentClickCommand = new RelayCommand<Document>(DeleteDocument);
+        }
 
+        private async void DeleteDocument(Document d)
+        {
+            if (d == null) return;
+
+            var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
+            if (window != null)
+            {
+                var result = await window.ShowMessageAsync("Видалити?", $"{d.DocumentName} {d.CreationDate}",
+                                                                           MessageDialogStyle.AffirmativeAndNegative);
+                if (result == MessageDialogResult.Negative) return;
+            }
+
+            _dataService.DeleteDocument(
+                async (isDeleted, error) =>
+                {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
+                    if (window != null && isDeleted)
+                        await window.ShowMessageAsync(null, $"{d.DocumentName} {d.CreationDate} видалений");
+                }, d);
+            LoadDocuments();
         }
 
         private void CreateOpenDocument(Document doc)

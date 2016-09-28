@@ -390,6 +390,31 @@ namespace docnote.Model
                 callback(correct, exeption);
             }
         }
+
+        public void DeleteDocument(Action<bool, Exception> callback, Document d)
+        {
+            using (var context = new DocnoteContext())
+            {
+                bool correct = false;
+                Exception exeption = null;
+                try
+                {
+                    //http://stackoverflow.com/questions/6746804/code-first-tpt-and-cascade-on-delete
+                    //Patient p = context.Patients
+                    //    .Include(e => e.Documents)
+                    //    .Single(e => e.Id == patient.Id);
+
+                    context.Documents.Attach(d);
+                    context.Documents.Remove(d);
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
+            }
+        }
         #endregion
 
     }

@@ -49,6 +49,8 @@ namespace docnote.Model
         #region Documents
         void GetDocumentsAsync(Action<ObservableCollection<Document>, Exception> callback, Patient p);
         void AddUpdateDocument(Action<bool, Exception> callback, Document document);
+        void DeleteDocument(Action<bool, Exception> callback, Document d);
+
         #endregion
     }
 }
