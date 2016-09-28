@@ -386,6 +386,7 @@ namespace docnote.Model
                 {
                     exeption = ex;
                 }
+                context.Entry<Document>(document).State = EntityState.Detached;
                 callback(correct, exeption);
             }
         }

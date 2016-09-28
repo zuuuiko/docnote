@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace docnote.Model
 {
-    //class ModelInitializer : DropCreateDatabaseAlways<DocnoteContext>
-    class ModelInitializer : CreateDatabaseIfNotExists<DocnoteContext>
+    class ModelInitializer : DropCreateDatabaseAlways<DocnoteContext>
+    //class ModelInitializer : CreateDatabaseIfNotExists<DocnoteContext>
     {
         protected override void Seed(DocnoteContext context)
         {

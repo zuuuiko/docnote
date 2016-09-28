@@ -9,8 +9,11 @@ namespace docnote.Model
     {
         static DocnoteContext()
         {
-            //Database.SetInitializer<DocnoteContext>(new DropCreateDatabaseIfModelChanges<DocnoteContext>());
+#if DEBUG
             Database.SetInitializer<DocnoteContext>(new ModelInitializer());
+#else       
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DocnoteContext, docnote.Migrations.Configuration>("ConnectionStringDocnoteDB"));
+#endif
         }
 
         public DocnoteContext()
