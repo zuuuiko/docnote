@@ -16,6 +16,8 @@ namespace docnote.Model
 
         public string EntryText { get; set; }
 
+        public bool? IsHomeVisit { get; set; } = false;
+
         public virtual Card Card { get; set; }
     }
 }

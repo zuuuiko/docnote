@@ -317,6 +317,7 @@
                             <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
+                        <TextBox DockPanel.Dock="Right" FontWeight="Bold" Text="{Binding Document.IllSheetCode}" Margin="15 0 5 0" MinWidth="200" BorderBrush="Black" BorderThickness="0 0 0 1" TextWrapping="Wrap"/>
                         <Label DockPanel.Dock="Right" Margin="20 0 0 0">лікарняний листок виданий</Label>
                     </DockPanel>
                     <DockPanel>

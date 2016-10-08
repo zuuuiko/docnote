@@ -168,6 +168,7 @@ namespace docnote.Model
                 InvGroupFirst = 3,
                 InvGroupChornobyl = 3,
                 InvGroupConfirmed = 3,
+                IllSheetCode = "11somecode1",
                 IllSheetOpenDate = new DateTime(2016, 8, 12),
                 IllSheetCloseDate = new DateTime(2016, 8, 12),
                 DovidkaOpenDate = new DateTime(2016, 8, 12),

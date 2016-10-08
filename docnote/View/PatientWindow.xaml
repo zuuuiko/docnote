@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:docnote.View"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:resources="clr-namespace:docnote.Resources"
@@ -63,9 +64,11 @@
                         </DataGrid>
                         <Button Style="{DynamicResource MetroCircleButtonStyle}"
                                 HorizontalAlignment="Center" VerticalAlignment="Top"
-                                Width="50" Height="50" Content="-" 
+                                Width="50" Height="50"
                             Command="{Binding DeleteDocumentClickCommand}"
-                            CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}" Background="White"/>
+                            CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}" Background="White">
+                            <iconPacks:PackIconFontAwesome Kind="Minus"/>
+                        </Button>
                     </DockPanel>
                 </StackPanel>
             </Controls:Flyout>
@@ -73,9 +76,14 @@
     </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Документи" 
+            <Button
                     Command="{Binding OpenDocumentsFlyoutCommand}"
-                    CommandParameter="{Binding ElementName=documentsFlyout}"/>
+                    CommandParameter="{Binding ElementName=documentsFlyout}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconFontAwesome Kind="Book" VerticalAlignment="Center"/>
+                    <Label FontSize="14" FontWeight="Bold" Foreground="White">ДОКУМЕНТИ</Label> 
+                </StackPanel>
+            </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid Style="{StaticResource MyGridStyle}" >

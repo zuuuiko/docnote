@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"        
         xmlns:resources="clr-namespace:docnote.Resources"
         mc:Ignorable="d ignore"
         Title="Doc NOTE"
@@ -28,23 +29,23 @@
         </Grid.ColumnDefinitions>
         <Label FontSize="21.333">Список пацієнтів</Label>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
-            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="+" 
-                    Command="{Binding AddPatientClickCommand}"/>
-            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="-" 
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50"
+                    Command="{Binding AddPatientClickCommand}">
+                <iconPacks:PackIconFontAwesome Kind="Plus"/>
+            </Button>
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" 
                     Command="{Binding DeletePatientClickCommand}"
-                    CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}"/>
+                    CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}">
+                <iconPacks:PackIconFontAwesome Kind="Minus"/>
+            </Button>
         </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal">
-            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Д" Command="{Binding OpenDoctorCommand}">
-                <!--<Rectangle Width="20"
-                           Height="20">
-                    <Rectangle.Fill>
-                        <VisualBrush Stretch="Fill"
-                                     Visual="{StaticResource appbar_city}" />
-                    </Rectangle.Fill>
-                </Rectangle>-->
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Command="{Binding OpenDoctorCommand}">
+                <iconPacks:PackIconFontAwesome Kind="UserMd" Width="30" Height="30"/>
             </Button>
-            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Content="Л" Command="{Binding OpenHospitalCommand}"></Button>
+            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Command="{Binding OpenHospitalCommand}">
+                <iconPacks:PackIconFontAwesome Kind="HospitalOutline" Width="30" Height="30"/>
+            </Button>
         </StackPanel>
         <Label Grid.Row="1" Content="Пошук за прізвищем"/>
         <TextBox Grid.Row="1" Grid.Column="1" x:Name="SearchByLNameBox">

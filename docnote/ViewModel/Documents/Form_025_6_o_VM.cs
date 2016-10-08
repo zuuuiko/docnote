@@ -15,9 +15,10 @@ namespace docnote.ViewModel.Documents
 {
     class Form_025_6_o_VM : AbstractFormVM
     {
+        //ICollection<CardEntry> cardEntries;
         //PatientWindowVM _patientVM;
-        public Form_025_6_o_VM(Document doc, IDataService dataService, Action reloadDocs)
-            :base(doc, dataService, reloadDocs, @"\f025-6_oWT.docx")
+        public Form_025_6_o_VM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs)
+            :base(doc, cardEntries, dataService, reloadDocs, @"\f025-6_oWT.docx")
         {
         }
 
@@ -26,7 +27,7 @@ namespace docnote.ViewModel.Documents
             return Application.Current.Windows.OfType<View.Documents.Form_025_6_o_Window>().FirstOrDefault();
         }
 
-        protected override void Init(Document doc)
+        protected override void Init(Document doc, ICollection<CardEntry> cardEntries)
         {
             //_patientVM = patientVM;
             //if (doc.Id != 0)
@@ -51,12 +52,43 @@ namespace docnote.ViewModel.Documents
                 PatientBuilding = p.Address.Building,
                 PatientApartment = p.Address.Apartment,
                 PatientIsWorking = p.IsWorking,
-                //VisitDatesHospital
+                //VisitDatesHospital,
                 //CountVisitsHospital
                 //VisitDatesHome
                 //CountVisitsHome
                 PatientId = p.Id
             };
+            InitVisitsFieilds(cardEntries);
+        }
+
+        private void InitVisitsFieilds(ICollection<CardEntry> cardEntries)
+        {
+            StringBuilder strHome = new StringBuilder();
+            StringBuilder strHospital = new StringBuilder();
+            byte countHome = 0;
+            byte countHospital = 0;
+            foreach (var item in cardEntries)
+            {
+                if (!item.IsHomeVisit.GetValueOrDefault() )
+                {
+                    strHospital.Append(item.CreationDate.ToShortDateString());
+                    strHospital.Append(", ");
+                    countHospital++;
+                }
+                else
+                {
+                    strHome.Append(item.CreationDate.ToShortDateString());
+                    strHome.Append(", ");
+                    countHome++;
+                }
+            }
+            strHospital.Remove(strHospital.Length - 2, 2);
+            strHome.Remove(strHome.Length - 2, 2);
+            Form_025_6_o f = _doc as Form_025_6_o;
+            f.VisitDatesHome = strHome.ToString();
+            f.VisitDatesHospital = strHospital.ToString();
+            f.CountVisitsHome = countHome;
+            f.CountVisitsHospital = countHospital;
         }
     }
 }

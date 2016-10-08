@@ -41,9 +41,9 @@ namespace docnote.Model
         public byte? Contingent { get; set; }               //from view
         public byte? Purpose { get; set; }                  //from view
         public bool? IsFirstVisit { get; set; }             //from view
-        public string VisitDatesHospital { get; set; }      //from card
+        public string VisitDatesHospital { get; set; }      //from cardEntry
         public byte? CountVisitsHospital { get; set; }
-        public string VisitDatesHome { get; set; }          //from card
+        public string VisitDatesHome { get; set; }          //from cardEntry
         public byte? CountVisitsHome { get; set; }
         [StringLength(30)]
         public string DiagnosisMain { get; set; }           //from view
@@ -68,8 +68,8 @@ namespace docnote.Model
         public byte? InvGroupChornobyl { get; set; }        //from view
         [Roman]
         public byte? InvGroupConfirmed { get; set; }        //from view
-        //[StringLength(20)]
-        //public string IllSheetCode { get; set; }            //from view
+        [StringLength(20)]
+        public string IllSheetCode { get; set; }            //from view
         public DateTime? IllSheetOpenDate { get; set; }     //from view
         public DateTime? IllSheetCloseDate { get; set; }    //from view
         public DateTime? DovidkaOpenDate { get; set; }      //from view

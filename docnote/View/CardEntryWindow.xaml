@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:docnote.View"
         mc:Ignorable="d"
         Title="Запис" 
@@ -20,8 +21,15 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Дата запису" />
-        <Label Grid.Column="1" HorizontalContentAlignment="Left" Content="{Binding CardEntry.CreationDate}" ContentStringFormat="dd/MM/yyyy HH:mm"/>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Label Content="Дата запису" VerticalAlignment="Center"/>
+            <Label Grid.Column="1" HorizontalContentAlignment="Left" VerticalAlignment="Center" Content="{Binding CardEntry.CreationDate}" ContentStringFormat="dd/MM/yyyy HH:mm"/>
+            <ToggleButton Width="30" Height="30" Margin="10 0"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}"
+                          IsChecked="{Binding Path=CardEntry.IsHomeVisit}">
+                <iconPacks:PackIconFontAwesome Kind="Home" />
+            </ToggleButton>
+        </StackPanel>
         <TextBox Grid.Row="1" Grid.ColumnSpan="2" 
                  TextWrapping="Wrap" 
                  VerticalScrollBarVisibility="Auto"

@@ -38,7 +38,7 @@ namespace docnote.ViewModel.Documents
         public ICommand SaveToDBCommand { get; protected set; }
         public ICommand CloseDocumentClickCommand { get; private set; }
 
-        public AbstractFormVM(Document doc, IDataService dataService, Action reloadDocs, string path)
+        public AbstractFormVM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs, string path)
         {
             _dataService = dataService;
             _updateDocsDataGrid = reloadDocs;
@@ -53,7 +53,7 @@ namespace docnote.ViewModel.Documents
             else
             {
                 LoadHospital();
-                Init(doc);
+                Init(doc, cardEntries);
             }
         }
 
@@ -101,7 +101,7 @@ namespace docnote.ViewModel.Documents
                 });
         }
 
-        protected abstract void Init(Document doc);
+        protected abstract void Init(Document doc, ICollection<CardEntry> cardEntries);
 
         private void CreateAndSaveWord()
         {

@@ -16,7 +16,7 @@ namespace docnote.ViewModel.Documents
     class Form_063_o_VM : AbstractFormVM
     {
         public Form_063_o_VM(Document doc, IDataService dataService, Action reloadDocs)
-            :base(doc, dataService, reloadDocs, @"\Form_063_o.docx")
+            :base(doc, null, dataService, reloadDocs, @"\Form_063_o.docx")
         {
         }
 
@@ -25,7 +25,7 @@ namespace docnote.ViewModel.Documents
             return Application.Current.Windows.OfType<View.Documents.Form_063_o_Window>().FirstOrDefault();
         }
 
-        protected override void Init(Document doc)
+        protected override void Init(Document doc, ICollection<CardEntry> cardEntries)
         {
             //_patientVM = patientVM;
             //if (doc.Id != 0)
