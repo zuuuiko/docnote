@@ -69,7 +69,7 @@ namespace docnote.ViewModel.Documents
             byte countHospital = 0;
             foreach (var item in cardEntries)
             {
-                if (!item.IsHomeVisit.GetValueOrDefault() )
+                if (!item.IsHomeVisit.GetValueOrDefault())
                 {
                     strHospital.Append(item.CreationDate.ToShortDateString());
                     strHospital.Append(", ");
@@ -82,8 +82,8 @@ namespace docnote.ViewModel.Documents
                     countHome++;
                 }
             }
-            strHospital.Remove(strHospital.Length - 2, 2);
-            strHome.Remove(strHome.Length - 2, 2);
+            if (strHospital.Length > 1) strHospital.Remove(strHospital.Length - 2, 2);
+            if (strHome.Length > 1) strHome.Remove(strHome.Length - 2, 2);
             Form_025_6_o f = _doc as Form_025_6_o;
             f.VisitDatesHome = strHome.ToString();
             f.VisitDatesHospital = strHospital.ToString();
