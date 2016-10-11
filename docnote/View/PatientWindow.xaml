@@ -371,7 +371,7 @@
             </DataGrid.InputBindings>
         </DataGrid>
         <ScrollViewer Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3">
-            <TextBlock Text="{Binding ElementName=CardEntriesGrid, Path=SelectedItem.EntryText}" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding ElementName=CardEntriesGrid, Path=SelectedItem.EntryText}" TextWrapping="Wrap" TextAlignment="Justify"/>
         </ScrollViewer>
 
     </Grid>

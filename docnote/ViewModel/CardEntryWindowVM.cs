@@ -6,10 +6,12 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace docnote.ViewModel
@@ -33,13 +35,22 @@ namespace docnote.ViewModel
             }
         }
 
+        private ObservableCollection<Disease> _diseases;
+        public ObservableCollection<Disease> Diseases
+        {
+            get { return _diseases; }
+            set { Set(ref _diseases, value); }
+        }
+
         public ICommand SaveAndCloseCardEntryClickCommand { get; private set; }
         public ICommand CloseCardEntryClickCommand { get; private set; }
+        public ICommand DiseaseDoubleClickCommand { get; private set; }
 
         public CardEntryWindowVM(Action reload, CardEntry cardEntry, IDataService dataService)
         {
             _dataService = dataService;
             CardEntry = cardEntry;
+            Diseases = new ObservableCollection<Disease>();
             Init(reload);         
         }
         //new CardEntry
@@ -55,6 +66,18 @@ namespace docnote.ViewModel
             _updateCardEntriesDataGrid = reload;
             SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
             CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
+            DiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
+        }
+
+        private void AddDiseaseToDiseases(TreeViewItem obj)
+        {
+            var str = obj.Header.ToString();
+            var pos = str.IndexOf(' ');
+            var disease = new Disease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+            if (!Diseases.Any(d => d.Equals(disease)))
+            {
+                Diseases.Add(disease);
+            }
         }
 
         private void CloseCardEntryWindow()

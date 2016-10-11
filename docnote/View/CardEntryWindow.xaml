@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:docnote.View"
@@ -30,11 +31,73 @@
                 <iconPacks:PackIconFontAwesome Kind="Home" />
             </ToggleButton>
         </StackPanel>
-        <TextBox Grid.Row="1" Grid.ColumnSpan="2" 
-                 TextWrapping="Wrap" 
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="2" >
+            <Expander ExpandDirection="Left" >
+                <Expander.Header>
+                    <TextBlock Text="Діагнози" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="-90"/>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Expander.Header>
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Margin="0 0 0 10" BorderBrush="LightBlue" BorderThickness="2" MaxHeight="200">
+                        <DataGrid ItemsSource="{Binding Diseases}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код" Binding="{Binding Code}"/>
+                                <DataGridTextColumn Header="Діагноз" Binding="{Binding Name}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TreeView x:Name="DiseaseTreeView" Margin="0 0 5 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding DiseaseDoubleClickCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=DiseaseTreeView}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <!--<TreeView.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=DiseaseDoubleClickCommand}"
+                                          CommandParameter="{Binding ElementName=DiseaseTreeView, Path=SelectedItem}"/>
+                        </TreeView.InputBindings>-->
+                                <TreeViewItem Header="A00-B99 Некоторые инфекционные и паразитарные болезни">
+                                    <TreeViewItem Header="A00-A09 Кишечные инфекции">
+                                        <TreeViewItem Header="A00 Холера"/>
+                                        <TreeViewItem Header="A01 Тиф и паратиф"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="A15-A19 Туберкулез"></TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="C00-D48 Новообразования">
+                                    <TreeViewItem Header="C00-C97 Злокачественные новообразования">
+                                        <TreeViewItem Header="C00-C14 Злокачественные новообразования губы, полости рта и глотки">
+                                            <TreeViewItem Header="C00 Злокачественное новообразование губы"/>
+                                            <TreeViewItem Header="C01 Злокачественные новообразования основания языка"/>
+                                            <TreeViewItem Header="C02 Злокачественное новообразование других и неуточненных частей языка">
+                                                <TreeViewItem Header="C02.0	Спинки языка"/>
+                                                <TreeViewItem Header="C02.1	Боковой поверхности языка"/>
+                                            </TreeViewItem>
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="C15-C26 Злокачественные новообразования органов пищеварения">
+                                        </TreeViewItem>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="D00-D09 Новообразования in situ">
+                                    </TreeViewItem>
+                                </TreeViewItem>
+                            </TreeView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Expander>
+            <TextBox  
+                 TextWrapping="Wrap" TextAlignment="Justify"
                  VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True" 
                  Text="{Binding CardEntry.EntryText}"></TextBox>
+        </DockPanel>
         <Button Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="12" Content="Зберегти і закрити" Margin="0,10" Command="{Binding SaveAndCloseCardEntryClickCommand}"/>
         <Button Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="12" Content="Закрити" Margin="10,10,534,0" Command="{Binding CloseCardEntryClickCommand}" Grid.Column="1"/>
     </Grid>

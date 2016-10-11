@@ -103,6 +103,7 @@
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\CardEntry.cs" />
     <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\Disease.cs" />
     <Compile Include="Model\DocnoteContext.cs" />
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\Document.cs" />
