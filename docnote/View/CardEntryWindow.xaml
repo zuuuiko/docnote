@@ -41,8 +41,11 @@
                     </TextBlock>
                 </Expander.Header>
                 <DockPanel>
+                    <Button DockPanel.Dock="Top" Content="Видалити хворобу" 
+                        Command="{Binding DeleteDiseaseClickCommand}"
+                        CommandParameter="{Binding ElementName=DiseasesGrid, Path=SelectedItem}"></Button>
                     <Border DockPanel.Dock="Top" Margin="0 0 0 10" BorderBrush="LightBlue" BorderThickness="2" MaxHeight="200">
-                        <DataGrid ItemsSource="{Binding Diseases}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="DiseasesGrid" ItemsSource="{Binding Diseases}" SelectedItem="{Binding SelectedDisease}" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding Code}"/>
                                 <DataGridTextColumn Header="Діагноз" Binding="{Binding Name}"/>

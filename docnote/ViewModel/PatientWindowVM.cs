@@ -101,6 +101,19 @@ namespace docnote.ViewModel
             }
         }
 
+        private ObservableCollection<Disease> _diseases;
+        public ObservableCollection<Disease> Diseases
+        {
+            get
+            {
+                return _diseases;
+            }
+            set
+            {
+                Set(ref _diseases, value);
+            }
+        }
+
         public ICommand ShowCardEntriesCommand { get; private set; }
         public ICommand CardEntryDoubleClickCommand { get; private set; }
         public ICommand AddCardEntryClickCommand { get; private set; }
@@ -128,6 +141,7 @@ namespace docnote.ViewModel
             LoadAddress();
             LoadCard();
             LoadCardEntries();
+            LoadDiseases();
             Init(reloadPatients);
         }
 
@@ -287,7 +301,7 @@ namespace docnote.ViewModel
         {
             CardEntryWindow cew = new CardEntryWindow();
             ce.Card = Patient.Card;
-            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, LoadDiseases, ce, Diseases.ToList(), _dataService);
             cew.ShowDialog();
         }
 
@@ -302,7 +316,7 @@ namespace docnote.ViewModel
 
             CardEntryWindow cew = new CardEntryWindow();
             CardEntry ce = new CardEntry { CardId = Patient.Card.CardPatientId };
-            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, LoadDiseases, ce, Diseases.ToList(), _dataService);
             cew.ShowDialog();
         }
 
@@ -409,6 +423,21 @@ namespace docnote.ViewModel
                     }
                     CardEntries = cardEntries;
                 }, Patient?.Card, earliestDate);
+        }
+
+        public void LoadDiseases()
+        {
+            _dataService.GetDiseasesAsync(
+                (diseases, error) =>
+                {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
+                    Diseases = diseases;
+                    //Patient.Card.Diseases = diseases;
+                }, Patient?.Card);
         }
 
         //public override void Cleanup()

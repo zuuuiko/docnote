@@ -103,7 +103,7 @@ namespace docnote.ViewModel.Documents
 
         protected abstract void Init(Document doc, ICollection<CardEntry> cardEntries);
 
-        private void CreateAndSaveWord()
+        private async void CreateAndSaveWord()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Word Documents| *.doc;*.docx";
@@ -113,6 +113,11 @@ namespace docnote.ViewModel.Documents
                 try
                 {
                     Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+                    MetroWindow window = GetCurrentWindow();
+                    if (window != null)
+                    {
+                        var result = await window.ShowMessageAsync(null, $"Файл: ${saveFileDialog.FileName} збережено.");//TODO: No
+                    }
                 }
                 catch (Exception ex)
                 {

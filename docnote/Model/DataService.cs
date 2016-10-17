@@ -60,7 +60,7 @@ namespace docnote.Model
                     exeption = ex;
                 }
                 callback(correct, exeption);
-               
+
             }
         }
 
@@ -343,6 +343,59 @@ namespace docnote.Model
                 callback(correct, exeption);
             }
         }
+        #endregion
+
+        #region Disease
+        public async void GetDiseasesAsync(Action<ObservableCollection<Disease>, Exception> callback, Card c)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                ObservableCollection<Disease> diseases = null;
+                try
+                {
+                    await context.Diseases.Where(dis => dis.CardId == c.CardPatientId).LoadAsync();
+                    diseases = context.Diseases.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(diseases, exeption);
+            };
+        }
+        public void AddDiseases(Action<bool, Exception> callback, IEnumerable<Disease> diseases, int cardId)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    var contextDiseases = context.Diseases.Where(dis => dis.CardId == cardId).ToList();
+                    foreach (var dis in diseases.Except(contextDiseases))
+                    {
+                        //if (dis.CardId == 0)
+                        //{
+                            dis.CardId = cardId;
+                            context.Diseases.Add(dis);
+                        //}
+                    }
+                    foreach (var dis in contextDiseases.Except(diseases))
+                    {
+                        context.Diseases.Attach(dis);
+                        context.Diseases.Remove(dis);
+                    }
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
+            }
+        }
+
         #endregion
 
         #region Documents

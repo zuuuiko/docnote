@@ -12,6 +12,7 @@ namespace docnote.Model
         public Card()
         {
             CardEntries = new HashSet<CardEntry>();
+            Diseases = new HashSet<Disease>();
         }
 
         [Key]
@@ -27,6 +28,8 @@ namespace docnote.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CardEntry> CardEntries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Disease> Diseases { get; set; }
 
         public virtual Patient Patient { get; set; }
     }

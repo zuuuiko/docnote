@@ -20,6 +20,7 @@ namespace docnote.ViewModel
     {
         private readonly IDataService _dataService;
         Action _updateCardEntriesDataGrid;
+        Action _updateDiseases;
         //PatientWindowVM _patientVM;
 
         private CardEntry _cardEntry;
@@ -41,18 +42,37 @@ namespace docnote.ViewModel
             get { return _diseases; }
             set { Set(ref _diseases, value); }
         }
+        private Disease _selectedDisease;
+        public Disease SelectedDisease
+        {
+            get { return _selectedDisease; }
+            set { Set(ref _selectedDisease, value); }
+        }
 
         public ICommand SaveAndCloseCardEntryClickCommand { get; private set; }
         public ICommand CloseCardEntryClickCommand { get; private set; }
         public ICommand DiseaseDoubleClickCommand { get; private set; }
+        public ICommand DeleteDiseaseClickCommand { get; private set; }
 
-        public CardEntryWindowVM(Action reload, CardEntry cardEntry, IDataService dataService)
+        public CardEntryWindowVM(Action reload, Action reloadDiseases, CardEntry cardEntry, List<Disease> diseases, IDataService dataService)
         {
             _dataService = dataService;
             CardEntry = cardEntry;
-            Diseases = new ObservableCollection<Disease>();
-            Init(reload);         
+            Diseases = new ObservableCollection<Disease>(diseases);
+            _updateDiseases = reloadDiseases;
+            _updateCardEntriesDataGrid = reload;
+            SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
+            CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
+            DiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
+            DeleteDiseaseClickCommand = new RelayCommand<Disease>(DeleteDisease);
+            //Init(reload);         
         }
+
+        private void DeleteDisease(Disease obj)
+        {
+            Diseases.Remove(obj);
+        }
+
         //new CardEntry
         //public CardEntryWindowVM(Action reload, IDataService dataService)
         //{
@@ -61,19 +81,19 @@ namespace docnote.ViewModel
         //    Init(reload);
         //}
 
-        private void Init(Action reload)
-        {
-            _updateCardEntriesDataGrid = reload;
-            SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
-            CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
-            DiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
-        }
+        //private void Init(Action reload)
+        //{
+        //    _updateCardEntriesDataGrid = reload;
+        //    SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
+        //    CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
+        //    DiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
+        //}
 
         private void AddDiseaseToDiseases(TreeViewItem obj)
         {
             var str = obj.Header.ToString();
             var pos = str.IndexOf(' ');
-            var disease = new Disease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+            var disease = new Disease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1)};
             if (!Diseases.Any(d => d.Equals(disease)))
             {
                 Diseases.Add(disease);
@@ -87,6 +107,14 @@ namespace docnote.ViewModel
 
         private void SaveAndCloseCardEntry()
         {
+            _dataService.AddDiseases((isSaved, error) =>
+            {
+                if (isSaved)
+                {
+                    _updateDiseases();
+                }
+            }, Diseases.ToList(), CardEntry.CardId);
+
             _dataService.AddUpdateCardEntry(
                 async (isSaved, error) =>
                 {

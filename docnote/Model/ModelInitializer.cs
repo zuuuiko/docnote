@@ -59,6 +59,12 @@ namespace docnote.Model
             };
             #endregion
 
+            #region Disease
+            var dis1 = new Disease { Code = "C02.0", Name = "Спинки языка" };
+            var dis2 = new Disease { Code = "C02.1", Name = "Боковой поверхности языка" };
+            var dis3 = new Disease { Code = "D00-D09", Name = "Новообразования in situ" };
+            #endregion
+
             #region Cards
 
             var c1 = new Card
@@ -86,6 +92,9 @@ namespace docnote.Model
             c1.CardEntries.Add(ce3);
             c2.CardEntries.Add(ce4);
             c3.CardEntries.Add(ce5);
+            c1.Diseases.Add(dis1);
+            c1.Diseases.Add(dis2);
+            c1.Diseases.Add(dis3);
 
             #endregion
 

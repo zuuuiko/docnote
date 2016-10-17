@@ -11,6 +11,7 @@
         Title="Доктор" 
         GlowBrush="{DynamicResource AccentColorBrush}"
         SaveWindowPosition="True"
+        Width="500" MinHeight="320" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="MyGridStyle" TargetType="{x:Type Grid}">
@@ -18,9 +19,13 @@
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="FontWeight" Value="Bold" />
                     <Setter Property="VerticalContentAlignment" Value ="Center" />
+                    <Setter Property="Margin" Value ="20 5" />
+                    <Setter Property="FontSize" Value ="14"/>
                 </Style>
                 <Style TargetType="{x:Type TextBox}">
                     <Setter Property="VerticalContentAlignment" Value ="Center"/>
+                    <Setter Property="Margin" Value ="5" />
+                    <Setter Property="FontSize" Value ="14"/>
                 </Style>
             </Style.Resources>
         </Style>
@@ -29,7 +34,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,51 +42,62 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
 
         </Grid.RowDefinitions>
-        <Label VerticalAlignment="Center" Margin="5,10,5,5">Прізвище</Label>
-        <Label VerticalAlignment="Center" Margin="5" Grid.Row="1" >Ім'я</Label>
-        <Label VerticalAlignment="Center" Margin="5" Grid.Row="2" >По-батькові</Label>
-        <TextBox Text="{Binding Doctor.FirstName}" VerticalContentAlignment="Center" Margin="0,10,5,5" Grid.Column="1" >
+        <Label >Прізвище</Label>
+        <Label Grid.Row="1" >Ім'я</Label>
+        <Label Grid.Row="2" >По-батькові</Label>
+        <TextBox Text="{Binding Doctor.FirstName}" Grid.Column="1" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.FirstName'}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <TextBox Text="{Binding Doctor.LastName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="1" >
+        <TextBox Text="{Binding Doctor.LastName}" Grid.Column="1" Grid.Row="1" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.LastName'}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <TextBox Text="{Binding Doctor.MiddleName}" VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="2" >
+        <TextBox Text="{Binding Doctor.MiddleName}" Grid.Column="1" Grid.Row="2" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.MiddleName'}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
 
-        <Label VerticalContentAlignment="Center" Margin="5" Content="Посада" Grid.Row="3"/>
-        <Label VerticalContentAlignment="Center" Margin="5" Content="Місце роботи" Grid.Row="4" />
-        <Label VerticalContentAlignment="Center" Margin="5" Content="Телефон" Grid.Row="5" />
-        <TextBox Text="{Binding Doctor.Rank}" VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="3"  >
+        <Label Content="Посада" Grid.Row="3"/>
+        <Label Content="Місце роботи" Grid.Row="4" />
+        <Label Content="Телефон" Grid.Row="5" />
+        <TextBox Text="{Binding Doctor.Rank}" Grid.Column="1" Grid.Row="3"  
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.Rank'}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <TextBox Text="{Binding Doctor.JobPlace}" VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="4" >
+        <TextBox Text="{Binding Doctor.JobPlace}" Grid.Column="1" Grid.Row="4" 
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.JobPlace'}">
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <TextBox Style="{StaticResource Validate}" 
+        <!--<TextBox Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.PhoneNumber'}"
                  Text="{Binding Path=Doctor.PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
-                 VerticalContentAlignment="Center" Margin="0,5,5,5" Grid.Column="1" Grid.Row="5" >
+                 Grid.Column="1" Grid.Row="5" >-->
+            <TextBox
+                 MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Doctor.PhoneNumber'}"
+                 Text="{Binding Path=Doctor.PhoneNumber}" 
+                 Grid.Column="1" Grid.Row="5" >
             <i:Interaction.Behaviors>
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
-        <Button Command="{Binding Path=DoctorSaveAndCloseClickCommand}" Content="Зберегти і закрити" HorizontalAlignment="Center"  Grid.Row="6" VerticalAlignment="Top" Margin="10,25,27,0" />
-        <Button Command="{Binding Path=DoctorCloseClickCommand}" Content="Закрити" HorizontalAlignment="Left" Margin="26,25,0,0" Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" Width="74"/>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding Path=DoctorSaveAndCloseClickCommand}" Content="Зберегти і закрити" Margin="10" />
+            <Button Command="{Binding Path=DoctorCloseClickCommand}" Content="Закрити" Margin="10" Width="74"/>
+        </StackPanel>
         <!--<TextBox Text="{Binding Doctor.MobileNumber}" VerticalContentAlignment="Center" Margin="0,5,5,5" Controls:TextBoxHelper.Watermark="Номер мобільного телефону" Grid.Column="1" Grid.Row="5" />-->
     </Grid>
 </Controls:MetroWindow>

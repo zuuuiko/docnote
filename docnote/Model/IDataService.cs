@@ -46,6 +46,11 @@ namespace docnote.Model
         void DeleteCardEntry(Action<bool, Exception> callback, CardEntry ce);
         #endregion
 
+        #region Disease
+        void GetDiseasesAsync(Action<ObservableCollection<Disease>, Exception> callback, Card c);
+        void AddDiseases(Action<bool, Exception> callback, IEnumerable<Disease> diseases, int cardId);
+        #endregion
+
         #region Documents
         void GetDocumentsAsync(Action<ObservableCollection<Document>, Exception> callback, Patient p);
         void AddUpdateDocument(Action<bool, Exception> callback, Document document);
