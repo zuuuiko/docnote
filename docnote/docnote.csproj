@@ -102,8 +102,10 @@
     <Compile Include="Model\Address.cs" />
     <Compile Include="Model\Card.cs" />
     <Compile Include="Model\CardEntry.cs" />
+    <Compile Include="Model\CEDisease.cs" />
     <Compile Include="Model\DataService.cs" />
-    <Compile Include="Model\Disease.cs" />
+    <Compile Include="Model\DispDisease.cs" />
+    <Compile Include="Model\InvalidDisease.cs" />
     <Compile Include="Model\DocnoteContext.cs" />
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\Document.cs" />

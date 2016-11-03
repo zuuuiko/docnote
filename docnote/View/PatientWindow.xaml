@@ -81,7 +81,7 @@
                     CommandParameter="{Binding ElementName=documentsFlyout}">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconFontAwesome Kind="Book" VerticalAlignment="Center"/>
-                    <Label FontSize="14" FontWeight="Bold" Foreground="White">ДОКУМЕНТИ</Label> 
+                    <Label FontSize="14" FontWeight="Bold" Foreground="White">ДОКУМЕНТИ</Label>
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>
@@ -91,6 +91,7 @@
             <resources:EnumBooleanConverter x:Key="enumBooleanConverter" />
         </Grid.Resources>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -157,8 +158,140 @@
                 <resources:SelectAllTextBoxBehavior></resources:SelectAllTextBoxBehavior>
             </i:Interaction.Behaviors>
         </TextBox>
+        <DockPanel Grid.Row="6" Grid.ColumnSpan="2">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label>Інвалід</Label>
+                <ToggleButton Width="30" Height="30" Margin="10 0" x:Name="InvalidToggle"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}"
+                          IsChecked="{Binding Path=Patient.Card.IsInvalid}">
+                    <iconPacks:PackIconFontAwesome Kind="Wheelchair" />
+                </ToggleButton>
+            </StackPanel>
+            <Expander IsExpanded="True" Visibility="{Binding IsChecked, ElementName=InvalidToggle, Converter={StaticResource BoolToVisibilityConverter}}">
+                <DockPanel DockPanel.Dock="Bottom" >
+                    <Button DockPanel.Dock="Top" Content="Видалити хворобу" 
+                        Command="{Binding DeleteInvalidDiseaseClickCommand}"
+                        CommandParameter="{Binding ElementName=InvalidDiseasesGrid, Path=SelectedItem}"></Button>
+                    <Border DockPanel.Dock="Top" Margin="0 0 0 10" BorderBrush="LightBlue" BorderThickness="2" MaxHeight="200">
+                        <DataGrid x:Name="InvalidDiseasesGrid" ItemsSource="{Binding InvalidDiseases}" SelectedItem="{Binding SelectedInvalidDisease}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код" Binding="{Binding Code}"/>
+                                <DataGridTextColumn Header="Діагноз" Binding="{Binding Name}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TreeView x:Name="InvalidDiseaseTreeView" Margin="0 0 5 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding InvalidDiseaseDoubleClickCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=InvalidDiseaseTreeView}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <!--<TreeView.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=DiseaseDoubleClickCommand}"
+                                          CommandParameter="{Binding ElementName=DiseaseTreeView, Path=SelectedItem}"/>
+                        </TreeView.InputBindings>-->
+                                <TreeViewItem Header="A00-B99 Некоторые инфекционные и паразитарные болезни">
+                                    <TreeViewItem Header="A00-A09 Кишечные инфекции">
+                                        <TreeViewItem Header="A00 Холера"/>
+                                        <TreeViewItem Header="A01 Тиф и паратиф"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="A15-A19 Туберкулез"></TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="C00-D48 Новообразования">
+                                    <TreeViewItem Header="C00-C97 Злокачественные новообразования">
+                                        <TreeViewItem Header="C00-C14 Злокачественные новообразования губы, полости рта и глотки">
+                                            <TreeViewItem Header="C00 Злокачественное новообразование губы"/>
+                                            <TreeViewItem Header="C01 Злокачественные новообразования основания языка"/>
+                                            <TreeViewItem Header="C02 Злокачественное новообразование других и неуточненных частей языка">
+                                                <TreeViewItem Header="C02.0	Спинки языка"/>
+                                                <TreeViewItem Header="C02.1	Боковой поверхности языка"/>
+                                            </TreeViewItem>
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="C15-C26 Злокачественные новообразования органов пищеварения">
+                                        </TreeViewItem>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="D00-D09 Новообразования in situ">
+                                    </TreeViewItem>
+                                </TreeViewItem>
+                            </TreeView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Expander>
+        </DockPanel>
+        <DockPanel Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label>Діспансерізація</Label>
+                <ToggleButton Width="30" Height="30" Margin="10 0" x:Name="DispToggle"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}"
+                          IsChecked="{Binding Path=Patient.Card.IsDisp}">
+                    <iconPacks:PackIconFontAwesome Kind="Stethoscope" />
+                </ToggleButton>
+            </StackPanel>
+            <Expander IsExpanded="True" Visibility="{Binding IsChecked, ElementName=DispToggle, Converter={StaticResource BoolToVisibilityConverter}}">
+                <DockPanel DockPanel.Dock="Bottom" >
+                    <Button DockPanel.Dock="Top" Content="Видалити хворобу" 
+                        Command="{Binding DeleteDispDiseaseClickCommand}"
+                        CommandParameter="{Binding ElementName=DispDiseasesGrid, Path=SelectedItem}"></Button>
+                    <Border DockPanel.Dock="Top" Margin="0 0 0 10" BorderBrush="LightBlue" BorderThickness="2" MaxHeight="200">
+                        <DataGrid x:Name="DispDiseasesGrid" ItemsSource="{Binding DispDiseases}" SelectedItem="{Binding SelectedDispDisease}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код" Binding="{Binding Code}"/>
+                                <DataGridTextColumn Header="Діагноз" Binding="{Binding Name}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <TreeView x:Name="DispDiseaseTreeView" Margin="0 0 5 0">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                        <i:InvokeCommandAction
+                                    Command="{Binding DispDiseaseDoubleClickCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=DispDiseaseTreeView}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <!--<TreeView.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=DiseaseDoubleClickCommand}"
+                                          CommandParameter="{Binding ElementName=DiseaseTreeView, Path=SelectedItem}"/>
+                        </TreeView.InputBindings>-->
+                                <TreeViewItem Header="A00-B99 Некоторые инфекционные и паразитарные болезни">
+                                    <TreeViewItem Header="A00-A09 Кишечные инфекции">
+                                        <TreeViewItem Header="A00 Холера"/>
+                                        <TreeViewItem Header="A01 Тиф и паратиф"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="A15-A19 Туберкулез"></TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="C00-D48 Новообразования">
+                                    <TreeViewItem Header="C00-C97 Злокачественные новообразования">
+                                        <TreeViewItem Header="C00-C14 Злокачественные новообразования губы, полости рта и глотки">
+                                            <TreeViewItem Header="C00 Злокачественное новообразование губы"/>
+                                            <TreeViewItem Header="C01 Злокачественные новообразования основания языка"/>
+                                            <TreeViewItem Header="C02 Злокачественное новообразование других и неуточненных частей языка">
+                                                <TreeViewItem Header="C02.0	Спинки языка"/>
+                                                <TreeViewItem Header="C02.1	Боковой поверхности языка"/>
+                                            </TreeViewItem>
+                                        </TreeViewItem>
+                                        <TreeViewItem Header="C15-C26 Злокачественные новообразования органов пищеварения">
+                                        </TreeViewItem>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="D00-D09 Новообразования in situ">
+                                    </TreeViewItem>
+                                </TreeViewItem>
+                            </TreeView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Expander>
+        </DockPanel>
 
-        <Expander Grid.Row="6" Grid.ColumnSpan="4">
+        <Expander Grid.Row="7" Grid.ColumnSpan="4">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -336,9 +469,9 @@
                 </Grid>
             </StackPanel>
         </Expander>
-        <Label Content="Назва / Код карти" Grid.Row="7"  />
+        <Label Content="Назва / Код карти" Grid.Row="8"  />
         <!--<Label Content="Остання дата оновлення" Grid.Row="7" Grid.Column="2" />-->
-        <TextBox Grid.Row="7" Grid.Column="1" 
+        <TextBox Grid.Row="8" Grid.Column="1" 
                  Style="{StaticResource Validate}" 
                  MaxLength="{Binding Converter={StaticResource LengthConverter}, ConverterParameter='Card.CardNameCode'}"
                  Text="{Binding Path=Patient.Card.CardNameCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
@@ -348,19 +481,19 @@
         </TextBox>
         <!--<TextBox Text="{Binding Card.LastUpdateDate}" Controls:TextBoxHelper.Watermark="дата оновлення" Grid.Row="7" Grid.Column="3" />-->
 
-        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="9" Grid.ColumnSpan="2" Orientation="Horizontal">
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.All}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=All}">Вибрати всі</RadioButton>
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.LastMonth}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=LastMonth}">За останній місяць</RadioButton>
             <RadioButton Margin="5,0" Command="{Binding ShowCardEntriesCommand}" CommandParameter="{x:Static resources:PeriodsRadioButtons.Last3Month}" IsChecked="{Binding Path=PeriodsRadioButtons, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Last3Month}">За останні 3 місяці</RadioButton>
         </StackPanel>
-        <Button Grid.Row="8" Grid.Column="2" Content="Додати запис" Command="{Binding AddCardEntryClickCommand}"></Button>
-        <Button Grid.Row="8" Grid.Column="3" Content="Видалити запис" 
+        <Button Grid.Row="9" Grid.Column="2" Content="Додати запис" Command="{Binding AddCardEntryClickCommand}"></Button>
+        <Button Grid.Row="9" Grid.Column="3" Content="Видалити запис" 
                 Command="{Binding DeleteCardEntryClickCommand}"
                 CommandParameter="{Binding ElementName=CardEntriesGrid, Path=SelectedItem}"></Button>
-        <Button Grid.Row="10" Grid.Column="2" Content="Зберегти і закрити" Command="{Binding SaveAndClosePatientClickCommand}"></Button>
-        <Button Grid.Row="10" Grid.Column="3" Content="Закрити" Command="{Binding ClosePatientClickCommand}"></Button>
+        <Button Grid.Row="11" Grid.Column="2" Content="Зберегти і закрити" Command="{Binding SaveAndClosePatientClickCommand}"></Button>
+        <Button Grid.Row="11" Grid.Column="3" Content="Закрити" Command="{Binding ClosePatientClickCommand}"></Button>
 
-        <DataGrid  x:Name="CardEntriesGrid" Grid.Row="9" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid  x:Name="CardEntriesGrid" Grid.Row="10" ItemsSource="{Binding CardEntries}" SelectedItem="{Binding SelectedCardEntry}" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
             </DataGrid.Columns>
@@ -370,7 +503,7 @@
                                           CommandParameter="{Binding ElementName=CardEntriesGrid, Path=SelectedItem}"/>
             </DataGrid.InputBindings>
         </DataGrid>
-        <ScrollViewer Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3">
+        <ScrollViewer Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3">
             <TextBlock Text="{Binding ElementName=CardEntriesGrid, Path=SelectedItem.EntryText}" TextWrapping="Wrap" TextAlignment="Justify"/>
         </ScrollViewer>
 

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace docnote.Model
 {
-    public class Disease
+    public class CEDisease
     {
         public int Id { get; set; }
-        public int CardId { get; set; }
-        public virtual Card Card { get; set; }
+        public int CardEntryId { get; set; }
+        public virtual CardEntry CardEntry { get; set; }
         [StringLength(20)]
         public string Code { get; set; }
         [StringLength(100)]
@@ -19,7 +19,7 @@ namespace docnote.Model
 
         public override bool Equals(object obj)
         {
-            Disease personObj = obj as Disease;
+            CEDisease personObj = obj as CEDisease;
             if (personObj == null)
                 return false;
             else

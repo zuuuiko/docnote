@@ -345,17 +345,17 @@ namespace docnote.Model
         }
         #endregion
 
-        #region Disease
-        public async void GetDiseasesAsync(Action<ObservableCollection<Disease>, Exception> callback, Card c)
+        #region InvalidDisease
+        public async void GetInvalidDiseasesAsync(Action<ObservableCollection<InvalidDisease>, Exception> callback, Card c)
         {
             using (var context = new DocnoteContext())
             {
                 Exception exeption = null;
-                ObservableCollection<Disease> diseases = null;
+                ObservableCollection<InvalidDisease> diseases = null;
                 try
                 {
-                    await context.Diseases.Where(dis => dis.CardId == c.CardPatientId).LoadAsync();
-                    diseases = context.Diseases.Local;
+                    await context.InvalidDiseases.Where(dis => dis.CardId == c.CardPatientId).LoadAsync();
+                    diseases = context.InvalidDiseases.Local;
                 }
                 catch (Exception ex)
                 {
@@ -364,7 +364,7 @@ namespace docnote.Model
                 callback(diseases, exeption);
             };
         }
-        public void AddDiseases(Action<bool, Exception> callback, IEnumerable<Disease> diseases, int cardId)
+        public void AddInvalidDiseases(Action<bool, Exception> callback, IEnumerable<InvalidDisease> diseases, int cardId)
         {
             using (var context = new DocnoteContext())
             {
@@ -372,19 +372,123 @@ namespace docnote.Model
                 bool correct = false;
                 try
                 {
-                    var contextDiseases = context.Diseases.Where(dis => dis.CardId == cardId).ToList();
+                    var contextDiseases = context.InvalidDiseases.Where(dis => dis.CardId == cardId).ToList();
                     foreach (var dis in diseases.Except(contextDiseases))
                     {
                         //if (dis.CardId == 0)
                         //{
                             dis.CardId = cardId;
-                            context.Diseases.Add(dis);
+                            context.InvalidDiseases.Add(dis);
                         //}
                     }
                     foreach (var dis in contextDiseases.Except(diseases))
                     {
-                        context.Diseases.Attach(dis);
-                        context.Diseases.Remove(dis);
+                        context.InvalidDiseases.Attach(dis);
+                        context.InvalidDiseases.Remove(dis);
+                    }
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
+            }
+        }
+        #endregion
+
+        #region DispDisease
+        public async void GetDispDiseasesAsync(Action<ObservableCollection<DispDisease>, Exception> callback, Card c)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                ObservableCollection<DispDisease> diseases = null;
+                try
+                {
+                    await context.DispDiseases.Where(dis => dis.CardId == c.CardPatientId).LoadAsync();
+                    diseases = context.DispDiseases.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(diseases, exeption);
+            };
+        }
+        public void AddDispDiseases(Action<bool, Exception> callback, IEnumerable<DispDisease> diseases, int cardId)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    var contextDiseases = context.DispDiseases.Where(dis => dis.CardId == cardId).ToList();
+                    foreach (var dis in diseases.Except(contextDiseases))
+                    {
+                        //if (dis.CardId == 0)
+                        //{
+                            dis.CardId = cardId;
+                            context.DispDiseases.Add(dis);
+                        //}
+                    }
+                    foreach (var dis in contextDiseases.Except(diseases))
+                    {
+                        context.DispDiseases.Attach(dis);
+                        context.DispDiseases.Remove(dis);
+                    }
+                    correct = context.SaveChanges() > 0;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(correct, exeption);
+            }
+        }
+        #endregion
+
+        #region CEDisease
+        public async void GetCEDiseasesAsync(Action<ObservableCollection<CEDisease>, Exception> callback, CardEntry ce)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                ObservableCollection<CEDisease> diseases = null;
+                try
+                {
+                    await context.CEDiseases.Where(dis => dis.CardEntryId == ce.Id).LoadAsync();
+                    diseases = context.CEDiseases.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(diseases, exeption);
+            };
+        }
+        public void AddCEDiseases(Action<bool, Exception> callback, IEnumerable<CEDisease> diseases, int cardEntryId)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                bool correct = false;
+                try
+                {
+                    var contextDiseases = context.CEDiseases.Where(dis => dis.CardEntryId == cardEntryId).ToList();
+                    foreach (var dis in diseases.Except(contextDiseases))
+                    {
+                        //if (dis.CardId == 0)
+                        //{
+                        dis.CardEntryId = cardEntryId;
+                        context.CEDiseases.Add(dis);
+                        //}
+                    }
+                    foreach (var dis in contextDiseases.Except(diseases))
+                    {
+                        context.CEDiseases.Attach(dis);
+                        context.CEDiseases.Remove(dis);
                     }
                     correct = context.SaveChanges() > 0;
                 }

@@ -20,7 +20,6 @@ namespace docnote.ViewModel
     {
         private readonly IDataService _dataService;
         Action _updateCardEntriesDataGrid;
-        Action _updateDiseases;
         //PatientWindowVM _patientVM;
 
         private CardEntry _cardEntry;
@@ -36,41 +35,41 @@ namespace docnote.ViewModel
             }
         }
 
-        private ObservableCollection<Disease> _diseases;
-        public ObservableCollection<Disease> Diseases
+        private ObservableCollection<CEDisease> _CEDiseases;
+        public ObservableCollection<CEDisease> CEDiseases
         {
-            get { return _diseases; }
-            set { Set(ref _diseases, value); }
+            get { return _CEDiseases; }
+            set { Set(ref _CEDiseases, value); }
         }
-        private Disease _selectedDisease;
-        public Disease SelectedDisease
+        private CEDisease _selectedCEDisease;
+        public CEDisease SelectedCEDisease
         {
-            get { return _selectedDisease; }
-            set { Set(ref _selectedDisease, value); }
+            get { return _selectedCEDisease; }
+            set { Set(ref _selectedCEDisease, value); }
         }
 
         public ICommand SaveAndCloseCardEntryClickCommand { get; private set; }
         public ICommand CloseCardEntryClickCommand { get; private set; }
-        public ICommand DiseaseDoubleClickCommand { get; private set; }
-        public ICommand DeleteDiseaseClickCommand { get; private set; }
+        public ICommand CEDiseaseDoubleClickCommand { get; private set; }
+        public ICommand DeleteCEDiseaseClickCommand { get; private set; }
 
-        public CardEntryWindowVM(Action reload, Action reloadDiseases, CardEntry cardEntry, List<Disease> diseases, IDataService dataService)
+        public CardEntryWindowVM(Action reload, CardEntry cardEntry, IDataService dataService)
         {
             _dataService = dataService;
             CardEntry = cardEntry;
-            Diseases = new ObservableCollection<Disease>(diseases);
-            _updateDiseases = reloadDiseases;
+            InitCEDiseases();
+            //CEDiseases = new ObservableCollection<CEDisease>();
             _updateCardEntriesDataGrid = reload;
             SaveAndCloseCardEntryClickCommand = new RelayCommand(SaveAndCloseCardEntry);
             CloseCardEntryClickCommand = new RelayCommand(CloseCardEntryWindow);
-            DiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
-            DeleteDiseaseClickCommand = new RelayCommand<Disease>(DeleteDisease);
+            CEDiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDiseases);
+            DeleteCEDiseaseClickCommand = new RelayCommand<CEDisease>(DeleteCEDisease);
             //Init(reload);         
         }
 
-        private void DeleteDisease(Disease obj)
+        private void DeleteCEDisease(CEDisease obj)
         {
-            Diseases.Remove(obj);
+            CEDiseases.Remove(obj);
         }
 
         //new CardEntry
@@ -93,10 +92,10 @@ namespace docnote.ViewModel
         {
             var str = obj.Header.ToString();
             var pos = str.IndexOf(' ');
-            var disease = new Disease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1)};
-            if (!Diseases.Any(d => d.Equals(disease)))
+            var disease = new CEDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1)};
+            if (!CEDiseases.Any(d => d.Equals(disease)))
             {
-                Diseases.Add(disease);
+                CEDiseases.Add(disease);
             }
         }
 
@@ -105,34 +104,52 @@ namespace docnote.ViewModel
             Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault().Close();
         }
 
-        private void SaveAndCloseCardEntry()
+        private async void SaveAndCloseCardEntry()
         {
-            _dataService.AddDiseases((isSaved, error) =>
+            _dataService.AddCEDiseases((isSaved, error) =>
             {
-                if (isSaved)
+                if (error != null)
                 {
-                    _updateDiseases();
+                    MessageBox.Show(error.StackTrace);
+                    return;
                 }
-            }, Diseases.ToList(), CardEntry.CardId);
+            }, CEDiseases.ToList(), CardEntry.CardId);
 
             _dataService.AddUpdateCardEntry(
-                async (isSaved, error) =>
+                (isSaved, error) =>
                 {
                     if (error != null)
                     {
                         MessageBox.Show(error.StackTrace);
                         return;
                     }
-                    var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
-                    if (window != null)
+                    
+                }, CardEntry);
+
+            var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
+            if (window != null)
+            {
+                var result = await window.ShowMessageAsync(null, "збережено");//TODO: NO
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    _updateCardEntriesDataGrid();
+                    CloseCardEntryWindow();
+                }
+            }
+        }
+
+        public void InitCEDiseases()
+        {
+            _dataService.GetCEDiseasesAsync(
+                (diseases, error) =>
+                {
+                    if (error != null)
                     {
-                        var result = await window.ShowMessageAsync(null, isSaved ? "збережено" : error?.Message);//TODO: NO
-                        if (result == MessageDialogResult.Affirmative)
-                        {
-                            _updateCardEntriesDataGrid();
-                            CloseCardEntryWindow();
-                        }
+                        MessageBox.Show(error.StackTrace);
+                        return;
                     }
+                    CEDiseases = new ObservableCollection<CEDisease>(diseases);
+                    //Patient.Card.Diseases = diseases;
                 }, CardEntry);
         }
     }

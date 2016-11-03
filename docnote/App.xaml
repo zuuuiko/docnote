@@ -38,7 +38,7 @@
                     <resources:ComboBoxConverter x:Key="ComboBoxConverter" />
                     <resources:ComboBoxRomeConverter x:Key="ComboBoxRomeConverter" />
                     <resources:DateConverter x:Key="DateConverter" />
-                    
+                    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
                     <Style x:Key="Validate" TargetType="{x:Type TextBox}">
                         <Style.Triggers>
                             <Trigger Property="Validation.HasError" Value="True">

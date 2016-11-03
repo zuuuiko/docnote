@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace docnote.ViewModel
@@ -89,6 +90,7 @@ namespace docnote.ViewModel
                 Set(ref _selectedCardEntry, value);
             }
         }
+
         public ObservableCollection<CardEntry> CardEntries
         {
             get
@@ -101,16 +103,29 @@ namespace docnote.ViewModel
             }
         }
 
-        private ObservableCollection<Disease> _diseases;
-        public ObservableCollection<Disease> Diseases
+        private ObservableCollection<InvalidDisease> _invalidDiseases;
+        public ObservableCollection<InvalidDisease> InvalidDiseases
         {
             get
             {
-                return _diseases;
+                return _invalidDiseases;
             }
             set
             {
-                Set(ref _diseases, value);
+                Set(ref _invalidDiseases, value);
+            }
+        }
+
+        private ObservableCollection<DispDisease> _dispDiseases;
+        public ObservableCollection<DispDisease> DispDiseases
+        {
+            get
+            {
+                return _dispDiseases;
+            }
+            set
+            {
+                Set(ref _dispDiseases, value);
             }
         }
 
@@ -123,6 +138,10 @@ namespace docnote.ViewModel
         public ICommand OpenDocumentsFlyoutCommand { get; private set; }
         public ICommand CreateOpenDocumentCommand { get; private set; }
         public ICommand DeleteDocumentClickCommand { get; private set; }
+        public ICommand InvalidDiseaseDoubleClickCommand { get; private set; }
+        public ICommand DeleteInvalidDiseaseClickCommand { get; private set; }
+        public ICommand DispDiseaseDoubleClickCommand { get; private set; }
+        public ICommand DeleteDispDiseaseClickCommand { get; private set; }
 
         [PreferredConstructor]
         public PatientWindowVM(Action reloadPatients, IDataService dataService)
@@ -141,15 +160,15 @@ namespace docnote.ViewModel
             LoadAddress();
             LoadCard();
             LoadCardEntries();
-            LoadDiseases();
             Init(reloadPatients);
         }
-
 
         private void Init(Action reloadPatients)
         {
             //_mainVM = mainVM;
             _updatePatientsDataGrid = reloadPatients;
+            InitInvalidDiseases();
+            InitDispDiseases();
             PeriodsRadioButtons = PeriodsRadioButtons.All;
             ShowCardEntriesCommand = new RelayCommand<PeriodsRadioButtons>(ShowCardEntries);
             CardEntryDoubleClickCommand = new RelayCommand<CardEntry>(OpenCardEntryWindow);
@@ -161,6 +180,42 @@ namespace docnote.ViewModel
             DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(), new Form_063_o() };
             CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
             DeleteDocumentClickCommand = new RelayCommand<Document>(DeleteDocument);
+            InvalidDiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToInvalidDiseases);
+            DeleteInvalidDiseaseClickCommand = new RelayCommand<InvalidDisease>(DeleteInvalidDisease);
+            DispDiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToDispDiseases);
+            DeleteDispDiseaseClickCommand = new RelayCommand<DispDisease>(DeleteDispDisease);
+        }
+
+        private void DeleteInvalidDisease(InvalidDisease obj)
+        {
+            InvalidDiseases.Remove(obj);
+        }
+
+        private void AddDiseaseToInvalidDiseases(TreeViewItem obj)
+        {
+            var str = obj.Header.ToString();
+            var pos = str.IndexOf(' ');
+            var disease = new InvalidDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+            if (!InvalidDiseases.Any(d => d.Equals(disease)))
+            {
+                InvalidDiseases.Add(disease);
+            }
+        }
+
+        private void DeleteDispDisease(DispDisease obj)
+        {
+            DispDiseases.Remove(obj);
+        }
+
+        private void AddDiseaseToDispDiseases(TreeViewItem obj)
+        {
+            var str = obj.Header.ToString();
+            var pos = str.IndexOf(' ');
+            var disease = new DispDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+            if (!DispDiseases.Any(d => d.Equals(disease)))
+            {
+                DispDiseases.Add(disease);
+            }
         }
 
         private async void DeleteDocument(Document d)
@@ -271,6 +326,7 @@ namespace docnote.ViewModel
                         MessageBox.Show(error.StackTrace);
                         return;
                     }
+                    SaveDiseases(); //!!! not return if error
                     var window = Application.Current.Windows.OfType<PatientWindow>().FirstOrDefault();
                     if (window != null)
                     {
@@ -282,6 +338,26 @@ namespace docnote.ViewModel
                         }
                     }
                 }, Patient);
+        }
+        private void SaveDiseases()
+        {
+            _dataService.AddInvalidDiseases((isSaved, error) =>
+            {
+                if (error != null)
+                {
+                    MessageBox.Show(error.StackTrace);
+                    return;
+                }
+            }, InvalidDiseases.ToList(), Patient.Card.CardPatientId);
+
+            _dataService.AddDispDiseases((isSaved, error) =>
+            {
+                if (error != null)
+                {
+                    MessageBox.Show(error.StackTrace);
+                    return;
+                }
+            }, DispDiseases.ToList(), Patient.Card.CardPatientId);
         }
 
         private void SavePatient()
@@ -295,13 +371,14 @@ namespace docnote.ViewModel
                         return;
                     }
                 }, Patient);
+            SaveDiseases();
         }
 
         private void OpenCardEntryWindow(CardEntry ce)
         {
             CardEntryWindow cew = new CardEntryWindow();
             ce.Card = Patient.Card;
-            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, LoadDiseases, ce, Diseases.ToList(), _dataService);
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
             cew.ShowDialog();
         }
 
@@ -316,7 +393,7 @@ namespace docnote.ViewModel
 
             CardEntryWindow cew = new CardEntryWindow();
             CardEntry ce = new CardEntry { CardId = Patient.Card.CardPatientId };
-            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, LoadDiseases, ce, Diseases.ToList(), _dataService);
+            cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
             cew.ShowDialog();
         }
 
@@ -425,9 +502,9 @@ namespace docnote.ViewModel
                 }, Patient?.Card, earliestDate);
         }
 
-        public void LoadDiseases()
+        public void InitInvalidDiseases()
         {
-            _dataService.GetDiseasesAsync(
+            _dataService.GetInvalidDiseasesAsync(
                 (diseases, error) =>
                 {
                     if (error != null)
@@ -435,7 +512,22 @@ namespace docnote.ViewModel
                         MessageBox.Show(error.StackTrace);
                         return;
                     }
-                    Diseases = diseases;
+                    InvalidDiseases = new ObservableCollection<InvalidDisease>(diseases);
+                    //Patient.Card.Diseases = diseases;
+                }, Patient?.Card);
+        }
+
+        public void InitDispDiseases()
+        {
+            _dataService.GetDispDiseasesAsync(
+                (diseases, error) =>
+                {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
+                    DispDiseases = new ObservableCollection<DispDisease>(diseases);
                     //Patient.Card.Diseases = diseases;
                 }, Patient?.Card);
         }

@@ -12,6 +12,24 @@ namespace docnote.Model
     {
         protected override void Seed(DocnoteContext context)
         {
+            #region CEDisease
+            var dis1 = new CEDisease { Code = "C02.0", Name = "Спинки языка" };
+            var dis2 = new CEDisease { Code = "C02.1", Name = "Боковой поверхности языка" };
+            var dis3 = new CEDisease { Code = "D00-D09", Name = "Новообразования in situ" };
+            #endregion
+
+            #region InvalidDisease
+            var invdis1 = new InvalidDisease { Code = "A00", Name = "Холера" };
+            var invdis2 = new InvalidDisease { Code = "A01", Name = "Тиф и паратиф" };
+            var invdis3 = new InvalidDisease { Code = "A15-A19", Name = "Туберкулез" };
+            #endregion
+
+            #region DispDisease
+            var dispdis1 = new DispDisease { Code = "A00", Name = "Холера" };
+            var dispdis2 = new DispDisease { Code = "C02.1", Name = "Спинки языка" };
+            var dispdis3 = new DispDisease { Code = "C02", Name = "Злокачественное новообразование других и неуточненных частей языка" };
+            #endregion
+
             #region CardEntry
             var ce1 = new CardEntry
             {
@@ -57,12 +75,10 @@ namespace docnote.Model
                 EntryText = null,
                 CreationDate = new DateTime(2016, 5, 6)
             };
-            #endregion
 
-            #region Disease
-            var dis1 = new Disease { Code = "C02.0", Name = "Спинки языка" };
-            var dis2 = new Disease { Code = "C02.1", Name = "Боковой поверхности языка" };
-            var dis3 = new Disease { Code = "D00-D09", Name = "Новообразования in situ" };
+            ce1.CEDiseases.Add(dis1);
+            ce1.CEDiseases.Add(dis2);
+            ce1.CEDiseases.Add(dis3);
             #endregion
 
             #region Cards
@@ -71,8 +87,8 @@ namespace docnote.Model
             {
                 CardNameCode = "КД-00234е34",
                 CreationDate = new DateTime(2016, 4, 1),
-                LastUpdateDate = new DateTime(2016, 4, 1)
-
+                LastUpdateDate = new DateTime(2016, 4, 1),
+                IsInvalid = true
             };
             var c2 = new Card
             {
@@ -86,16 +102,17 @@ namespace docnote.Model
                 CreationDate = new DateTime(2016, 4, 3),
                 LastUpdateDate = new DateTime(2016, 4, 3)
             };
-
+            c1.InvalidDiseases.Add(invdis1);
+            c1.InvalidDiseases.Add(invdis2);
+            c1.InvalidDiseases.Add(invdis3);
+            c1.DispDiseases.Add(dispdis1);
+            c1.DispDiseases.Add(dispdis2);
+            c1.DispDiseases.Add(dispdis3);
             c1.CardEntries.Add(ce1);
             c1.CardEntries.Add(ce2);
             c1.CardEntries.Add(ce3);
             c2.CardEntries.Add(ce4);
             c3.CardEntries.Add(ce5);
-            c1.Diseases.Add(dis1);
-            c1.Diseases.Add(dis2);
-            c1.Diseases.Add(dis3);
-
             #endregion
 
             #region Address

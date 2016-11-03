@@ -42,10 +42,10 @@
                 </Expander.Header>
                 <DockPanel>
                     <Button DockPanel.Dock="Top" Content="Видалити хворобу" 
-                        Command="{Binding DeleteDiseaseClickCommand}"
+                        Command="{Binding DeleteCEDiseaseClickCommand}"
                         CommandParameter="{Binding ElementName=DiseasesGrid, Path=SelectedItem}"></Button>
                     <Border DockPanel.Dock="Top" Margin="0 0 0 10" BorderBrush="LightBlue" BorderThickness="2" MaxHeight="200">
-                        <DataGrid x:Name="DiseasesGrid" ItemsSource="{Binding Diseases}" SelectedItem="{Binding SelectedDisease}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid x:Name="DiseasesGrid" ItemsSource="{Binding CEDiseases}" SelectedItem="{Binding SelectedCEDisease}" AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding Code}"/>
                                 <DataGridTextColumn Header="Діагноз" Binding="{Binding Name}"/>
@@ -58,7 +58,7 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDoubleClick">
                                         <i:InvokeCommandAction
-                                    Command="{Binding DiseaseDoubleClickCommand}"
+                                    Command="{Binding CEDiseaseDoubleClickCommand}"
                                     CommandParameter="{Binding SelectedItem, ElementName=DiseaseTreeView}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
