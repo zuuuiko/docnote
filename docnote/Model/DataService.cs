@@ -72,7 +72,7 @@ namespace docnote.Model
                 Exception exeption = null;
                 try
                 {
-                    await context.Patients.LoadAsync();
+                    await context.Patients.Include(p => p.Address).LoadAsync();
                     patients = context.Patients.Local;
                 }
                 catch (Exception ex)
@@ -91,7 +91,7 @@ namespace docnote.Model
                 Exception exeption = null;
                 try
                 {
-                    await context.Patients.Where(p => p.LastName.Contains(lName)).LoadAsync();
+                    await context.Patients.Include(p => p.Address).Where(p => p.LastName.Contains(lName)).LoadAsync();
                     patients = context.Patients.Local;
                 }
                 catch (Exception ex)

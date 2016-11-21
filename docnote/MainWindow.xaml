@@ -63,6 +63,7 @@
             </TextBox>
         </DockPanel>
         <DataGrid x:Name="PatientsGrid"  Margin="10"
+                  HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Patients}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
             <!--<DataGrid.Resources>
                 -->
@@ -89,7 +90,7 @@
                         </i:Interaction.Triggers>-->
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FirstName}" Header="Ім'я" Width="*">
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="Ім'я" Width="Auto">
                     <!--<DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Width" Value="*" />
@@ -102,7 +103,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding MiddleName}" Header="По-Батькові" Width="*">
+                <DataGridTextColumn Binding="{Binding MiddleName}" Header="По-Батькові" Width="Auto">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -110,7 +111,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding LastName}" Header="Прізвище" Width="*">
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Прізвище" Width="Auto">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -118,7 +119,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=BirthDate, StringFormat={}{0:dd/MM/yyyy}}" Header="Дата Народження" Width="1.5*">
+                <DataGridTextColumn Binding="{Binding Sex, Converter={StaticResource BoolToSexConverter}}" Header="Стать" Width="Auto">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -126,7 +127,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Телефон" Width="*">
+                <DataGridTextColumn Binding="{Binding Path=BirthDate, StringFormat={}{0:dd/MM/yyyy}}" Header="Дата Народження" Width="Auto">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -134,10 +135,18 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding ParentName}" Header="Батьки" Width="*">
+                <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Телефон" Width="Auto">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="Padding" Value="7 0" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Address.ShortAddress}" Header="Адреса проживання" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <!--<Setter Property="HorizontalAlignment" Value="Center" />-->
                             <Setter Property="Padding" Value="7 0" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>

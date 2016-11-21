@@ -33,5 +33,17 @@ namespace docnote.Model
         public string Apartment { get; set; }
 
         public virtual Patient Patient { get; set; }
+
+        public string ShortAddress
+        {
+            get
+            {
+                var address = $"{Region}, {CityVillage}, {Street}, {Building}";
+                if (!string.IsNullOrEmpty(Apartment)) address += $", {Apartment}";
+                return address;
+            }
+        }
+
+
     }
 }

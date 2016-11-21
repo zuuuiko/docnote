@@ -33,7 +33,7 @@
                     <resources:LengthConverter x:Key="LengthConverter" />
 
                     <resources:BoolInverterConverter x:Key="BoolInverterConverter" />
-
+                    <resources:BoolToSexConverter x:Key="BoolToSexConverter" />
                     <resources:BoolConverter x:Key="BoolConverter" />
                     <resources:ComboBoxConverter x:Key="ComboBoxConverter" />
                     <resources:ComboBoxRomeConverter x:Key="ComboBoxRomeConverter" />

@@ -157,7 +157,7 @@ namespace docnote.ViewModel
             _dataService = dataService;
             Patient = p;
             LoadDocuments();
-            LoadAddress();
+            //LoadAddress();
             LoadCard();
             LoadCardEntries();
             Init(reloadPatients);
@@ -418,19 +418,19 @@ namespace docnote.ViewModel
             }
         }
 
-        private void LoadAddress()
-        {
-            _dataService.GetAddress(
-                (address, error) =>
-                {
-                    if (error != null)
-                    {
-                        MessageBox.Show(error.StackTrace);
-                        return;
-                    }
-                    Patient.Address = address;
-                }, Patient);
-        }
+        //private void LoadAddress()
+        //{
+        //    _dataService.GetAddress(
+        //        (address, error) =>
+        //        {
+        //            if (error != null)
+        //            {
+        //                MessageBox.Show(error.StackTrace);
+        //                return;
+        //            }
+        //            Patient.Address = address;
+        //        }, Patient);
+        //}
 
         private void LoadCard()
         {
