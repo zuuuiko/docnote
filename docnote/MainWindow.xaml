@@ -85,6 +85,21 @@
         <DataGrid x:Name="PatientsGrid"  Margin="10"
                   HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Patients}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Card.IsInvalid}" Value="true">
+                            <Setter Property="Background" Value="LightPink"></Setter>
+                        </DataTrigger>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True" >
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <!--<DataGrid.Resources>
                 -->
             <!--<resources:SexConverter x:Key="sexConverter"/>-->
