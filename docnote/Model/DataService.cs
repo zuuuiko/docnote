@@ -72,7 +72,8 @@ namespace docnote.Model
                 Exception exeption = null;
                 try
                 {
-                    await context.Patients.Include(p => p.Address).LoadAsync();
+                    await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card).LoadAsync();
                     patients = context.Patients.Local;
                 }
                 catch (Exception ex)
@@ -91,7 +92,50 @@ namespace docnote.Model
                 Exception exeption = null;
                 try
                 {
-                    await context.Patients.Include(p => p.Address).Where(p => p.LastName.Contains(lName)).LoadAsync();
+                    await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card).Where(p => p.LastName.Contains(lName)).LoadAsync();
+                    patients = context.Patients.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(patients, exeption);
+            };
+        }
+        public async void GetInvalidDispPatientsAsync(Action<ObservableCollection<Patient>, Exception> callback, bool isInvalid, bool isDisp)
+        {
+            using (var context = new DocnoteContext())
+            {
+                ObservableCollection<Patient> patients = null;
+                Exception exeption = null;
+                try
+                {
+                    if (isInvalid && isDisp)
+                    {
+                        await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card)
+                                          .Where(p => p.Card.IsInvalid == true && p.Card.IsDisp == true).LoadAsync();
+                    }
+                    else if (isInvalid)
+                    {
+                        await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card)
+                                          .Where(p => p.Card.IsInvalid == true).LoadAsync();
+                    }
+                    else if (isDisp)
+                    {
+                        await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card)
+                                          .Where(p => p.Card.IsDisp == true).LoadAsync();
+                    }
+                    else
+                    {
+                        await context.Patients.Include(p => p.Address)
+                                          .Include(p => p.Card)
+                                          .LoadAsync();
+                    }
+
                     patients = context.Patients.Local;
                 }
                 catch (Exception ex)

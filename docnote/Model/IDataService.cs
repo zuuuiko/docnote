@@ -13,6 +13,7 @@ namespace docnote.Model
         void AddUpdatePatient(Action<bool, Exception> callback, Patient p);
         void DeletePatient(Action<bool, Exception> callback, Patient p);
         void GetPatientsByLNameAsync(Action<ObservableCollection<Patient>, Exception> callback, string lName);
+        void GetInvalidDispPatientsAsync(Action<ObservableCollection<Patient>, Exception> callback, bool isInvalid, bool isDisp);
         #endregion
 
         #region Hospital

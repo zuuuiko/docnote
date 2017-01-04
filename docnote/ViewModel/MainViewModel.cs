@@ -54,9 +54,36 @@ namespace docnote.ViewModel
         public ICommand AddPatientClickCommand { get; private set; }
         #endregion
 
+        private bool _isShowInvalidPatientsBtnChecked;
+        public bool IsShowInvalidPatientsBtnChecked
+        {
+            get
+            {
+                return _isShowInvalidPatientsBtnChecked;
+            }
+            set
+            {
+                Set(ref _isShowInvalidPatientsBtnChecked, value);
+            }
+        }
+
+        private bool _isShowDispPatientsBtnChecked;
+        public bool IsShowDispPatientsBtnChecked
+        {
+            get
+            {
+                return _isShowDispPatientsBtnChecked;
+            }
+            set
+            {
+                Set(ref _isShowDispPatientsBtnChecked, value);
+            }
+        }
+
         public ICommand OpenDoctorCommand { get; private set; }
         public ICommand OpenHospitalCommand { get; private set; }
         public ICommand SearchPatientsByLNameCommand { get; private set; }
+        public ICommand ShowInvalidDispPatientsCommand { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -64,15 +91,31 @@ namespace docnote.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-
+            IsShowInvalidPatientsBtnChecked = false;
+            IsShowDispPatientsBtnChecked = false;
             PatientDoubleClickCommand = new RelayCommand<Patient>(OpenPatientWindow);
             AddPatientClickCommand = new RelayCommand(OpenPatientWindow);
             DeletePatientClickCommand = new RelayCommand<Patient>(DeletePatient);
             OpenDoctorCommand = new RelayCommand(OpenDoctorWindow);
             OpenHospitalCommand = new RelayCommand(OpenHospitalWindow);
             SearchPatientsByLNameCommand = new RelayCommand<string>(SearchPatientsByLName);
+            ShowInvalidDispPatientsCommand = new RelayCommand(SearchPatientsByInvalidAndDisp);
 
             LoadPatients();
+        }
+
+        private void SearchPatientsByInvalidAndDisp()
+        {
+            _dataService.GetInvalidDispPatientsAsync(
+                (patients, error) =>
+                {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
+                    Patients = patients;
+                }, IsShowInvalidPatientsBtnChecked, IsShowDispPatientsBtnChecked);
         }
 
         private void SearchPatientsByLName(string lName)

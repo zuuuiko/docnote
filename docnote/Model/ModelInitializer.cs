@@ -94,13 +94,16 @@ namespace docnote.Model
             {
                 CardNameCode = "КД-00234е34",
                 CreationDate = new DateTime(2016, 4, 3),
-                LastUpdateDate = new DateTime(2016, 4, 3)
+                LastUpdateDate = new DateTime(2016, 4, 3),
+                IsInvalid = true,
+                IsDisp = true
             };
             var c3 = new Card
             {
                 CardNameCode = "КД-00234е34",
                 CreationDate = new DateTime(2016, 4, 3),
-                LastUpdateDate = new DateTime(2016, 4, 3)
+                LastUpdateDate = new DateTime(2016, 4, 3),
+                IsDisp = true
             };
             c1.InvalidDiseases.Add(invdis1);
             c1.InvalidDiseases.Add(invdis2);

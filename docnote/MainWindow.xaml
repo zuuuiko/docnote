@@ -41,17 +41,7 @@
             <Label FontSize="21.333" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10 0 0 0">Список пацієнтів</Label>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="10 0 20 0">
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" Margin="0 0 10 0"
-                    Command="{Binding AddPatientClickCommand}">
-                    <iconPacks:PackIconFontAwesome Kind="Plus"/>
-                </Button>
-                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="50" Height="50" 
-                    Command="{Binding DeletePatientClickCommand}"
-                    CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}">
-                    <iconPacks:PackIconFontAwesome Kind="Minus"/>
-                </Button>
-            </StackPanel>
+            
             <Label Content="Пошук за прізвищем" VerticalContentAlignment="Center" Margin="10 0 0 0"/>
             <TextBox x:Name="SearchByLNameBox" Margin="30 0 30 0" Height="15">
                 <i:Interaction.Triggers>
@@ -62,6 +52,36 @@
                 </i:Interaction.Triggers>
             </TextBox>
         </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" Margin="10 0 20 0">
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="30" Height="30"
+                    Command="{Binding AddPatientClickCommand}">
+                    <iconPacks:PackIconFontAwesome Kind="Plus"/>
+                </Button>
+                <Label Content="Добавити пацієнта" VerticalAlignment="Center"></Label>
+                <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="30" Height="30" 
+                    Command="{Binding DeletePatientClickCommand}"
+                    CommandParameter="{Binding ElementName=PatientsGrid, Path=SelectedItem}">
+                    <iconPacks:PackIconFontAwesome Kind="Minus"/>
+                </Button>
+                <Label Content="Видалити пацієнта" VerticalAlignment="Center"></Label>
+                <ToggleButton Width="30" Height="30"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}"
+                              IsChecked="{Binding Path=IsShowInvalidPatientsBtnChecked}"
+                              Command="{Binding ShowInvalidDispPatientsCommand}">
+                    <iconPacks:PackIconFontAwesome Kind="Wheelchair" />
+                </ToggleButton>
+                <Label Content="Показати інвалідів" VerticalAlignment="Center"></Label>
+                <ToggleButton Width="30" Height="30"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}"
+                              IsChecked="{Binding Path=IsShowDispPatientsBtnChecked}"
+                              Command="{Binding ShowInvalidDispPatientsCommand}">
+                    <iconPacks:PackIconFontAwesome Kind="Stethoscope" />
+                </ToggleButton>
+                <Label Content="Показати диспансерників" VerticalAlignment="Center"></Label>
+            </StackPanel>
+        </DockPanel>
+
         <DataGrid x:Name="PatientsGrid"  Margin="10"
                   HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Patients}" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="{Binding RowDetailsVisible}" >

@@ -147,8 +147,8 @@ namespace docnote.ViewModel
         public PatientWindowVM(Action reloadPatients, IDataService dataService)
         {
             _dataService = dataService;
-            Init(reloadPatients);
             Patient = new Patient { Address = new Address(), Card = new Card(), Documents = new HashSet<Document>() };
+            Init(reloadPatients);
         }
 
         public PatientWindowVM(Action reloadPatients, Patient p, IDataService dataService)
@@ -158,7 +158,7 @@ namespace docnote.ViewModel
             Patient = p;
             LoadDocuments();
             //LoadAddress();
-            LoadCard();
+            //LoadCard();
             LoadCardEntries();
             Init(reloadPatients);
         }
@@ -432,19 +432,19 @@ namespace docnote.ViewModel
         //        }, Patient);
         //}
 
-        private void LoadCard()
-        {
-            _dataService.GetCard(
-                (card, error) =>
-                {
-                    if (error != null)
-                    {
-                        MessageBox.Show(error.StackTrace);
-                        return;
-                    }
-                    Patient.Card = card;
-                }, Patient);
-        }
+        //private void LoadCard()
+        //{
+        //    _dataService.GetCard(
+        //        (card, error) =>
+        //        {
+        //            if (error != null)
+        //            {
+        //                MessageBox.Show(error.StackTrace);
+        //                return;
+        //            }
+        //            Patient.Card = card;
+        //        }, Patient);
+        //}
 
         private void LoadDocuments()
         {
