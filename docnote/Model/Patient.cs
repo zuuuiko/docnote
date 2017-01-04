@@ -24,6 +24,9 @@ namespace docnote.Model
         [StringLength(30)]
         public string ExLastName { get; set; }
 
+        [StringLength(30)]
+        public string SocialStatus { get; set; }
+
         public DateTime? BirthDate { get; set; }
 
         public bool? Sex { get; set; }

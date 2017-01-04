@@ -214,6 +214,7 @@ namespace docnote.Model
                 MiddleName = "P1MName",
                 LastName = "P1LName",
                 ExLastName = "P1ExLName",
+                SocialStatus = "АТОшник",
                 BirthDate = new DateTime(2012, 8, 12),
                 Sex = true,
                 IdentificationCode = 111123,
