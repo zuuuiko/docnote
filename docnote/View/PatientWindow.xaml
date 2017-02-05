@@ -37,7 +37,7 @@
                                         Margin="10 0 10 50"
                                         DisplayMemberPath="DocumentName"
                                         ItemsSource="{Binding DocumentFormList}" 
-                                        SelectedItem="{Binding SelectedDocumentForm}">
+                                        SelectedItem="{Binding SelectedDocumentForm}" Controls:TextBoxHelper.Watermark="Створити новий документ">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged" >
                                 <i:InvokeCommandAction Command="{Binding CreateOpenDocumentCommand}"
@@ -86,6 +86,7 @@
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
     <Grid Style="{StaticResource MyGridStyle}" >
         <Grid.Resources>
             <resources:EnumBooleanConverter x:Key="enumBooleanConverter" />
@@ -235,7 +236,7 @@
         </DockPanel>
         <DockPanel Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <Label>Діспансерізація</Label>
+                <Label>Диспансерізація</Label>
                 <ToggleButton Width="30" Height="30" Margin="10 0" x:Name="DispToggle"
                           Style="{DynamicResource MetroCircleToggleButtonStyle}"
                           IsChecked="{Binding Path=Patient.Card.IsDisp}">
@@ -517,5 +518,5 @@
         </ScrollViewer>
 
     </Grid>
-
+    </ScrollViewer>
 </Controls:MetroWindow>

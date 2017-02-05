@@ -71,7 +71,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Label>1. Прізвище, ім’я, по батькові лікаря, який розпочав лікування</Label>
                         <TextBox FontWeight="Bold" Margin="10 0 0 0" TextWrapping="Wrap" Width="280" 
-                             Text="{Binding Document.OpeningDoctorName}"></TextBox>
+                             Text="{Binding Document.OpeningDoctorName}" Background="#FFCCCCCC"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>2. Номер медичної карти амбулаторного хворого</Label>
@@ -117,7 +117,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.Contingent, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -135,7 +135,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30"
                               Text="{Binding Document.Purpose, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.Purpose, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.Purpose, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -148,7 +148,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.IsFirstVisit, Converter={StaticResource BoolConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.IsFirstVisit, Converter={StaticResource BoolConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.IsFirstVisit, Converter={StaticResource BoolConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         </ComboBox>
@@ -193,19 +193,19 @@
                         <Label DockPanel.Dock="Right">12. Діагноз заключний:</Label>
                     </DockPanel>
                     <DockPanel>
-                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisCode}" DockPanel.Dock="Right" Margin="5 0" HorizontalContentAlignment="Center" Width="180" BorderThickness="1" BorderBrush="Black"/>
+                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisCode}" DockPanel.Dock="Right" Margin="5 0" HorizontalContentAlignment="Center" Width="180" BorderThickness="1" BorderBrush="Black" Background="#FFCCCCCC"/>
                         <Label DockPanel.Dock="Left">основний</Label>
-                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisMain}" Margin="5 0" BorderThickness="0 0 0 1" TextWrapping="Wrap" BorderBrush="Black"/>
+                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisMain}" Margin="5 0" BorderThickness="0 0 0 1" TextWrapping="Wrap" BorderBrush="Black" Background="#FFCCCCCC"/>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="0 0 15 0">супутні</Label>
-                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisSecondary}" Margin="5 0" Width="575" BorderThickness="0 0 0 1" TextWrapping="Wrap" BorderBrush="Black"/>
+                        <TextBox FontWeight="Bold" Text="{Binding Document.DiagnosisSecondary}" Margin="5 0" Width="575" BorderThickness="0 0 0 1" TextWrapping="Wrap" BorderBrush="Black" Background="#FFCCCCCC"/>
                     </StackPanel>
                     <Label Padding="5 15 5 0">Для кожного із захворювань: гостре захворювання – 1; вперше зареєстроване хронічне – 2;</Label>
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.DiagnosisSeverity, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.DiagnosisSeverity, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.DiagnosisSeverity, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -217,7 +217,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.TraumaPlace, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.TraumaPlace, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.TraumaPlace, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -233,12 +233,12 @@
                     </DockPanel>
                     <DockPanel>
                         <Label DockPanel.Dock="Left">14. Оперативні втручання (операції), виконані на прийомі</Label>
-                        <TextBox FontWeight="Bold" Text="{Binding Document.OperationName}" DockPanel.Dock="Right" Margin="15 0 5 0" BorderBrush="Black" BorderThickness="0 0 0 1" TextWrapping="Wrap"/>
+                        <TextBox FontWeight="Bold" Text="{Binding Document.OperationName}" DockPanel.Dock="Right" Margin="15 0 5 0" TextWrapping="Wrap" Background="#FFCCCCCC"/>
                     </DockPanel>
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.DispGroupIsOnRegister, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.DispGroupIsOnRegister, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.DispGroupIsOnRegister, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -249,7 +249,7 @@
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.DispGroupTakenOnRegister, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWay}"
                               SelectedItem="{Binding Document.DispGroupTakenOnRegister, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}">
-                            <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
+                            <ComboBoxItem HorizontalContentAlignment="Center" Background="#FFCCCCCC">I</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
                         </ComboBox>
@@ -258,7 +258,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="30 0 30 0">Знятий(а) з обліку</Label>
                         <StackPanel>
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.DispRemovedRegisterDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.DispRemovedRegisterDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
                     </StackPanel>
@@ -266,7 +266,7 @@
                     <DockPanel Margin="30 0 0 0">
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.DispRemovedRegisterReason, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.DispRemovedRegisterReason, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.DispRemovedRegisterReason, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -277,14 +277,14 @@
                     <StackPanel Orientation="Horizontal">
                         <Label>Дата наступного відвідування</Label>
                         <StackPanel>
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.DispDateOfNextVisit, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.DispDateOfNextVisit, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
                     </StackPanel>
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 5 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.InvGroupFirst, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.InvGroupFirst, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.InvGroupFirst, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -294,7 +294,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.InvGroupChornobyl, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.InvGroupChornobyl, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.InvGroupChornobyl, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -304,7 +304,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0 20 5" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.InvGroupConfirmed, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.InvGroupConfirmed, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.InvGroupConfirmed, Converter={StaticResource ComboBoxRomeConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">I</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">II</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">III</ComboBoxItem>
@@ -314,29 +314,29 @@
                     <Label Padding="5 0">17. Документ про тимчасову непрацездатність</Label>
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
-                        <TextBox DockPanel.Dock="Right" FontWeight="Bold" Text="{Binding Document.IllSheetCode}" Margin="15 0 5 0" MinWidth="200" BorderBrush="Black" BorderThickness="0 0 0 1" TextWrapping="Wrap"/>
+                        <TextBox DockPanel.Dock="Right" FontWeight="Bold" Text="{Binding Document.IllSheetCode}" Margin="15 0 5 0" MinWidth="200" TextWrapping="Wrap" Background="#FFCCCCCC"/>
                         <Label DockPanel.Dock="Right" Margin="20 0 0 0">лікарняний листок виданий</Label>
                     </DockPanel>
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllSheetCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
                         <Label DockPanel.Dock="Right" Margin="125 0 0 0">закритий</Label>
                     </DockPanel>
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaOpenDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
                         <Label DockPanel.Dock="Right" Margin="20 0 0 0">довідка видана</Label>
                     </DockPanel>
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right" Margin="50 0">
-                            <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.DovidkaCloseDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                             <Label HorizontalContentAlignment="Center" FontSize="10" Padding="0">(число, місяць, рік)</Label>
                         </StackPanel>
                         <Label DockPanel.Dock="Right" Margin="65 0 0 0">закрита</Label>
@@ -346,7 +346,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.TreatmentResult, Converter={StaticResource ComboBoxConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.TreatmentResult, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.TreatmentResult, Converter={StaticResource ComboBoxConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">3</ComboBoxItem>
@@ -364,7 +364,7 @@
                     <DockPanel>
                         <ComboBox FontWeight="Bold" Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Center" Width="30" 
                               Text="{Binding Document.ServiceCase, Converter={StaticResource BoolConverter}, Mode=OneWay}"
-                              SelectedItem="{Binding Document.ServiceCase, Converter={StaticResource BoolConverter}, Mode=OneWayToSource}">
+                              SelectedItem="{Binding Document.ServiceCase, Converter={StaticResource BoolConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
                             <ComboBoxItem HorizontalContentAlignment="Center">1</ComboBoxItem>
                             <ComboBoxItem HorizontalContentAlignment="Center">2</ComboBoxItem>
                         </ComboBox>
@@ -372,7 +372,7 @@
                     </DockPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>20. Прізвище, ім’я, по батькові лікаря, який закінчив лікування</Label>
-                        <TextBox x:Name="DoctorFMLNameTB" FontWeight="Bold" Margin="10 0 0 0" TextWrapping="Wrap" Width="280" Text="{Binding Document.ClosingDoctorName}"></TextBox>
+                        <TextBox x:Name="DoctorFMLNameTB" FontWeight="Bold" Margin="10 0 0 0" TextWrapping="Wrap" Width="280" Text="{Binding Document.ClosingDoctorName}" Background="#FFCCCCCC"></TextBox>
                     </StackPanel>
                     <DockPanel Margin="0 50 0 0">
                         <Label BorderBrush="Black" BorderThickness="0 0 0 1" MinWidth="150" DockPanel.Dock="Right"/>
@@ -381,7 +381,7 @@
                     </DockPanel>
                     <Label HorizontalContentAlignment="Right" Margin="0 0 30 0" FontSize="10">(прізвище, підпис)</Label>
                     <DockPanel>
-                        <DatePicker FontWeight="Bold" Text="{Binding Document.SignDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Margin="10 0 50 0" DockPanel.Dock="Right" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату"/>
+                        <DatePicker FontWeight="Bold" Text="{Binding Document.SignDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" Margin="10 0 50 0" DockPanel.Dock="Right" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                         <Label Margin="20 0" DockPanel.Dock="Right" HorizontalContentAlignment="Right">Дата</Label>
                     </DockPanel>
                 </StackPanel>

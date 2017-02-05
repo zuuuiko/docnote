@@ -193,13 +193,27 @@ namespace docnote.ViewModel
 
         private void AddDiseaseToInvalidDiseases(TreeViewItem obj)
         {
-            var str = obj.Header.ToString();
-            var pos = str.IndexOf(' ');
-            var disease = new InvalidDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
-            if (!InvalidDiseases.Any(d => d.Equals(disease)))
+            try
             {
-                InvalidDiseases.Add(disease);
+                var str = obj.Header.ToString(); // exception
+                var pos = str.IndexOf(' ');
+                var disease = new InvalidDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+                if (!InvalidDiseases.Any(d => d.Equals(disease)))
+                {
+                    InvalidDiseases.Add(disease);
+                }
             }
+            catch (Exception)
+            {
+                //System.Diagnostics.Debug.WriteLine(ex.InnerException?.Message);
+            }
+            //var str = obj.Header.ToString(); //TODO: exception
+            //var pos = str.IndexOf(' ');
+            //var disease = new InvalidDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
+            //if (!InvalidDiseases.Any(d => d.Equals(disease)))
+            //{
+            //    InvalidDiseases.Add(disease);
+            //}
         }
 
         private void DeleteDispDisease(DispDisease obj)
