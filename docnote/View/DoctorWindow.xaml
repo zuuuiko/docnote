@@ -6,6 +6,7 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:resources="clr-namespace:docnote.Resources"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:docnote.View"
         mc:Ignorable="d"
         Title="Доктор" 
@@ -30,6 +31,64 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="documentsFlyout" Header="Документи" Position="Right" Width="400" Theme="Accent">
+                <StackPanel>
+                    <ComboBox x:Name="DocumentFormButton"
+                                        Margin="10 0 10 50"
+                                        DisplayMemberPath="DocumentName"
+                                        ItemsSource="{Binding DocumentFormList}" 
+                                        SelectedItem="{Binding SelectedDocumentForm}" Controls:TextBoxHelper.Watermark="Створити новий документ">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged" >
+                                <i:InvokeCommandAction Command="{Binding CreateOpenDocumentCommand}"
+                                                       CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <!--<ComboBox.InputBindings>
+                            <MouseBinding MouseAction="LeftClick"
+                                          Command="{Binding Path=CreateOpenDocumentCommand}"
+                                          CommandParameter="{Binding ElementName=DocumentFormButton, Path=SelectedItem}"/>
+                        </ComboBox.InputBindings>-->
+                    </ComboBox>
+                    <DockPanel>
+                        <DataGrid Margin="10 0 0 0" DockPanel.Dock="Left" x:Name="DocumentsGrid" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Дата створення" Binding="{Binding Path=CreationDate, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
+                                <DataGridTextColumn Header="Назва документа" Binding="{Binding Path=DocumentName}"/>
+                            </DataGrid.Columns>
+                            <DataGrid.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick"
+                                          Command="{Binding Path=CreateOpenDocumentCommand}"
+                                          CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}"/>
+                            </DataGrid.InputBindings>
+                        </DataGrid>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Width="50" Height="50"
+                            Command="{Binding DeleteDocumentClickCommand}"
+                            CommandParameter="{Binding ElementName=DocumentsGrid, Path=SelectedItem}" Background="White">
+                            <iconPacks:PackIconFontAwesome Kind="Minus"/>
+                        </Button>
+                    </DockPanel>
+                </StackPanel>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button
+                    Command="{Binding OpenDocumentsFlyoutCommand}"
+                    CommandParameter="{Binding ElementName=documentsFlyout}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconFontAwesome Kind="Book" VerticalAlignment="Center"/>
+                    <Label FontSize="14" FontWeight="Bold" Foreground="White">ДОКУМЕНТИ</Label>
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
     <Grid Style="{StaticResource MyGridStyle}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>

@@ -105,6 +105,7 @@
     <Compile Include="Model\CEDisease.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\DispDisease.cs" />
+    <Compile Include="Model\Form_Prikr.cs" />
     <Compile Include="Model\InvalidDisease.cs" />
     <Compile Include="Model\DocnoteContext.cs" />
     <Compile Include="Model\Doctor.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\ModelInitializer.cs" />
     <Compile Include="Model\Patient.cs" />
+    <Compile Include="Model\PrikrPatientData.cs" />
+    <Compile Include="Resources\BoolToUnboundReasonConverter.cs" />
     <Compile Include="Resources\BoolToSexConverter.cs" />
     <Compile Include="Resources\DateConverter.cs" />
     <Compile Include="Resources\ComboBoxConverter.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="ViewModel\Documents\AbstractFormVM.cs" />
     <Compile Include="ViewModel\Documents\Form_025_6_o_VM.cs" />
     <Compile Include="ViewModel\Documents\Form_063_o_VM.cs" />
+    <Compile Include="ViewModel\Documents\Form_Prikr_VM.cs" />
     <Compile Include="ViewModel\HospitalWindowVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PatientWindowVM.cs" />
@@ -145,6 +149,9 @@
     </Compile>
     <Compile Include="View\Documents\Form_063_o_Window.xaml.cs">
       <DependentUpon>Form_063_o_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Documents\Form_Prikr_Window.xaml.cs">
+      <DependentUpon>Form_Prikr_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\HospitalWindow.xaml.cs">
       <DependentUpon>HospitalWindow.xaml</DependentUpon>
@@ -181,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Documents\Form_063_o_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Documents\Form_Prikr_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

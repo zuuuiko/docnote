@@ -70,22 +70,55 @@ namespace docnote.Resources
 
                     aDoc.Activate();
                     //Find and replace:
-                    Type type = doc.GetType();
-                    PropertyInfo[] properties = type.GetProperties();
-
-                    foreach (PropertyInfo property in properties)
+                    if (doc is Form_Prikr)
                     {
-                        if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+                        Form_Prikr document = doc as Form_Prikr;
+                        object start = 0;
+                        object end = 0;
+                        Word.Range myRange = aDoc.Range(ref start, ref end);
+                        Word.Table myTable = aDoc.Tables[1];
+                        int rowCount = 3;
 
-                        var value = property.GetValue(doc);
+                        //add a row for each item in a collection.
+                        foreach (var item in document.PatientsDatas)
+                        {
+                            myTable.Rows.Add(ref missing);
 
-                        if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
-                            value = ConvertByteToRome(value);
+                            myTable.Rows[rowCount].Cells[1].Range.Text = item.RowId?.ToString();
+                            myTable.Rows[rowCount].Cells[2].Range.Text = item.FLMName;
+                            myTable.Rows[rowCount].Cells[3].Range.Text = item.BirthDate?.ToShortDateString();
+                            myTable.Rows[rowCount].Cells[4].Range.Text = item.IdentificationDocumentDetails;
+                            myTable.Rows[rowCount].Cells[5].Range.Text = item.City;
+                            myTable.Rows[rowCount].Cells[6].Range.Text = item.Street;
+                            myTable.Rows[rowCount].Cells[7].Range.Text = item.Building;
+                            myTable.Rows[rowCount].Cells[8].Range.Text = item.Apartment;
+                            myTable.Rows[rowCount].Cells[10].Range.Text = item.SignDate?.ToShortDateString();
+                            myTable.Rows[rowCount].Cells[11].Range.Text = item.UnboundReasonCode?.ToString();
+                            myTable.Rows[rowCount].Cells[12].Range.Text = item.UnboundDate?.ToShortDateString();
 
-                        if (value is Boolean)
-                            value = (bool)value ? 1 : 2;
+                            rowCount++;
+                        }
+                        myTable.Rows.Last.Delete();
+                    }
+                    else
+                    {
+                        Type type = doc.GetType();
+                        PropertyInfo[] properties = type.GetProperties();
 
-                        FindAndReplace(wordApp, $"<<{property.Name}>>", value);
+                        foreach (PropertyInfo property in properties)
+                        {
+                            if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+
+                            var value = property.GetValue(doc);
+
+                            if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
+                                value = ConvertByteToRome(value);
+
+                            if (value is Boolean)
+                                value = (bool)value ? 1 : 2;
+
+                            FindAndReplace(wordApp, $"<<{property.Name}>>", value);
+                        }
                     }
                 }
                 else
@@ -102,7 +135,7 @@ namespace docnote.Resources
                         ref missing, ref missing, ref missing);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.StackTrace);
             }
@@ -113,7 +146,7 @@ namespace docnote.Resources
             }
             //Close Document:
             //aDoc.Close(ref missing, ref missing, ref missing);
-            
+
         }
 
         private static object ConvertByteToRome(object value)

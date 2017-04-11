@@ -13,8 +13,10 @@ namespace docnote.Model
         public DateTime LastUpdateDate { get; set; } = DateTime.Now;
 
         public int? PatientId { get; set; }
+        public int? DoctorId { get; set; }
 
-        public virtual Patient Patient { get; set; }
+        public Patient Patient { get; set; }
+        public Doctor Doctor { get; set; }
 
         [StringLength(20)]
         public virtual string DocumentName { get; set; }

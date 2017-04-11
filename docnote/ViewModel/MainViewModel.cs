@@ -168,7 +168,7 @@ namespace docnote.ViewModel
         private void OpenDoctorWindow()
         {
             var dw = new DoctorWindow();
-            dw.DataContext = new DoctorWindowVM(_dataService);
+            dw.DataContext = new DoctorWindowVM(_dataService, Patients);
             dw.ShowDialog();
         }
 

@@ -207,12 +207,37 @@ namespace docnote.Model
                 ClosingDoctorName = "Гарбуз Дмитро",
                 SignDate = DateTime.Now.Date
             };
+            
+            #region PersonsDatas
+            List<PrikrPatientData> personsDatas = new List<PrikrPatientData>();
+            for (int i = 1; i <= 30; i++)
+            {
+                personsDatas.Add(new PrikrPatientData
+                {
+                    RowId = i,
+                    IdentificationDocumentDetails = "EH 000000",
+                    FLMName = "Іваненко Іван Іванович",
+                    BirthDate = new DateTime(2012, 8, 12),
+                    City = "Kiev",
+                    Street = "Some street",
+                    Building = "5B",
+                    Apartment = "3",
+                    SignDate = new DateTime(2017, 01, 12),
+                    UnboundDate = new DateTime(2017, 02, 13),
+                    UnboundReasonCode = true
+                });
+            }
+            #endregion
+
+            var doc3 = new Form_Prikr();
+            personsDatas.ForEach(pPD => doc3.PatientsDatas.Add(pPD));
 
             #endregion
 
             #region Patient
             Patient p1 = new Patient
             {
+                IdentificationDocumentDetails = "EH 000000",
                 FirstName = "P1FName",
                 MiddleName = "P1MName",
                 LastName = "P1LName",
@@ -238,6 +263,7 @@ namespace docnote.Model
 
             Patient p2 = new Patient
             {
+                IdentificationDocumentDetails = "EH 000001",
                 FirstName = "P2FName",
                 MiddleName = "P2MName",
                 LastName = "P2LName",
@@ -260,6 +286,7 @@ namespace docnote.Model
 
             Patient p3 = new Patient
             {
+                IdentificationDocumentDetails = "EH 000002",
                 FirstName = "P3FName",
                 MiddleName = "P3MName",
                 LastName = "P3LName",
@@ -296,7 +323,7 @@ namespace docnote.Model
             d.Patients.Add(p1);
             d.Patients.Add(p2);
             d.Patients.Add(p3);
-
+            d.Documents.Add(doc3);
             #endregion
 
             #region Hospital

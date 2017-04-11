@@ -18,7 +18,7 @@ namespace docnote.ViewModel.Documents
         //ICollection<CardEntry> cardEntries;
         //PatientWindowVM _patientVM;
         public Form_025_6_o_VM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs)
-            :base(doc, cardEntries, dataService, reloadDocs, @"\f025-6_oWT.docx")
+            :base(doc, null, cardEntries, dataService, reloadDocs, @"\f025-6_oWT.docx")
         {
         }
 
@@ -27,7 +27,7 @@ namespace docnote.ViewModel.Documents
             return Application.Current.Windows.OfType<View.Documents.Form_025_6_o_Window>().FirstOrDefault();
         }
 
-        protected override void Init(Document doc, ICollection<CardEntry> cardEntries)
+        protected override void Init(Document doc, ICollection<Patient> patients, ICollection<CardEntry> cardEntries)
         {
             //_patientVM = patientVM;
             //if (doc.Id != 0)
@@ -36,7 +36,7 @@ namespace docnote.ViewModel.Documents
             //    return;
             //}
             var p = doc.Patient;
-            _doc = new Form_025_6_o
+            _document = new Form_025_6_o
             {
                 //DecreeMOZDateNumber
                 HospitalSubordination = Hospital.HospitalSubordination,
@@ -84,7 +84,7 @@ namespace docnote.ViewModel.Documents
             }
             if (strHospital.Length > 1) strHospital.Remove(strHospital.Length - 2, 2);
             if (strHome.Length > 1) strHome.Remove(strHome.Length - 2, 2);
-            Form_025_6_o f = _doc as Form_025_6_o;
+            Form_025_6_o f = _document as Form_025_6_o;
             f.VisitDatesHome = strHome.ToString();
             f.VisitDatesHospital = strHospital.ToString();
             f.CountVisitsHome = countHome;

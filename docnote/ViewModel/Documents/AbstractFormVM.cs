@@ -18,16 +18,16 @@ namespace docnote.ViewModel.Documents
     {
         protected readonly IDataService _dataService;
         protected readonly string _path;
-        protected Document _doc;
+        protected Document _document;
         public Document Document
         {
             get
             {
-                return _doc;
+                return _document;
             }
             set
             {
-                Set(ref _doc, value);
+                Set(ref _document, value);
             }
         }
 
@@ -38,7 +38,7 @@ namespace docnote.ViewModel.Documents
         public ICommand SaveToDBCommand { get; protected set; }
         public ICommand CloseDocumentClickCommand { get; private set; }
 
-        public AbstractFormVM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs, string path)
+        public AbstractFormVM(Document document, ICollection<Patient> patients, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs, string path)
         {
             _dataService = dataService;
             _updateDocsDataGrid = reloadDocs;
@@ -46,14 +46,22 @@ namespace docnote.ViewModel.Documents
             CreateAndSaveWordClickCommand = new RelayCommand(CreateAndSaveWord);
             SaveToDBCommand = new RelayCommand(SaveDocumentToDB);
             CloseDocumentClickCommand = new RelayCommand(CloseDocumentWindow);
-            if (doc.Id != 0)
+
+            // Open exist document
+            if (document.Id != 0)
             {
-                _doc = doc;
+                _document = document;
+                //TODO: kostil
+                if (document is Form_Prikr)
+                {
+                    Init(_document, null, null);
+                }
             }
+            //Create new document
             else
             {
                 LoadHospital();
-                Init(doc, cardEntries);
+                Init(document, patients, cardEntries);
             }
         }
 
@@ -64,6 +72,13 @@ namespace docnote.ViewModel.Documents
 
         private void SaveDocumentToDB()
         {
+            //if(Document is Form_Prikr)
+            //{
+            //    StringBuilder patientsDatas = new StringBuilder();
+            //    (this as Form_Prikr_VM).PatientItems.OrderBy(d => d.RowId).ToList().ForEach(pPData => patientsDatas.AppendLine(pPData.ToString()));
+
+            //    (Document as Form_Prikr).PatientsDatas = patientsDatas.ToString();
+            //}
             _dataService.AddUpdateDocument(
                 async (isSaved, error) =>
                 {
@@ -101,7 +116,7 @@ namespace docnote.ViewModel.Documents
                 });
         }
 
-        protected abstract void Init(Document doc, ICollection<CardEntry> cardEntries);
+        protected abstract void Init(Document document, ICollection<Patient> patients, ICollection<CardEntry> cardEntries);
 
         private async void CreateAndSaveWord()
         {
@@ -112,7 +127,7 @@ namespace docnote.ViewModel.Documents
                 string fileName = System.IO.Directory.GetCurrentDirectory() + _path;
                 try
                 {
-                    Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _doc);
+                    Resources.WordManager.CreateWordDocument(fileName, saveFileDialog.FileName, _document);
                     MetroWindow window = GetCurrentWindow();
                     if (window != null)
                     {

@@ -1,0 +1,163 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.Documents.Form_Prikr_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.Model"
+        mc:Ignorable="d"
+        Title="Прикріплення" 
+        SaveWindowPosition="True"
+        SizeToContent="Width"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen">
+    <!--<Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Зберегти" 
+                    Command="{Binding SaveToDBCommand}"/>
+            <Button Content="Згенерувати і зберегти Ворд" 
+                    Command="{Binding CreateAndSaveWordClickCommand}"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>-->
+    <!--<Window.Resources>
+        <DataTemplate DataType="{x:Type local:PrikrPatientData}">
+            <StackPanel Width="1000" Orientation="Horizontal">
+                <Label Width="30" BorderBrush="Black" BorderThickness="1" Content="{Binding RowId}" HorizontalContentAlignment="Center" />
+                <Label Width="190" BorderBrush="Black" BorderThickness="1" Content="{Binding FLMName}"/>
+                <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding BirthDate}"/>
+                <Label Width="120" BorderBrush="Black" BorderThickness="1" Content="{Binding IdentificationDocumentDetails}"/>
+                <Label Width="90" BorderBrush="Black" BorderThickness="1" Content="{Binding City}"/>
+                <Label Width="90" BorderBrush="Black" BorderThickness="1" Content="{Binding Street}"/>
+                <Label Width="50" BorderBrush="Black" BorderThickness="1" Content="{Binding Building}" HorizontalContentAlignment="Center" />
+                <Label Width="40" BorderBrush="Black" BorderThickness="1" Content="{Binding Apartment}" HorizontalContentAlignment="Center" />
+                <Label Width="60" BorderBrush="Black" BorderThickness="1"/>
+                <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding SignDate}"/>
+                <Label Width="60" BorderBrush="Black" BorderThickness="1" Content="{Binding UnboundReasonCode}" HorizontalContentAlignment="Center" />
+                <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding UnboundDate}"/>
+                <Label Width="60" BorderBrush="Black" BorderThickness="1"/>
+                -->
+    <!-- the other controls with bindings -->
+    <!--
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Зберегти" Command="{Binding SaveToDBCommand}"/>
+            <Button Content="Закрити"  Command="{Binding CloseDocumentClickCommand}" Margin="10 0"/>
+            <Button Content="Згенерувати і зберегти Ворд" Command="{Binding CreateAndSaveWordClickCommand}"/>
+        </StackPanel>
+        <Border Padding="5" BorderBrush="Black" BorderThickness="2" Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Grid Width="1000">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="50"/>
+                            <RowDefinition MinHeight="70"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="190"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2">
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap"  Text="№ З/П"/>
+                        </Border>
+                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" Text="ПІБ особи"/>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" />
+                        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Дата народження"/>
+                        </Border>
+                        <Border Grid.Column="2" Grid.Row="1" BorderBrush="Black" BorderThickness="1" />
+                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Паспорт, серія та номер" />
+                        </Border>
+                        <Border Grid.Column="3" Grid.Row="1" BorderBrush="Black" BorderThickness="1" />
+
+                        <Border Grid.Column="4" Grid.ColumnSpan="4" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" Text="Місце проживання" />
+                        </Border>
+                        <Border Grid.Column="4" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Населений пункт (для сільської місцевості)" />
+                        </Border>
+                        <Border Grid.Column="5" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" Text="Вулиця" />
+                        </Border>
+                        <Border Grid.Column="6" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Будинок" />
+                        </Border>
+                        <Border Grid.Column="7" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Квартира" />
+                        </Border>
+
+                        <Border Grid.Column="8" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Прикріплення до лікаря" />
+                        </Border>
+                        <Border Grid.Column="8" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Підпис медичного працівника" />
+                        </Border>
+                        <Border Grid.Column="9" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" Text="Дата" />
+                        </Border>
+
+                        <Border Grid.Column="10" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Припинення прикріплення до лікаря" />
+                        </Border>
+                        <Border Grid.Column="10" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Причина: 1 — відкріплення;  2- смерть" />
+                        </Border>
+                        <Border Grid.Column="11" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" Text="Дата" />
+                        </Border>
+
+                        <Border Grid.Column="12" BorderBrush="Black" BorderThickness="1" />
+                        <Border Grid.Column="12" Grid.Row="1"  BorderBrush="Black" BorderThickness="1" >
+                            <TextBlock Padding="3 10 3 3" TextAlignment="Center" FontWeight="Bold" TextWrapping="Wrap" Text="Підпис завідувача амбулаторії" />
+                        </Border>
+                    </Grid>
+                    <ItemsControl ItemsSource="{Binding PatientItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:PrikrPatientData}">
+                                <StackPanel Width="1000" Orientation="Horizontal">
+                                    <Label Width="30" BorderBrush="Black" BorderThickness="1" Content="{Binding RowId}" HorizontalContentAlignment="Center" />
+                                    <Label Width="190" BorderBrush="Black" BorderThickness="1" Content="{Binding FLMName}"/>
+                                    <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding BirthDate}"/>
+                                    <Label Width="120" BorderBrush="Black" BorderThickness="1" Content="{Binding IdentificationDocumentDetails}"/>
+                                    <Label Width="90" BorderBrush="Black" BorderThickness="1" Content="{Binding City}"/>
+                                    <Label Width="90" BorderBrush="Black" BorderThickness="1" Content="{Binding Street}"/>
+                                    <Label Width="50" BorderBrush="Black" BorderThickness="1" Content="{Binding Building}" HorizontalContentAlignment="Center" />
+                                    <Label Width="40" BorderBrush="Black" BorderThickness="1" Content="{Binding Apartment}" HorizontalContentAlignment="Center" />
+                                    <Label Width="60" BorderBrush="Black" BorderThickness="1"/>
+                                    <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding SignDate}"/>
+                                    <Label Width="60" BorderBrush="Black" BorderThickness="1" Content="{Binding UnboundReasonCode, Converter={StaticResource BoolConverter}, Mode=OneWay}" HorizontalContentAlignment="Center" />
+                                    <Label Width="70" BorderBrush="Black" BorderThickness="1" Content="{Binding UnboundDate}"/>
+                                    <Label Width="60" BorderBrush="Black" BorderThickness="1"/>
+                                    <!-- the other controls with bindings -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+
+    <!--</StackPanel>-->
+</Controls:MetroWindow>

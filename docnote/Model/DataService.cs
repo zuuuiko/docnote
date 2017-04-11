@@ -421,8 +421,8 @@ namespace docnote.Model
                     {
                         //if (dis.CardId == 0)
                         //{
-                            dis.CardId = cardId;
-                            context.InvalidDiseases.Add(dis);
+                        dis.CardId = cardId;
+                        context.InvalidDiseases.Add(dis);
                         //}
                     }
                     foreach (var dis in contextDiseases.Except(diseases))
@@ -473,8 +473,8 @@ namespace docnote.Model
                     {
                         //if (dis.CardId == 0)
                         //{
-                            dis.CardId = cardId;
-                            context.DispDiseases.Add(dis);
+                        dis.CardId = cardId;
+                        context.DispDiseases.Add(dis);
                         //}
                     }
                     foreach (var dis in contextDiseases.Except(diseases))
@@ -555,7 +555,16 @@ namespace docnote.Model
                 ObservableCollection<Document> documents = null;
                 try
                 {
-                    await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
+                    if (p != null)
+                    {
+                        //load patient's documents
+                        await context.Documents.Where(d => d.PatientId == p.Id).LoadAsync();
+                    }
+                    else
+                    {
+                        //load doctors's documents
+                        await context.Documents.Where(d => d.DoctorId != null).LoadAsync();
+                    }
                     documents = context.Documents.Local;
                 }
                 catch (Exception ex)
@@ -593,7 +602,7 @@ namespace docnote.Model
             }
         }
 
-        public void DeleteDocument(Action<bool, Exception> callback, Document d)
+        public void DeleteDocument(Action<bool, Exception> callback, Document document)
         {
             using (var context = new DocnoteContext())
             {
@@ -602,12 +611,15 @@ namespace docnote.Model
                 try
                 {
                     //http://stackoverflow.com/questions/6746804/code-first-tpt-and-cascade-on-delete
-                    //Patient p = context.Patients
-                    //    .Include(e => e.Documents)
-                    //    .Single(e => e.Id == patient.Id);
+                    if (document is Form_Prikr)
+                    {
+                        document = context.Form_PrikrDocuments
+                                    .Include(e => e.PatientsDatas)
+                                    .Single(e => e.Id == document.Id);
+                    }
 
-                    context.Documents.Attach(d);
-                    context.Documents.Remove(d);
+                    context.Documents.Attach(document);
+                    context.Documents.Remove(document);
                     correct = context.SaveChanges() > 0;
                 }
                 catch (Exception ex)
@@ -616,6 +628,25 @@ namespace docnote.Model
                 }
                 callback(correct, exeption);
             }
+        }
+
+        public void GetPrikrPatientDatas(Action<IEnumerable<PrikrPatientData>, Exception> callback, Document d)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                IEnumerable<PrikrPatientData> prikrPatientDatas = null;
+                try
+                {
+                    context.PrikrPatientDatas.Where(pPD => pPD.FormPrikrId == d.Id).OrderBy(pPD => pPD.RowId).Load();
+                    prikrPatientDatas = context.PrikrPatientDatas.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(prikrPatientDatas, exeption);
+            };
         }
         #endregion
 

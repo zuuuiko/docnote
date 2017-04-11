@@ -12,6 +12,9 @@ namespace docnote.Model
 
         public int? DoctorId { get; set; }
 
+        [StringLength(100)]
+        public string IdentificationDocumentDetails { get; set; }
+
         [StringLength(30)]
         public string FirstName { get; set; }
 
@@ -62,8 +65,7 @@ namespace docnote.Model
 
         public DateTime? UnregistrationDate { get; set; }
 
-        [StringLength(20)]
-        public string UnregistrationReason { get; set; }
+        public bool? UnregistrationReason { get; set; }
 
         public virtual Address Address { get; set; }
 

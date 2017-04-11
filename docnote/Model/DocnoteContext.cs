@@ -27,7 +27,11 @@ namespace docnote.Model
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Hospital> Hospitals { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+
         public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<Form_Prikr> Form_PrikrDocuments { get; set; }
+        public virtual DbSet<PrikrPatientData> PrikrPatientDatas { get; set; }
+
         public virtual DbSet<InvalidDisease> InvalidDiseases { get; set; }
         public virtual DbSet<CEDisease> CEDiseases { get; set; }
         public virtual DbSet<DispDisease> DispDiseases { get; set; }
@@ -35,13 +39,6 @@ namespace docnote.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Doctor>()
-                .Property(e => e.PhoneNumber)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Patient>()
-                .Property(e => e.PhoneNumber)
-                .IsFixedLength();
 
             modelBuilder.Entity<Hospital>()
                 .HasMany(e => e.Doctors)
@@ -52,6 +49,20 @@ namespace docnote.Model
                 .HasMany(e => e.Patients)
                 .WithOptional(e => e.Doctor)
                 .HasForeignKey(e => e.DoctorId);
+
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.Documents)
+                .WithOptional(e => e.Doctor)
+                .HasForeignKey(e => e.DoctorId)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Doctor>()
+                .Property(e => e.PhoneNumber)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Patient>()
+                .Property(e => e.PhoneNumber)
+                .IsFixedLength();
 
             modelBuilder.Entity<Patient>()
                 .HasOptional(e => e.Address)
@@ -93,6 +104,11 @@ namespace docnote.Model
                 .HasForeignKey(e => e.CardEntryId)
                 .WillCascadeOnDelete();
 
+            modelBuilder.Entity<Form_Prikr>()
+                .HasMany(e => e.PatientsDatas)
+                .WithOptional(e => e.FormPrikr)
+                .HasForeignKey(e => e.FormPrikrId)
+                .WillCascadeOnDelete();
         }
     }
 }

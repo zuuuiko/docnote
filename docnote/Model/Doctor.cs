@@ -13,6 +13,7 @@ namespace docnote.Model
         public Doctor()
         {
             Patients = new HashSet<Patient>();
+            Documents = new HashSet<Document>();
         }
 
         public int Id { get; set; }
@@ -39,6 +40,9 @@ namespace docnote.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patients { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Document> Documents { get; set; }
 
         public virtual Hospital Hospital { get; set; }
 

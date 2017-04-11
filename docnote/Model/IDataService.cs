@@ -67,6 +67,7 @@ namespace docnote.Model
         void AddUpdateDocument(Action<bool, Exception> callback, Document document);
         void DeleteDocument(Action<bool, Exception> callback, Document d);
 
+        void GetPrikrPatientDatas(Action<IEnumerable<PrikrPatientData>, Exception> callback, Document d);
         #endregion
     }
 }
