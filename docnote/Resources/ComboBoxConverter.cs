@@ -40,6 +40,29 @@ namespace docnote.Resources
         }
     }
 
+    public class ComboBoxStringConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+                return String.Empty;
+
+            return value.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var val = value as ComboBoxItem;
+            if (val != null)
+            {
+                var v = (value as ComboBoxItem).Content.ToString();
+                return v;
+            }
+            return null;
+        }
+    }
+
     public class ComboBoxRomeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

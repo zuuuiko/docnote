@@ -1,0 +1,135 @@
+﻿<Controls:MetroWindow x:Class="docnote.View.Documents.Form_095_o_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:docnote.View.Documents"
+        mc:Ignorable="d"
+        Title="Форма 095/o" 
+        SaveWindowPosition="True"
+        SizeToContent="Width"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Зберегти" Command="{Binding SaveToDBCommand}"/>
+            <Button Content="Закрити"  Command="{Binding CloseDocumentClickCommand}" Margin="10 0"/>
+            <Button Content="Згенерувати і зберегти Ворд" Command="{Binding CreateAndSaveWordClickCommand}"/>
+        </StackPanel>
+        <Border Padding="5" BorderBrush="Black" BorderThickness="2" Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Width="649.700787">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,0"/>
+                        <StackPanel Orientation="Vertical" Margin="0 0 20 0">
+                            <TextBlock Height="Auto" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                    Найменування міністерства, іншого органу виконавчої влади, підприємства, установи, організації, до сфери управління якого належить заклад охорони здоров’я
+                            </TextBlock>
+                            <TextBlock FontWeight="Bold" Text="{Binding Document.HospitalSubordination}" Height="Auto" TextWrapping="WrapWithOverflow"/>
+                            <TextBlock Height="Auto" TextWrapping="WrapWithOverflow" TextAlignment="Justify">
+                    Найменування та місцезнаходження (повна поштова адреса) закладу охорони здоров’я, де заповнюється форма
+                            </TextBlock>
+                            <TextBlock FontWeight="Bold" Text="{Binding Document.HospitalNamePostAddress}" Height="Auto" TextWrapping="WrapWithOverflow"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Margin="0 0 40 0">Код за ЄДРПОУ</Label>
+                                <Label FontWeight="Bold" Content="{Binding Document.EDRPOU}"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <Label HorizontalContentAlignment="Center" FontWeight="Bold">МЕДИЧНА ДОКУМЕНТАЦІЯ</Label>
+                            <Label HorizontalContentAlignment="Center" Padding="0">Форма первинної облікової документації</Label>
+                            <Label HorizontalContentAlignment="Center" Padding="0 0 0 5" FontWeight="Bold">№ 095/о</Label>
+                            <Label HorizontalContentAlignment="Center" >ЗАТВЕРДЖЕНО</Label>
+                            <Label HorizontalContentAlignment="Center" Padding="0 5 0 0">Наказ МОЗ України</Label>
+                            <Label HorizontalContentAlignment="Center" Padding="0" Content="14 лютого 2012 року №110"/>
+                        </StackPanel>
+                    </Grid>
+                    <Border BorderBrush="Black" BorderThickness="0,1,0,1">
+                        <StackPanel>
+                            <StackPanel Margin="0 5 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label HorizontalContentAlignment="Center" FontWeight="Bold">ДОВІДКА №</Label>
+                                <TextBox Padding="5 0 0 0" FontWeight="Bold" Text="{Binding Document.DocumentNumber}" Background="#FFCCCCCC"/>
+                            </StackPanel>
+                            <Label Padding="0" HorizontalContentAlignment="Center" FontWeight="Bold">про тимчасову непрацездатність студента навчального закладу І–ІV рівнів акредитації, про хворобу,</Label>
+                            <Label Padding="0" HorizontalContentAlignment="Center" FontWeight="Bold">карантин і інші причини відсутності дитини, яка відвідує загальноосвітній навчальний заклад,</Label>
+                            <Label Padding="0" HorizontalContentAlignment="Center" FontWeight="Bold">дошкільний навчальний заклад</Label>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Дата видачі</Label>
+                        <Label Margin="10 0 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" Content="{Binding Document.CreationDate}" ContentStringFormat="dd/MM/yyyy"/>
+                        <!--<DatePicker Margin="10 0 0 0" FontWeight="Bold" Text="{Binding Document.IssueDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>-->
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>1.</Label>
+                        <ComboBox FontWeight="Bold" Width="330"  
+                              Text="{Binding Document.HumanType, Converter={StaticResource ComboBoxStringConverter}, Mode=OneWay}"
+                              SelectedItem="{Binding Document.HumanType, Converter={StaticResource ComboBoxStringConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
+                            <ComboBoxItem Padding="5 0">Студенту</ComboBoxItem>
+                            <ComboBoxItem Padding="5 0">Учню</ComboBoxItem>
+                            <ComboBoxItem Padding="5 0">Дитині, що відвідує дошкільний навчальний заклад</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <Label FontWeight="Bold" Margin="5 0" Content="{Binding Document.SchoolPlace}"/>
+                    <Label HorizontalAlignment="Center" Padding="0" FontSize="10">(найменування навчального закладу)</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>2. Прізвище, ім’я, по батькові хворого</Label>
+                        <Label FontWeight="Bold" Margin="10 0 0 0" Content="{Binding Document.PatientFLMName}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>3. Дата народження (рік, місяць, число, для дітей до 1 року – день)</Label>
+                        <Label Margin="10 0 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" Content="{Binding Document.PatientBirthDate}" ContentStringFormat="dd/MM/yyyy"/>
+                    </StackPanel>
+                    <Label>4. Діагноз захворювання (зазначається за згодою пацієнта), інші причини відсутності</Label>
+                    <TextBox FontWeight="Bold" Margin="5 0 5 5" TextWrapping="Wrap" 
+                             Text="{Binding Document.DiagnosisAndAbsenceReason}" Background="#FFCCCCCC"></TextBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>5. Наявність контакту з інфекційним хворим (так, ні)</Label>
+                        <StackPanel Margin="20 0" >
+                            <ComboBox FontWeight="Bold" HorizontalContentAlignment="Center" Width="100"
+                              Text="{Binding Document.IsСontactWithInfection, Converter={StaticResource BoolYesNoConverter}, Mode=OneWay}"
+                              SelectedItem="{Binding Document.IsСontactWithInfection, Converter={StaticResource BoolYesNoConverter}, Mode=OneWayToSource}" Background="#FFCCCCCC">
+                                <ComboBoxItem HorizontalContentAlignment="Center">Так</ComboBoxItem>
+                                <ComboBoxItem HorizontalContentAlignment="Center">Ні</ComboBoxItem>
+                            </ComboBox>
+                            <Label FontSize="10">(підкреслити, вписати)</Label>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label>6. Звільнений(на) від занять, відвідувань дошкільного навчального закладу</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <Label VerticalContentAlignment="Center" Padding="10 0">з</Label>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllStartDate1, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
+                            <Label VerticalContentAlignment="Center" Padding="10 0">по</Label>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllEndDate1, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label VerticalContentAlignment="Center" Padding="10 0">з</Label>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllStartDate2, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
+                            <Label VerticalContentAlignment="Center" Padding="10 0">по</Label>
+                            <DatePicker FontWeight="Bold" Text="{Binding Document.IllEndDate2, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <DockPanel Margin="40 20 0 10">
+                        <Label DockPanel.Dock="Right" Width="200" BorderThickness="0 0 0 1" BorderBrush="Black"></Label>
+                        <Label DockPanel.Dock="Right" FontWeight="Bold">Підпис лікаря</Label>
+                        <Label DockPanel.Dock="Right">М.П.</Label>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+
+    <!--</StackPanel>-->
+</Controls:MetroWindow>

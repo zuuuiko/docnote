@@ -36,7 +36,9 @@
                     <resources:BoolToUnboundReasonConverter x:Key="BoolToUnboundReasonConverter" />
                     <resources:BoolToSexConverter x:Key="BoolToSexConverter" />
                     <resources:BoolConverter x:Key="BoolConverter" />
+                    <resources:BoolYesNoConverter x:Key="BoolYesNoConverter" />
                     <resources:ComboBoxConverter x:Key="ComboBoxConverter" />
+                    <resources:ComboBoxStringConverter x:Key="ComboBoxStringConverter" />
                     <resources:ComboBoxRomeConverter x:Key="ComboBoxRomeConverter" />
                     <resources:DateConverter x:Key="DateConverter" />
                     <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />

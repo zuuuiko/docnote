@@ -105,6 +105,7 @@
     <Compile Include="Model\CEDisease.cs" />
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\DispDisease.cs" />
+    <Compile Include="Model\Form_095_o.cs" />
     <Compile Include="Model\Form_Prikr.cs" />
     <Compile Include="Model\InvalidDisease.cs" />
     <Compile Include="Model\DocnoteContext.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="ViewModel\CardEntryWindowVM.cs" />
     <Compile Include="ViewModel\DoctorWindowVM.cs" />
     <Compile Include="ViewModel\Documents\AbstractFormVM.cs" />
+    <Compile Include="ViewModel\Documents\Form_095_o_VM.cs" />
     <Compile Include="ViewModel\Documents\Form_025_6_o_VM.cs" />
     <Compile Include="ViewModel\Documents\Form_063_o_VM.cs" />
     <Compile Include="ViewModel\Documents\Form_Prikr_VM.cs" />
@@ -149,6 +151,9 @@
     </Compile>
     <Compile Include="View\Documents\Form_063_o_Window.xaml.cs">
       <DependentUpon>Form_063_o_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Documents\Form_095_o_Window.xaml.cs">
+      <DependentUpon>Form_095_o_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Documents\Form_Prikr_Window.xaml.cs">
       <DependentUpon>Form_Prikr_Window.xaml</DependentUpon>
@@ -188,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Documents\Form_063_o_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Documents\Form_095_o_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
