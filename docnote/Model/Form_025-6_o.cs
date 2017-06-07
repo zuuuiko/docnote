@@ -29,6 +29,7 @@ namespace docnote.Model
         public string PatientCardNameCode { get; set; }     //from card
         [StringLength(50)]
         public string PatientFLMName { get; set; }          //from patient
+        [PrintConverter(ConvertType.BoolTo12)]
         public bool? PatientSex { get; set; }               //from patient
         public DateTime? PatientBirthDate { get; set; }     //from patient
         [StringLength(30)]
@@ -37,9 +38,11 @@ namespace docnote.Model
         public string PatientBuilding { get; set; }         //from address
         [StringLength(10)]
         public string PatientApartment { get; set; }        //from address
+        [PrintConverter(ConvertType.BoolTo12)]
         public bool? PatientIsWorking { get; set; }         //from patient
         public byte? Contingent { get; set; }               //from view
         public byte? Purpose { get; set; }                  //from view
+        [PrintConverter(ConvertType.BoolTo12)]
         public bool? IsFirstVisit { get; set; }             //from view
         public string VisitDatesHospital { get; set; }      //from cardEntry
         public byte? CountVisitsHospital { get; set; }
@@ -55,18 +58,23 @@ namespace docnote.Model
         public byte? TraumaPlace { get; set; }              //from view
         [StringLength(30)]
         public string OperationName { get; set; }           //from view
-        [Roman]
+        //[Roman]
+        [PrintConverter(ConvertType.NumberToRome)]
         public byte? DispGroupIsOnRegister { get; set; }    //from view
-        [Roman]
+       // [Roman]
+        [PrintConverter(ConvertType.NumberToRome)]
         public byte? DispGroupTakenOnRegister { get; set; } //from view
         public DateTime? DispRemovedRegisterDate { get; set; }     //from view
         public byte? DispRemovedRegisterReason { get; set; }//from view
         public DateTime? DispDateOfNextVisit { get; set; }  //from view
-        [Roman]
+        //[Roman]
+        [PrintConverter(ConvertType.NumberToRome)]
         public byte? InvGroupFirst { get; set; }            //from view
-        [Roman]
+        //[Roman]
+        [PrintConverter(ConvertType.NumberToRome)]
         public byte? InvGroupChornobyl { get; set; }        //from view
-        [Roman]
+        //[Roman]
+        [PrintConverter(ConvertType.NumberToRome)]
         public byte? InvGroupConfirmed { get; set; }        //from view
         [StringLength(20)]
         public string IllSheetCode { get; set; }            //from view
@@ -75,6 +83,7 @@ namespace docnote.Model
         public DateTime? DovidkaOpenDate { get; set; }      //from view
         public DateTime? DovidkaCloseDate { get; set; }     //from view
         public byte? TreatmentResult { get; set; }          //from view
+        [PrintConverter(ConvertType.BoolTo12)]
         public bool? ServiceCase { get; set; }              //from view
         [StringLength(50)]
         public string ClosingDoctorName { get; set; }       //from view

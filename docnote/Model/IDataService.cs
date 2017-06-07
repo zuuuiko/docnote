@@ -42,7 +42,9 @@ namespace docnote.Model
 
         void GetCardEntriesByPeriodAsync(Action<ObservableCollection<CardEntry>, Exception> callback, Card c, DateTime earliestDate, DateTime latestDate);
 
-        void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce);
+        void GetCardEntry(Action<CardEntry, Exception> callback, int cardId);
+
+        void AddUpdateCardEntry(Action<CardEntry, Exception> callback, CardEntry ce);
 
         void DeleteCardEntry(Action<bool, Exception> callback, CardEntry ce);
         #endregion
@@ -59,7 +61,8 @@ namespace docnote.Model
 
         #region CEDisease
         void GetCEDiseasesAsync(Action<ObservableCollection<CEDisease>, Exception> callback, CardEntry ce);
-        void AddCEDiseases(Action<bool, Exception> callback, IEnumerable<CEDisease> diseases, int cardEntryId);
+        void GetCEDiseasesAsync(Action<ObservableCollection<CEDisease>, Exception> callback, Patient p);
+        void AddCEDiseases(Action<bool, Exception> callback, IEnumerable<CEDisease> diseases, CardEntry ce);
         #endregion
 
         #region Documents

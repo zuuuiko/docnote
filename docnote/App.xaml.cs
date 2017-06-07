@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Threading;
 using System.Windows.Markup;
 using System.Globalization;
 using System.Threading;
+using System.Data.Entity;
 
 namespace docnote
 {
@@ -25,6 +26,20 @@ namespace docnote
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
     new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+
+            using (var context = new Model.DocnoteContext())
+            {
+                if (!context.Database.Exists())
+                {
+                    Database.SetInitializer(new CreateDatabaseIfNotExists<Model.DocnoteContext>());
+                }
+                else
+                {
+                    Database.SetInitializer(new MigrateDatabaseToLatestVersion<Model.DocnoteContext, Migrations.Configuration>("ConnectionStringDocnoteDB"));
+                }
+                context.Database.Initialize(force: true);
+            }
+
         }
     }
 }

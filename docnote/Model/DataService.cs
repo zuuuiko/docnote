@@ -340,7 +340,26 @@ namespace docnote.Model
             };
         }
 
-        public void AddUpdateCardEntry(Action<bool, Exception> callback, CardEntry ce)
+        public void GetCardEntry(Action<CardEntry, Exception> callback, int cardId)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                CardEntry cardEntry = null;
+                try
+                {
+                    cardEntry = context.CardEntries.Where(ce => ce.CardId == cardId).OrderByDescending(ce => ce.Id).FirstOrDefault();
+                    //cardEntry = context.CardEntries.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(cardEntry, exeption);
+            };
+        }
+
+        public void AddUpdateCardEntry(Action<CardEntry, Exception> callback, CardEntry ce)
         {
             using (var context = new DocnoteContext())
             {
@@ -364,7 +383,7 @@ namespace docnote.Model
                     exeption = ex;
                 }
                 context.Entry<CardEntry>(ce).State = EntityState.Detached;
-                callback(correct, exeption);
+                callback(ce, exeption);
             }
         }
 
@@ -512,7 +531,34 @@ namespace docnote.Model
                 callback(diseases, exeption);
             };
         }
-        public void AddCEDiseases(Action<bool, Exception> callback, IEnumerable<CEDisease> diseases, int cardEntryId)
+
+        public async void GetCEDiseasesAsync(Action<ObservableCollection<CEDisease>, Exception> callback, Patient p)
+        {
+            using (var context = new DocnoteContext())
+            {
+                Exception exeption = null;
+                ObservableCollection<CEDisease> diseases = null;
+                try
+                {
+
+                    await System.Threading.Tasks.Task.Run(() =>
+                    {
+                        var cardEntryIdList = (from ce in context.CardEntries
+                                               where ce.CardId == p.Card.CardPatientId
+                                               select ce.Id).ToArray();
+                        context.CEDiseases.Include(d => d.CardEntry).Where(dis => cardEntryIdList.Contains(dis.CardEntry.Id)).Load();
+                    });
+
+                    diseases = context.CEDiseases.Local;
+                }
+                catch (Exception ex)
+                {
+                    exeption = ex;
+                }
+                callback(diseases, exeption);
+            };
+        }
+        public void AddCEDiseases(Action<bool, Exception> callback, IEnumerable<CEDisease> diseases, CardEntry cardEntry)
         {
             using (var context = new DocnoteContext())
             {
@@ -520,13 +566,16 @@ namespace docnote.Model
                 bool correct = false;
                 try
                 {
-                    var contextDiseases = context.CEDiseases.Where(dis => dis.CardEntryId == cardEntryId).ToList();
+                    var contextDiseases = context.CEDiseases.Where(dis => dis.CardEntryId == cardEntry.Id).ToList();
+                    var ce = context.CardEntries.Where(cEntr => cEntr.Id == cardEntry.Id).First();
                     foreach (var dis in diseases.Except(contextDiseases))
                     {
                         //if (dis.CardId == 0)
                         //{
-                        dis.CardEntryId = cardEntryId;
-                        context.CEDiseases.Add(dis);
+                        //dis.CardEntryId = cardEntry.Id;
+                        //dis.CardEntry = cardEntry;
+                        //context.CEDiseases.Add(dis);
+                        ce.CEDiseases.Add(dis);
                         //}
                     }
                     foreach (var dis in contextDiseases.Except(diseases))

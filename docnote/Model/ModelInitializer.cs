@@ -31,6 +31,7 @@ namespace docnote.Model
             #endregion
 
             #region CardEntry
+            #region ce1
             var ce1 = new CardEntry
             {
                 EntryText =
@@ -43,6 +44,8 @@ namespace docnote.Model
 4. У пункті 4 зазначаються місце роботи та займана посада особи.",
                 CreationDate = new DateTime(2016, 4, 1)
             };
+            #endregion
+            #region ce2
             var ce2 = new CardEntry
             {
                 EntryText =
@@ -57,6 +60,8 @@ namespace docnote.Model
 7. У пункті 7 вказуються короткий анамнез, стан при направленні, діагностичні дослідження, перебіг хвороби, проведене лікування.",
                 CreationDate = new DateTime(2016, 4, 17)
             };
+            #endregion
+            #region ce3
             var ce3 = new CardEntry
             {
                 EntryText =
@@ -65,6 +70,7 @@ namespace docnote.Model
 9. У кінці форми проставляються дата заповнення та підпис лікаря, який заповнив виписку на хворого.",
                 CreationDate = new DateTime(2016, 5, 6)
             };
+            #endregion
             var ce4 = new CardEntry
             {
                 EntryText = null,
@@ -235,6 +241,7 @@ namespace docnote.Model
             #endregion
 
             #region Patient
+            #region p1
             Patient p1 = new Patient
             {
                 IdentificationDocumentDetails = "EH 000000",
@@ -258,9 +265,11 @@ namespace docnote.Model
                 Card = c1,
                 Address = a1
             };
+            #endregion
             p1.Documents.Add(doc1);
             p1.Documents.Add(doc2);
 
+            #region p2
             Patient p2 = new Patient
             {
                 IdentificationDocumentDetails = "EH 000001",
@@ -283,7 +292,8 @@ namespace docnote.Model
                 Card = c2,
                 Address = a2
             };
-
+            #endregion
+            #region p3
             Patient p3 = new Patient
             {
                 IdentificationDocumentDetails = "EH 000002",
@@ -306,7 +316,7 @@ namespace docnote.Model
                 Card = c3,
                 Address = a3
             };
-
+            #endregion
             #endregion
 
             #region Doctor

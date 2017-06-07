@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:docnote.View.Documents"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Форма 095/o" 
         SaveWindowPosition="True"
@@ -68,8 +69,8 @@
                     </Border>
                     <StackPanel Orientation="Horizontal">
                         <Label>Дата видачі</Label>
-                        <Label Margin="10 0 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" Content="{Binding Document.CreationDate}" ContentStringFormat="dd/MM/yyyy"/>
-                        <!--<DatePicker Margin="10 0 0 0" FontWeight="Bold" Text="{Binding Document.IssueDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>-->
+                        <!--<Label Margin="10 0 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" Content="{Binding Document.CreationDate}" ContentStringFormat="dd/MM/yyyy"/>-->
+                        <DatePicker Margin="10 0 0 0" FontWeight="Bold" Text="{Binding Document.IssueDate, Converter={StaticResource DateConverter}, Mode=TwoWay}" SelectedDateFormat="Short" Controls:TextBoxHelper.Watermark="Виберіть дату" Background="#FFCCCCCC"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>1.</Label>
@@ -92,6 +93,25 @@
                         <Label Margin="10 0 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" Content="{Binding Document.PatientBirthDate}" ContentStringFormat="dd/MM/yyyy"/>
                     </StackPanel>
                     <Label>4. Діагноз захворювання (зазначається за згодою пацієнта), інші причини відсутності</Label>
+
+
+                    <ComboBox x:Name="Diseases"
+                                        Margin="5 0 5 5"
+                                        DisplayMemberPath="Name"
+                                        ItemsSource="{Binding DiseasesList}" 
+                                        SelectedItem="{Binding SelectedDisease}" Controls:TextBoxHelper.Watermark="Вибрати діагноз">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged" >
+                                <i:InvokeCommandAction Command="{Binding AddDiseases}"
+                                                       CommandParameter="{Binding ElementName=Diseases, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                    <StackPanel Margin="5 0 5 5" Orientation="Horizontal">
+                        <TextBox Width="315" Text="{Binding Path=Diagnosis1}" Controls:TextBoxHelper.ClearTextButton="True"></TextBox>
+                        <TextBox Width="315" Margin="10 0 0 0" Text="{Binding Path=Diagnosis2}" Controls:TextBoxHelper.ClearTextButton="True"></TextBox>
+                    </StackPanel>
+
                     <TextBox FontWeight="Bold" Margin="5 0 5 5" TextWrapping="Wrap" 
                              Text="{Binding Document.DiagnosisAndAbsenceReason}" Background="#FFCCCCCC"></TextBox>
                     <StackPanel Orientation="Horizontal">

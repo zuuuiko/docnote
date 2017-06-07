@@ -92,7 +92,7 @@ namespace docnote.ViewModel
         {
             var str = obj.Header.ToString();
             var pos = str.IndexOf(' ');
-            var disease = new CEDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1)};
+            var disease = new CEDisease { Code = str.Substring(0, pos), Name = str.Substring(pos + 1) };
             if (!CEDiseases.Any(d => d.Equals(disease)))
             {
                 CEDiseases.Add(disease);
@@ -106,6 +106,30 @@ namespace docnote.ViewModel
 
         private async void SaveAndCloseCardEntry()
         {
+            int cardID = CardEntry.CardId;
+            _dataService.AddUpdateCardEntry(
+                (ce, error) =>
+                {
+                    if (error != null)
+                    {
+                        MessageBox.Show(error.StackTrace);
+                        return;
+                    }
+                    CardEntry = ce;
+
+                }, CardEntry);
+
+            //_dataService.GetCardEntry(
+            //    (cardEntry, error) =>
+            //    {
+            //        if (error != null)
+            //        {
+            //            MessageBox.Show(error.StackTrace);
+            //            return;
+            //        }
+            //        CardEntry = cardEntry;
+            //    }, cardID);
+
             _dataService.AddCEDiseases((isSaved, error) =>
             {
                 if (error != null)
@@ -113,18 +137,9 @@ namespace docnote.ViewModel
                     MessageBox.Show(error.StackTrace);
                     return;
                 }
-            }, CEDiseases.ToList(), CardEntry.CardId);
+            }, CEDiseases.ToList(), CardEntry);
 
-            _dataService.AddUpdateCardEntry(
-                (isSaved, error) =>
-                {
-                    if (error != null)
-                    {
-                        MessageBox.Show(error.StackTrace);
-                        return;
-                    }
-                    
-                }, CardEntry);
+            //Добавить Болезнь без кардЭнтри, потом обновить кардЭнтри (добавить ей Болезнь)
 
             var window = Application.Current.Windows.OfType<CardEntryWindow>().FirstOrDefault();
             if (window != null)

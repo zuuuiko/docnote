@@ -410,7 +410,7 @@ namespace docnote.ViewModel
             }
 
             CardEntryWindow cew = new CardEntryWindow();
-            CardEntry ce = new CardEntry { CardId = Patient.Card.CardPatientId };
+            CardEntry ce = new CardEntry { CardId = Patient.Card.CardPatientId, Card = Patient.Card };
             cew.DataContext = new CardEntryWindowVM(LoadCardEntries, ce, _dataService);
             cew.ShowDialog();
         }

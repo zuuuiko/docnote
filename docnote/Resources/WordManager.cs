@@ -107,15 +107,16 @@ namespace docnote.Resources
 
                         foreach (PropertyInfo property in properties)
                         {
-                            if (property.PropertyType.GUID == typeof(Patient).GUID) continue;
+                            if (property.GetCustomAttribute<NotPrintableAttribute>() != null) continue;
 
                             var value = property.GetValue(doc);
+                            var attr = property.GetCustomAttribute<PrintConverterAttribute>();
+                            if (attr != null) value = attr.Convert(value);
+                            //if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
+                            //    value = ConvertByteToRome(value);
 
-                            if (property.GetCustomAttributes<RomanAttribute>().Count() > 0)
-                                value = ConvertByteToRome(value);
-
-                            if (value is Boolean)
-                                value = (bool)value ? 1 : 2;
+                            //if (value is Boolean)
+                            //    value = (bool)value ? 1 : 2;
 
                             FindAndReplace(wordApp, $"<<{property.Name}>>", value);
                         }
@@ -149,17 +150,17 @@ namespace docnote.Resources
 
         }
 
-        private static object ConvertByteToRome(object value)
-        {
-            switch (value?.ToString())
-            {
-                case "1": return "I";
-                case "2": return "II";
-                case "3": return "III";
-                default:
-                    return null;
-            }
-        }
+        //private static object ConvertByteToRome(object value)
+        //{
+        //    switch (value?.ToString())
+        //    {
+        //        case "1": return "I";
+        //        case "2": return "II";
+        //        case "3": return "III";
+        //        default:
+        //            return null;
+        //    }
+        //}
 
         private static List<int> getRunningProcesses()
         {

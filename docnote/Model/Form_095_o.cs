@@ -22,7 +22,7 @@ namespace docnote.Model
 
         [StringLength(10)]
         public string DocumentNumber { get; set; }          //from view
-        //public DateTime? IssueDate { get; set; } = DateTime.Now;
+        public DateTime? IssueDate { get; set; } = DateTime.Now;
 
         [StringLength(50)]
         public string HumanType { get; set; }               //from view
@@ -31,9 +31,13 @@ namespace docnote.Model
         [StringLength(50)]
         public string PatientFLMName { get; set; }          //from patient
         public DateTime? PatientBirthDate { get; set; }     //from patient
-       
+        [PrintConverter(ConvertType.BoolToYesNo)]
         public bool? IsСontactWithInfection { get; set; }   //from view
 
+        [StringLength(50)]
+        public string Diagnosis1 { get; set; }           //from view
+        [StringLength(50)]
+        public string Diagnosis2 { get; set; }           //from view
         [StringLength(300)]
         public string DiagnosisAndAbsenceReason { get; set; }           //from view
 
