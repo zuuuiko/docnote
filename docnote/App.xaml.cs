@@ -29,15 +29,23 @@ namespace docnote
 
             using (var context = new Model.DocnoteContext())
             {
+#if DEBUG
+                Database.SetInitializer(new Model.ModelInitializer());
+#else
                 if (!context.Database.Exists())
                 {
                     Database.SetInitializer(new CreateDatabaseIfNotExists<Model.DocnoteContext>());
                 }
-                else
+                else if (!context.Database.CompatibleWithModel(false))
                 {
                     Database.SetInitializer(new MigrateDatabaseToLatestVersion<Model.DocnoteContext, Migrations.Configuration>("ConnectionStringDocnoteDB"));
                 }
-                context.Database.Initialize(force: true);
+                else
+                {
+                    Database.SetInitializer<Model.DocnoteContext>(null);
+                }
+#endif
+                context.Database.Initialize(false);
             }
 
         }

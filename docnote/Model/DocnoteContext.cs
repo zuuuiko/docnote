@@ -7,15 +7,6 @@ namespace docnote.Model
 
     public partial class DocnoteContext : DbContext
     {
-        static DocnoteContext()
-        {
-//#if DEBUG
-//            //Database.SetInitializer<DocnoteContext>(new ModelInitializer());
-//#else
-//            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DocnoteContext, docnote.Migrations.Configuration>("ConnectionStringDocnoteDB"));
-//#endif
-        }
-
         public DocnoteContext()
             : base("name=ConnectionStringDocnoteDB")
         {
