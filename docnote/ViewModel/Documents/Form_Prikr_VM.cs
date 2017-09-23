@@ -34,7 +34,7 @@ namespace docnote.ViewModel.Documents
             PatientItems = new ObservableCollection<PrikrPatientData>();
             IEnumerable<PrikrPatientData> prikrPatientDatas = null;
             // init new document
-            if (document.DoctorId == null)
+            if (document?.DoctorId == null)
             {
                 int rowId = 0;
                 prikrPatientDatas = patients.Select(p => new PrikrPatientData
@@ -43,14 +43,14 @@ namespace docnote.ViewModel.Documents
                     FLMName = $"{p.FirstName} {p.MiddleName} {p.LastName}",
                     BirthDate = p.BirthDate,
                     IdentificationDocumentDetails = p.IdentificationDocumentDetails,
-                    City = p.Address.CityVillage,
-                    Street = p.Address.Street,
-                    Building = p.Address.Building,
-                    Apartment = p.Address.Apartment,
+                    City = p.Address?.CityVillage,
+                    Street = p.Address?.Street,
+                    Building = p.Address?.Building,
+                    Apartment = p.Address?.Apartment,
                     UnboundDate = p.UnregistrationDate,
                     UnboundReasonCode = p.UnregistrationReason,
                 }).ToArray();
-                _document = new Form_Prikr {DoctorId = document.Doctor.Id,
+                _document = new Form_Prikr {DoctorId = document?.Doctor?.Id,
                                             PatientsDatas = new HashSet<PrikrPatientData>(prikrPatientDatas) };
             }
             // init exist document

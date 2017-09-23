@@ -18,7 +18,7 @@ namespace docnote.ViewModel.Documents
         //ICollection<CardEntry> cardEntries;
         //PatientWindowVM _patientVM;
         public Form_025_6_o_VM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs)
-            :base(doc, null, cardEntries, dataService, reloadDocs, @"\f025-6_oWT.docx")
+            : base(doc, null, cardEntries, dataService, reloadDocs, @"\f025-6_oWT.docx")
         {
         }
 
@@ -39,18 +39,18 @@ namespace docnote.ViewModel.Documents
             _document = new Form_025_6_o
             {
                 //DecreeMOZDateNumber
-                HospitalSubordination = Hospital.HospitalSubordination,
-                EDRPOU = Hospital.EDRPOU,
-                HospitalNamePostAddress = $"{Hospital.Country}, " +
-                $"{Hospital.Region}, {Hospital.CityVillage}, " +
-                $"{Hospital.Street}, {Hospital.Building}",
-                PatientCardNameCode = p.Card.CardNameCode,
+                HospitalSubordination = Hospital?.HospitalSubordination,
+                EDRPOU = Hospital?.EDRPOU,
+                HospitalNamePostAddress = $"{Hospital?.Country}, " +
+                $"{Hospital?.Region}, {Hospital?.CityVillage}, " +
+                $"{Hospital?.Street}, {Hospital?.Building}",
+                PatientCardNameCode = p.Card?.CardNameCode,
                 PatientFLMName = $"{p.LastName} {p.FirstName} {p.MiddleName}",
                 PatientSex = p.Sex,
                 PatientBirthDate = p.BirthDate,
-                PatientStreet = p.Address.Street,
-                PatientBuilding = p.Address.Building,
-                PatientApartment = p.Address.Apartment,
+                PatientStreet = p.Address?.Street,
+                PatientBuilding = p.Address?.Building,
+                PatientApartment = p.Address?.Apartment,
                 PatientIsWorking = p.IsWorking,
                 //VisitDatesHospital,
                 //CountVisitsHospital
@@ -58,7 +58,8 @@ namespace docnote.ViewModel.Documents
                 //CountVisitsHome
                 PatientId = p.Id
             };
-            InitVisitsFieilds(cardEntries);
+            if (cardEntries != null)
+                InitVisitsFieilds(cardEntries);
         }
 
         private void InitVisitsFieilds(ICollection<CardEntry> cardEntries)

@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace docnote.Model
 {
+#if DEBUG
     class ModelInitializer : DropCreateDatabaseAlways<DocnoteContext>
-    //class ModelInitializer : CreateDatabaseIfNotExists<DocnoteContext>
+#else
+    class ModelInitializer : CreateDatabaseIfNotExists<DocnoteContext>
+#endif
     {
         protected override void Seed(DocnoteContext context)
         {
+#if DEBUG
             #region CEDisease
             var dis1 = new CEDisease { Code = "C02.0", Name = "Спинки языка" };
             var dis2 = new CEDisease { Code = "C02.1", Name = "Боковой поверхности языка" };
@@ -213,7 +217,7 @@ namespace docnote.Model
                 ClosingDoctorName = "Гарбуз Дмитро",
                 SignDate = DateTime.Now.Date
             };
-            
+
             #region PersonsDatas
             List<PrikrPatientData> personsDatas = new List<PrikrPatientData>();
             for (int i = 1; i <= 30; i++)
@@ -349,6 +353,13 @@ namespace docnote.Model
             };
             h.Doctors.Add(d);
             context.Hospitals.Add(h);
+            #endregion
+#else
+            Doctor d = new Doctor { LastName = "NO Name" };
+            var h = new Hospital { Name = "NO Name" };
+            h.Doctors.Add(d);
+            context.Hospitals.Add(h);
+#endif
             try
             {
                 context.SaveChanges();
@@ -357,8 +368,7 @@ namespace docnote.Model
             {
                 System.Windows.MessageBox.Show(ex.StackTrace);
             }
-            
-            #endregion
+
         }
     }
 }

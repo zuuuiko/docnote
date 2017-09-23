@@ -34,10 +34,11 @@ namespace docnote
 #else
                 if (!context.Database.Exists())
                 {
-                    Database.SetInitializer(new CreateDatabaseIfNotExists<Model.DocnoteContext>());
+                    Database.SetInitializer(new Model.ModelInitializer());
                 }
                 else if (!context.Database.CompatibleWithModel(false))
                 {
+
                     Database.SetInitializer(new MigrateDatabaseToLatestVersion<Model.DocnoteContext, Migrations.Configuration>("ConnectionStringDocnoteDB"));
                 }
                 else

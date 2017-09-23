@@ -16,10 +16,10 @@ namespace docnote.Model
         public string IdentificationDocumentDetails { get; set; }
 
         [StringLength(30)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = "No name";
 
         [StringLength(30)]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = "No name";
 
         [StringLength(30)]
         public string MiddleName { get; set; }

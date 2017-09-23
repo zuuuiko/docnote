@@ -9,6 +9,7 @@ namespace docnote.Migrations
     {
         public Configuration()
         {
+            AutomaticMigrationDataLossAllowed = true;
             AutomaticMigrationsEnabled = true;
         }
 

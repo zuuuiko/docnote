@@ -81,7 +81,9 @@ namespace docnote.ViewModel
             LoadDoctor();
             LoadDocuments();
             OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
-            DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(), new Form_063_o(), new Form_Prikr() };
+            DocumentFormList = new ObservableCollection<Document> { //new Form_025_6_o(),
+                                                                    //new Form_063_o(),
+                                                                    new Form_Prikr() };
             CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
             DeleteDocumentClickCommand = new RelayCommand<Document>(DeleteDocument);
         }

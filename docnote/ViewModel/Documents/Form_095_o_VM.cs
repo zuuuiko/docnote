@@ -45,8 +45,8 @@ namespace docnote.ViewModel.Documents
 
         public ICommand AddDiseases { get; private set; }
 
-        public Form_095_o_VM(Document doc, ICollection<CardEntry> cardEntries, IDataService dataService, Action reloadDocs)
-            : base(doc, null, cardEntries, dataService, reloadDocs, @"\f095_oWT.docx")
+        public Form_095_o_VM(Document doc, IDataService dataService, Action reloadDocs)
+            : base(doc, null, null, dataService, reloadDocs, @"\f095_oWT.docx")
         {
             Diagnosis1 = (_document as Form_095_o).Diagnosis1;
             Diagnosis2 = (_document as Form_095_o).Diagnosis2;
@@ -64,11 +64,11 @@ namespace docnote.ViewModel.Documents
             var p = doc.Patient;
             _document = new Form_095_o
             {
-                HospitalSubordination = Hospital.HospitalSubordination,
-                EDRPOU = Hospital.EDRPOU,
-                HospitalNamePostAddress = $"{Hospital.Country}, " +
-                $"{Hospital.Region}, {Hospital.CityVillage}, " +
-                $"{Hospital.Street}, {Hospital.Building}",
+                HospitalSubordination = Hospital?.HospitalSubordination,
+                EDRPOU = Hospital?.EDRPOU,
+                HospitalNamePostAddress = $"{Hospital?.Country}, " +
+                $"{Hospital?.Region}, {Hospital?.CityVillage}, " +
+                $"{Hospital?.Street}, {Hospital?.Building}",
                 PatientFLMName = $"{p.LastName} {p.FirstName} {p.MiddleName}",
                 PatientBirthDate = p.BirthDate,
                 SchoolPlace = p.JobSchoolPlace,

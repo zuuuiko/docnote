@@ -177,7 +177,9 @@ namespace docnote.ViewModel
             SaveAndClosePatientClickCommand = new RelayCommand(SaveAndClosePatient);
             ClosePatientClickCommand = new RelayCommand(ClosePatientWindow);
             OpenDocumentsFlyoutCommand = new RelayCommand<Flyout>(OpenDocumentsFlyout);
-            DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(), new Form_063_o(), new Form_095_o() };
+            DocumentFormList = new ObservableCollection<Document> { new Form_025_6_o(),
+                                                                    //new Form_063_o(),
+                                                                    new Form_095_o() };
             CreateOpenDocumentCommand = new RelayCommand<Document>(CreateOpenDocument);
             DeleteDocumentClickCommand = new RelayCommand<Document>(DeleteDocument);
             InvalidDiseaseDoubleClickCommand = new RelayCommand<TreeViewItem>(AddDiseaseToInvalidDiseases);
@@ -272,7 +274,7 @@ namespace docnote.ViewModel
             {
                 case @"Форма 025-6/o":
                     fw = new Form_025_6_o_Window();
-                    fw.DataContext = new Form_025_6_o_VM(doc, CardEntries.ToList(), _dataService, LoadDocuments);
+                    fw.DataContext = new Form_025_6_o_VM(doc, CardEntries?.ToList(), _dataService, LoadDocuments);
                     break;
                 case @"Форма 063/о":
                     fw = new Form_063_o_Window();
@@ -280,7 +282,7 @@ namespace docnote.ViewModel
                     break;
                 case @"Форма 095/o":
                     fw = new Form_095_o_Window();
-                    fw.DataContext = new Form_095_o_VM(doc, CardEntries.ToList(), _dataService, LoadDocuments);
+                    fw.DataContext = new Form_095_o_VM(doc, _dataService, LoadDocuments);
                     break;
                 default:
                     break;
